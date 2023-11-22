@@ -1,19 +1,17 @@
-from time import sleep
 from motors import dcMotor
-import RPi.GPIO as GPIO
 
-DC_MOTOR_LEFT_IN1 = 0
-DC_MOTOR_LEFT_IN2 = 0
-DC_MOTOR_LEFT_PWM = 0
-DC_MOTOR_RIGHT_IN1 = 0
-DC_MOTOR_RIGHT_IN2 = 0
-DC_MOTOR_RIGHT_PWM = 0
+LEFT_IN1 = 0
+LEFT_IN2 = 0
+LEFT_PWM = 0
+RIGHT_IN1 = 0
+RIGHT_IN2 = 0
+RIGHT_PWM = 0
 
 class Drive:
     def __int__(self):
         print("Init drive")
-        self.left = dcMotor(DC_MOTOR_LEFT_IN1, DC_MOTOR_LEFT_IN2, DC_MOTOR_LEFT_PWM)
-        self.right = dcMotor(DC_MOTOR_RIGHT_IN1, DC_MOTOR_RIGHT_IN2, DC_MOTOR_RIGHT_PWM)
+        self.left = dcMotor(LEFT_IN1, LEFT_IN2, LEFT_PWM)
+        self.right = dcMotor(RIGHT_IN1, RIGHT_IN2, RIGHT_PWM)
 
     # ------------------------------ Drive front
     def move_front(self):

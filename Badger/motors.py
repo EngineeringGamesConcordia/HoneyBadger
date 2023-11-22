@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 from time import sleep
 
-GPIO.setmode(GPIO.BOARD)
 class dcMotor:
+    GPIO.setmode(GPIO.BOARD)
     def __init__(self, in1, in2, pwmPin):
         self.in1 = in1
         self.in2 = in2
@@ -32,3 +32,25 @@ class dcMotor:
     def stop(self):
         GPIO.output(self.in1, GPIO.LOW)
         GPIO.output(self.in2, GPIO.LOW)
+
+
+class servoMotor:
+    GPIO.setmode(GPIO.BCM)
+    frequency = 330
+    neutral_duty_cycle = 60
+
+    def __init__(self, pin, initAngle = 0, minAngle=0, maxAngle=270):
+        self.pin = pin
+        self.minAngle = minAngle
+        self.maxAngle = maxAngle
+        GPIO.setup(self.pin, GPIO.OUT)
+
+    def set_angle(self, angle):
+        duty = angle / 18 + 2
+        GPIO.output(self.pin, True)
+        pwm = GPIO.PWM(self.pin, 100)
+        pwm.start(0)
+        pwm.ChangeDutyCycle(duty)
+        sleep(1)
+        GPIO.output(self.pin, False)
+        pwm.ChangeDutyCycle(0)      # set duty back to 0 -> not continuously sending inputs to servo
