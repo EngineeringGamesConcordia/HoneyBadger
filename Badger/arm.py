@@ -18,6 +18,11 @@ class Arm:
     def y_neg(self):
         print("> arm y_neg")
 
+    # ------------------------------ Move to floor - reach ball
+
+    def height_floor(self):
+        print("> arm height floor")
+
     # ------------------------------ Move to height 1 - lowest
     def height_1(self):
         print("> arm height 1")

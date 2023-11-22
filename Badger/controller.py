@@ -12,12 +12,9 @@ from suck import Suck
     down arrow          height 1 (lowest)
     left arrow          height 2 (middle)
     up arrow            height 3 (highest)
+    circle              height to reach ball on floor
     square              start suck
     x                   stop suck
-    L1 hold             drive slow speed
-    L1 release          drive default speed
-    R1 hold             arm slow speed
-    R1 release          arm default speed
 '''
 
 class BadgerController(Controller):
@@ -65,16 +62,6 @@ class BadgerController(Controller):
         print("move right")
         self.drive.move_right()
 
-    # Slow drive speed
-    def on_L1_press(self):
-        print("slow drive")
-        self.drive.slow_drive_speed()
-
-    # Default drive speed
-    def on_L1_release(self):
-        print("default drive")
-        self.drive.default_drive_speed()
-
     '''
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
     '''
@@ -98,19 +85,14 @@ class BadgerController(Controller):
         print("arm y-neg")
         self.arm.y_neg()
 
-    # Slow arm speed
-    def on_R1_press(self):
-        print("slow arm")
-        self.arm.slow_arm_speed()
-
-    # Default arm speed
-    def on_R1_release(self):
-        print("default arm")
-        self.arm.default_arm_speed()
-
     '''
     ------------------------------ ARM SYSTEM - z axis ------------------------------
     '''
+    # Height floor - reach ball
+    def on_circle_press(self):
+        print("arm floor")
+        self.arm.height_floor()
+
     # Height 1 - lowest
     def on_down_arrow_press(self):
         print("arm height 1")

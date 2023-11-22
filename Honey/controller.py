@@ -9,11 +9,10 @@ from throw import Throw
     options             start manual control
     left joystick       drive (front, back, left, right)
     right joystick      arm (x-pos, x-neg, y-pos, y-neg)
-    down arrow          height to reach ball
+    circle              height to reach ball on floor
     square              start suck
     x                   stop suck
-    triangle            place ball
-    circle              throw ball  
+    triangle            place ball automatically in tube
     L1 hold             drive slow speed
     L1 release          drive default speed
     R1 hold             arm slow speed
@@ -65,15 +64,6 @@ class HoneyController(Controller):
         print("move right")
         self.drive.move_right()
 
-    # Slow drive speed
-    def on_L1_press(self):
-        print("slow drive")
-        self.drive.slow_drive_speed()
-
-    # Default drive speed
-    def on_L1_release(self):
-        print("default drive")
-        self.drive.default_drive_speed()
 
     '''
     ------------------------------ ARM SYSTEM ------------------------------
@@ -98,20 +88,10 @@ class HoneyController(Controller):
         print("arm y-neg")
         self.arm.y_neg()
 
-    # Height to reach ball
-    def on_down_arrow_press(self):
-        print("arm down")
-        self.arm.down()
-
-    # Slow arm speed
-    def on_R1_press(self):
-        print("slow arm")
-        self.arm.slow_arm_speed()
-
-    # Default arm speed
-    def on_R1_release(self):
-        print("default arm")
-        self.arm.default_arm_speed()
+    # Height floor - reach ball
+    def on_circle_press(self):
+        print("arm floor")
+        self.arm.height_floor()
 
     '''
     ------------------------------ SUCK SYSTEM ------------------------------
@@ -133,8 +113,3 @@ class HoneyController(Controller):
     def on_triangle_press(self):
         print("place ball")
         self.arm.place_ball()
-
-    # Throw ball
-    def on_circle_press(self):
-        print("throw ball")
-        self.throw.throw_ball()
