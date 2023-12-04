@@ -2,6 +2,7 @@ from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
 from throw import Throw
+from vacuum import Vacuum
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
@@ -10,20 +11,17 @@ from throw import Throw
     left joystick       drive (front, back, left, right)
     right joystick      arm (x-pos, x-neg, y-pos, y-neg)
     circle              height to reach ball on floor
-    square              start suck
-    x                   stop suck
+    square              start vacuum
+    x                   stop vacuum
     triangle            place ball automatically in tube
-    L1 hold             drive slow speed
-    L1 release          drive default speed
-    R1 hold             arm slow speed
-    R1 release          arm default speed
 '''
 
 class HoneyController(Controller):
-    def __init__(self, drive, arm, throw, interface, ds4drv):
+    def __init__(self, drive, arm, throw, vacuum, interface, ds4drv):
         self.arm = arm
         self.drive = drive
         self.throw = throw
+        self.vacuum = vacuum
 
         Controller.__init__(self, interface, ds4drv)
 
@@ -94,17 +92,17 @@ class HoneyController(Controller):
         self.arm.height_floor()
 
     '''
-    ------------------------------ SUCK SYSTEM ------------------------------
+    ------------------------------ VACUUM SYSTEM ------------------------------
     '''
-    # Start sucking
+    # Start vacuum
     def on_square_press(self):
         print("start sucking")
-        self.arm.start_suck()
+        self.vacuum.start_vacuum()
 
-    # Stop sucking
+    # Stop vacuum
     def on_x_press(self):
-        print("stop sucking")
-        self.arm.stop_suck()
+        print("stop vacuum")
+        self.arm.stop_vacuum()
 
     '''
     ------------------------------ THROW SYSTEM ------------------------------

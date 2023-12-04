@@ -16,23 +16,23 @@ class Drive:
     # ------------------------------ Drive front
     def move_front(self):
         print("> drive move front")
-        self.left.forward(100)
-        self.right.forward(100)
+        self.left.forward()
+        self.right.forward()
 
     # ------------------------------ Drive back
     def move_back(self):
         print("> drive move back")
-        self.left.backward(100)
-        self.right.backward(100)
+        self.left.backward()
+        self.right.backward()
 
     # ------------------------------ Drive left
     def move_left(self):
         print("> drive move left")
-        self.left.backward(100)
-        self.right.forward(100)
+        self.left.backward()
+        self.right.forward()
 
     # ------------------------------ Drive right
     def move_right(self):
         print("> drive move right")
-        self.left.forward(100)
-        self.right.backward(100)
+        self.left.forward()
+        self.right.backward()

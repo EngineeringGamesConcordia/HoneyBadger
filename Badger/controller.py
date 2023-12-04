@@ -1,7 +1,9 @@
 from pyPS4Controller.controller import Controller
 from arm import Arm
+from claw import Claw
 from drive import Drive
-from suck import Suck
+from vacuum import Vacuum
+from automation import Automation
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
@@ -13,15 +15,19 @@ from suck import Suck
     left arrow          height 2 (middle)
     up arrow            height 3 (highest)
     circle              height to reach ball on floor
-    square              start suck
-    x                   stop suck
+    square              start vacuum
+    x                   stop vacuum
+    L1                  open claw
+    L2                  close claw
 '''
 
 class BadgerController(Controller):
-    def __init__(self, drive, arm, suck, interface, ds4drv):
+    def __init__(self, arm, claw, drive, vacuum, automation, interface, ds4drv):
         self.arm = arm
+        self.claw = claw
         self.drive = drive
-        self.suck = suck
+        self.vacuum = vacuum
+        self.automation = automation
 
         Controller.__init__(self, interface, ds4drv)
 
@@ -30,7 +36,7 @@ class BadgerController(Controller):
     '''
     def on_options_press(self):
         print("start automatic control")
-        # self.drive.start_automatic_control()
+        self.automation.start()
 
     '''
     ------------------------------ START MANUAL CONTROL ------------------------------
@@ -107,16 +113,28 @@ class BadgerController(Controller):
     def on_up_arrow_press(self):
         print("arm height 3")
         self.arm.height_3()
-
+    
     '''
-    ------------------------------ SUCK SYSTEM ------------------------------
+    ------------------------------ VACUUM SYSTEM ------------------------------
     '''
-    # Start sucking
+    # Start vacuum
     def on_square_press(self):
-        print("start sucking")
-        self.suck.start_suck()
-
-    # Stop sucking
+        print("start vacuum")
+        self.vacuum.start_vacuum()
+    # Stop vacuum
     def on_x_press(self):
-        print("stop sucking")
-        self.suck.stop_suck()
+        print("stop vacuum")
+        self.vacuum.stop_vacuum()
+
+    '''
+    ------------------------------ CLAW SYSTEM ------------------------------
+    '''
+    # Open claw
+    def on_L1_press(self):
+        print("claw open")
+        self.claw.open()
+    
+    # Close claw
+    def on_R1_press(self):
+        print("claw close")
+        self.claw.close()

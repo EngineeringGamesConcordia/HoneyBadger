@@ -1,6 +1,15 @@
+from motors import servoMotor
+
+BOT = 0
+MID = 0
+TOP = 0
+
 class Arm:
     def __int__(self):
         print("Init arm")
+        self.bot = servoMotor(BOT)
+        self.mid = servoMotor(MID)
+        self.top = servoMotor(TOP)
 
     # ------------------------------ Move x-pos
     def x_pos(self):
@@ -35,11 +44,3 @@ class Arm:
 
     def height_3(self):
         print("> arm height 3")
-
-    # ------------------------------ Slow arm speed
-    def slow_arm_speed(self):
-        print("> slow arm speed")
-
-    # ------------------------------ Default arm speed
-    def default_arm_speed(self):
-        print("> default arm speed")
