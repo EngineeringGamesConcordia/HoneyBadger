@@ -18,15 +18,18 @@ from automation import Automation
     square              start vacuum
     x                   stop vacuum
     L1                  open claw
-    L2                  close claw
+    R1                  close claw
+    L2                  turn claw wrist left
+    R2                  turn claw wrist right
 '''
 
 class BadgerController(Controller):
-    def __init__(self, arm, claw, drive, vacuum, automation, interface, ds4drv):
+    def __init__(self, arm, claw, drive, vacuum, wrist, automation, interface, ds4drv):
         self.arm = arm
         self.claw = claw
         self.drive = drive
         self.vacuum = vacuum
+        self.wrist = wrist
         self.automation = automation
 
         Controller.__init__(self, interface, ds4drv)
@@ -74,22 +77,22 @@ class BadgerController(Controller):
     # Arm x-pos
     def on_R3_up(self, value):
         print("arm x-pos")
-        self.arm.x_pos()
+        self.arm.x_pos(value)
 
     # Arm x-neg
     def on_R3_down(self, value):
         print("arm x-neg")
-        self.arm.x_neg()
+        self.arm.x_neg(value)
 
     # Arm y-pos
     def on_R3_left(self, value):
         print("arm y-pos")
-        self.arm.y_pos()
+        self.arm.y_pos(value)
 
     # Arm y-neg
     def on_R3_right(self, value):
         print("arm y-neg")
-        self.arm.y_neg()
+        self.arm.y_neg(value)
 
     '''
     ------------------------------ ARM SYSTEM - z axis ------------------------------
@@ -132,9 +135,23 @@ class BadgerController(Controller):
     # Open claw
     def on_L1_press(self):
         print("claw open")
-        self.claw.open()
+        self.claw.open_claw()
     
     # Close claw
     def on_R1_press(self):
         print("claw close")
-        self.claw.close()
+        self.claw.close_claw()
+
+    '''
+    ------------------------------ WRIST SYSTEM ------------------------------
+    '''
+
+    # Open claw
+    def on_L2_press(self):
+        print("wrist left")
+        self.wrist.turn_left()
+
+    # Close claw
+    def on_R2_press(self):
+        print("wrist right")
+        self.wrist.turn_right()

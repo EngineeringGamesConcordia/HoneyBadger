@@ -8,14 +8,14 @@ class Claw:
         self.claw = servoMotor(PIN)
 
 # ------------------------------ Claw open
-def open(self):
+def open_claw(self):
     print("> claw open")
     self.claw.set_angle(90)
     
 # ------------------------------ Claw close
-def close(self):
+def close_claw(self):
     print("> claw close")
-    self.claw.set.angle(0)
+    self.claw.set_angle(0)
 
     
     
