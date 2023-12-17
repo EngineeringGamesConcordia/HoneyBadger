@@ -17,11 +17,12 @@ from vacuum import Vacuum
 '''
 
 class HoneyController(Controller):
-    def __init__(self, drive, arm, throw, vacuum, interface, ds4drv):
+    def __init__(self, drive, arm, throw, vacuum, automation, interface, ds4drv):
         self.arm = arm
         self.drive = drive
         self.throw = throw
         self.vacuum = vacuum
+        self.automation = automation
 
         Controller.__init__(self, interface, ds4drv)
 

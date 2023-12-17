@@ -3,6 +3,7 @@ from arm import Arm
 from claw import Claw
 from drive import Drive
 from vacuum import Vacuum
+from wrist import Wrist
 from automation import Automation
 
 '''
