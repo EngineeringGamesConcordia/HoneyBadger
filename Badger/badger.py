@@ -25,7 +25,8 @@ def threadFunction(controller):
 GPIO.setmode(GPIO.BCM)
 pca = PcaBoard()
 
-#TODO test and fix all init/min/max angles
+#TODO test and fix parameters
+
 base_servo = pca.addServo()
 elbow_servo = pca.addServo()
 wrist_r_servo = pca.addServo()
