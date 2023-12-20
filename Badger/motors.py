@@ -1,9 +1,13 @@
+import board
+import busio
 import RPi.GPIO as GPIO
 from time import sleep
-
+from adafruit_pca9685 import PCA9685
+from adafruit_motor import servo
 
 class dcMotor:
     GPIO.setmode(GPIO.BOARD)
+
     def __init__(self, in1, in2, pwmPin):
         self.in1 = in1
         self.in2 = in2

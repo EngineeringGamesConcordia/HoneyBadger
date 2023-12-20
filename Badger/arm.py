@@ -1,19 +1,21 @@
+import pcaBoard
+
 from motors import servoMotor
 from numpy import *
 
 # reference: https://github.com/aakieu/3-dof-planar/blob/master/InverseKinematics.py
 
 # motor pins
-BOT = 0
-MID = 0
-TOP = 0
+BASE = 0
+ELBOW = 0
+WRIST = 0
 
 class Arm:
     def __int__(self):
         print("Init arm")
-        self.bot = servoMotor(BOT)
-        self.mid = servoMotor(MID)
-        self.top = servoMotor(TOP)
+        self.bot = servoMotor(BASE)
+        self.mid = servoMotor(ELBOW)
+        self.top = servoMotor(WRIST)
 
     # ------------------------------ Move x-pos
     def x_pos(self, px):
