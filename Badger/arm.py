@@ -1,15 +1,17 @@
-import pcaBoard
-
-from motors import servoMotor
 from numpy import *
+from motors import stepperMotor
 
 # reference: https://github.com/aakieu/3-dof-planar/blob/master/InverseKinematics.py
 
 CONTROLLER_SCALE = 2**15
-FAST_SCALE = 1/(2**12)
-SLOW_SCALE = 1/(2**14)
+BIG_SERVO_SCALE = 1/(2**12)
+SMALL_SERVO_SCALE = 1/(2**14)
 CLAW_SCALE = 1/(2**12)
+KINEMATIC_SCALE = 2/(2**15)
 
+moveVal = 1
+px = 0
+py = 0
 
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(px, py):
@@ -43,17 +45,16 @@ def calculate_inverse_kinematic(px, py):
 
 
 class Arm:
-    def __int__(self, pca, base_servo, elbow_servo, wrist_r_servo, wrist_ud_servo, claw_servo):
+    def __int__(self, base_stepper, base_servo, elbow_servo, wrist_r_servo, wrist_ud_servo, claw_servo):
         print("Init arm")
         print("base_servo: " + str(base_servo))
         print("elbow_servo: " + str(elbow_servo))
         print("wrist_r_servo: " + str(wrist_r_servo))
         print("wrist_ud_servo: " + str(wrist_ud_servo))
         print("claw_servo: " + str(claw_servo))
-        self.pca = pca
         self.base_servo = base_servo
-        self.elbow_servo = base_servo
-        self.wrist_r_servo = wrist_r_servo
+        self.elbow_servo = elbow_servo
+        self.wrist_r_servo =  wrist_r_servo
         self.wrist_ud_servo = wrist_ud_servo
         self.claw_servo = claw_servo
         self.SLOW_MODE = False
@@ -61,84 +62,81 @@ class Arm:
     # ------------------------------ CLAW MOVEMENTS
     def open_claw(self, val):
         print("> arm claw open")
-        val = CONTROLLER_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
-        self.pca.setServoIncrement(self.claw_servo, val)
+        val = CLAW_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        self.claw_servo.angle = self.claw_servo.angle + val
 
     def close_claw(self, val):
         print("> arm claw close")
-        val = -CONTROLLER_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
-        self.pca.setServoIncrement(self.claw_servo, val)
-
-    def stop_claw(self, val):
-        print("> arm claw stop")
-        self.pca.setServoIncrement(self.claw_servo, 0)
+        val = -CLAW_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        self.claw_servo.angle = self.claw_servo.angle + val
 
     # ------------------------------ ROTATIONAL MOVEMENTS
-    def rotateArm(self, val):
-        val = CONTROLLER_SCALE * (val / CONTROLLER_SCALE) ** 3
-        self.pca.setServoIncrement(self.wrist_r_servo, val)
+    def turn_left(self):
+        print("> wrist rotating left")
+        self.wrist_r_servo.angle = self.wrist_r_servo.angle + moveVal
+
+    def turn_right(self):
+        print("> wrist rotating right")
+        self.wrist_r_servo.angle = self.wrist_r_servo.angle + moveVal
 
 
     # ------------------------------ Move x-pos
-    def x_pos(self, px):
+    def x_pos(self, val):
         print("> arm x_pos")
+        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        px = px + val;
         theta_1, theta_2, theta_3 = calculate_inverse_kinematic(px, 0)
-        self.base_servo.set_angle(theta_1)
-        self.elbow_servo.set_angle(theta_2)
-        self.wrist_ud_servo.set_angle(theta_3)
+        self.base_servo.angle = theta_1
+        self.elbow_servo.angle = theta_2
+        self.wrist_ud_servo.angle = theta_3
 
     # ------------------------------ Move x-neg
-    def x_neg(self, px):
+    def x_neg(self, val):
         print("> arm x_neg")
+        val = -KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        px = px + val;
         theta_1, theta_2, theta_3 = calculate_inverse_kinematic(px, 0)
-        self.base_servo.set_angle(theta_1)
-        self.elbow_servo.set_angle(theta_2)
-        self.wrist_ud_servo.set_angle(theta_3)
+        self.base_servo.angle = theta_1
+        self.elbow_servo.angle = theta_2
+        self.wrist_ud_servo.angle = theta_3
 
     # ------------------------------ Move y-pos
-    def y_pos(self, py):
+    def y_pos(self, val):
         print("> arm y_pos")
+        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        py = py + val;
         theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, py)
-        self.base_servo.set_angle(theta_1)
-        self.elbow_servo.set_angle(theta_2)
-        self.wrist_ud_servo.set_angle(theta_3)
+        self.base_servo.angle = theta_1
+        self.elbow_servo.angle = theta_2
+        self.wrist_ud_servo.angle = theta_3
 
     # ------------------------------ Move y-neg
-    def y_neg(self, py):
+    def y_neg(self, val):
         print("> arm y_neg")
+        val = -KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        py = py + val;
         theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, py)
-        self.base_servo.set_angle(theta_1)
-        self.elbow_servo.set_angle(theta_2)
-        self.wrist_ud_servo.set_angle(theta_3)
+        self.base_servo.angle = theta_1
+        self.elbow_servo.angle = theta_2
+        self.wrist_ud_servo.angle = theta_3
 
-    # ------------------------------ Move to floor - reach ball
-    def height_floor(self):
+    # ------------------------------ STEPPER Movements
+    # Insert stepper codes lol
+    
+"""
+    # ------------------------------ Move down
+    def move_down(self):
         print("> arm height floor")
         theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, 0)  # need to find (x, y) coordinates
-        self.base_servo.set_angle(theta_1)
-        self.elbow_servo.set_angle(theta_2)
-        self.wrist_ud_servo.set_angle(theta_3)
+        self.base_servo.angle = theta_1
+        self.elbow_servo.angle = theta_2
+        self.wrist_ud_servo.angle = theta_3
 
-    # ------------------------------ Move to height 1 - lowest
-    def height_1(self):
+    # ------------------------------ Move up
+    def move_up(self):
         print("> arm height 1")
         theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, 0)  # need to find (x, y) coordinates
-        self.base_servo.set_angle(theta_1)
-        self.elbow_servo.set_angle(theta_2)
-        self.wrist_ud_servo.set_angle(theta_3)
-
-    # ------------------------------ Move to height 2 - middle
-    def height_2(self):
-        print("> arm height 2")
-        theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, 0)  # need to find (x, y) coordinates
-        self.base_servo.set_angle(theta_1)
-        self.elbow_servo.set_angle(theta_2)
-        self.wrist_ud_servo.set_angle(theta_3)
-
-    # ------------------------------ Move to height 3 - highest
-    def height_3(self):
-        print("> arm height 3")
-        theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, 0)  # need to find (x, y) coordinates
-        self.base_servo.set_angle(theta_1)
-        self.elbow_servo.set_angle(theta_2)
-        self.wrist_ud_servo.set_angle(theta_3)
+        self.base_servo.angle = theta_1
+        self.elbow_servo.angle = theta_2
+        self.wrist_ud_servo.angle = theta_3
+"""

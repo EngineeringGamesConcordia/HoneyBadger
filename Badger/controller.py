@@ -1,9 +1,10 @@
 from pyPS4Controller.controller import Controller
 from arm import Arm
-from claw import Claw
 from drive import Drive
 from vacuum import Vacuum
 from automation import Automation
+from motors import dcMotor
+from motors import stepperMotor
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
@@ -95,27 +96,18 @@ class BadgerController(Controller):
         self.arm.y_neg(value)
 
     '''
-    ------------------------------ ARM SYSTEM - z axis ------------------------------
+    ------------------------------ ARM SYSTEM - Stepper ------------------------------
     '''
-    # Height floor - reach ball
-    def on_circle_press(self):
-        print("arm floor")
-        self.arm.height_floor()
 
-    # Height 1 - lowest
-    def on_down_arrow_press(self):
-        print("arm height 1")
-        self.arm.height_1()
+    # Turn Right
+    def on_right_arrow_press(self):
+        print("Stepper Moving Right")
+        #insert stepper code for right
 
-    # Height 2 - middle
+    # Turn Left
     def on_left_arrow_press(self):
-        print("arm height 2")
-        self.arm.height_2()
-
-    # Height 3 - highest
-    def on_up_arrow_press(self):
-        print("arm height 3")
-        self.arm.height_3()
+        print("Stepper Moving Left")
+        #insert stepper code for left
     
     '''
     ------------------------------ VACUUM SYSTEM ------------------------------
@@ -133,25 +125,25 @@ class BadgerController(Controller):
     ------------------------------ CLAW SYSTEM ------------------------------
     '''
     # Open claw
-    def on_L1_press(self):
+    def on_L2_press(self, value):
         print("claw open")
-        self.claw.open_claw()
+        self.claw.open_claw(value)
     
     # Close claw
-    def on_R1_press(self):
+    def on_R2_press(self, value):
         print("claw close")
-        self.claw.close_claw()
+        self.claw.close_claw(value)
 
     '''
     ------------------------------ WRIST SYSTEM ------------------------------
     '''
 
-    # Open claw
-    def on_L2_press(self):
+    # Wrist Turn Left
+    def on_L1_press(self):
         print("wrist left")
         self.wrist.turn_left()
 
-    # Close claw
-    def on_R2_press(self):
+    # Wrist Turn Right
+    def on_R1_press(self):
         print("wrist right")
         self.wrist.turn_right()

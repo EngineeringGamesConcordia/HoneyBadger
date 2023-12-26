@@ -2,8 +2,6 @@ import board
 import busio
 import RPi.GPIO as GPIO
 from time import sleep
-from adafruit_pca9685 import PCA9685
-from adafruit_motor import servo
 
 class dcMotor:
     GPIO.setmode(GPIO.BOARD)
@@ -16,14 +14,14 @@ class dcMotor:
         GPIO.setup(self.in2, GPIO.OUT)
         GPIO.setup(self.pwmPin, GPIO.OUT)
 
-    def forward(self):
+    def cw(self):
         GPIO.output(self.in1, GPIO.HIGH)
         sleep(5)
         GPIO.output(self.in2, GPIO.LOW)
         sleep(1)
         GPIO.cleanup()
 
-    def backward(self):
+    def ccw(self):
         GPIO.output(self.in1, GPIO.LOW)
         sleep(5)
         GPIO.output(self.in2, GPIO.HIGH)
@@ -34,25 +32,6 @@ class dcMotor:
         GPIO.output(self.in1, GPIO.LOW)
         GPIO.output(self.in2, GPIO.LOW)
         GPIO.cleanup()
-
-
-class servoMotor:
-    GPIO.setmode(GPIO.BCM)
-
-    def __init__(self, pin):
-        self.pin = pin
-        GPIO.setup(self.pin, GPIO.OUT)
-
-    # angle (int): the angle in degrees the motor should turn. between 0 an 360
-    def set_angle(self, angle):
-        duty = angle / 18 + 2
-        GPIO.output(self.pin, True)
-        pwm = GPIO.PWM(self.pin, 100)
-        pwm.start(0)
-        pwm.ChangeDutyCycle(duty)
-        sleep(1)
-        GPIO.output(self.pin, False)
-        pwm.ChangeDutyCycle(0)      # set duty back to 0 -> not continuously sending inputs to servo
 
 
 class stepperMotor:
