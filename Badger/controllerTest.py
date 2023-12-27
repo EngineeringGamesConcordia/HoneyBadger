@@ -5,42 +5,37 @@ import time
 class MyController(Controller):
 
     time = round(time.perf_counter()*1)
-    print(time)
-    while(True):
+
+
+   
+        
+    if(time%2==0):
         armX = (BadgerController.getLastValueArmX)
-        armX =str(armX)
-        armX = int(armX,0)
+        armX = int(str(armX))
         
         armY = (BadgerController.getLastValueArmY) 
-        armY = str(armY)
-        armY = int(armY,0)
+        armY = int(str(armY))
         
         driveX = (BadgerController.getLastValueDriveX)
         driveX = str(driveX)
-        driveX = int(driveX,0)
+        driveX = int(driveX,16)
 
         driveY = (BadgerController.getLastValueDriveY)
-        driveY = str(driveY)
-        driveY = int(driveY,0)
+        driveY = int(str(driveY))
        
         
         clawOpen = (BadgerController.getLastValueOpenClaw) 
-        clawOpen = str(clawOpen)
-        clawOpen = int(clawOpen, 0)
+        clawOpen = int(str(clawOpen))
     
         
         clawClose = (BadgerController.getLastValueOpenClaw) 
-        clawClose = str(clawClose)
-        clawClose = int(clawClose,0)
-   
-        
-        if(time%2==0):
-            print("WompWomp value of arm X: "+ str(armX) )
-            print("WompWomp value of arm Y: "+ str(armY) )
-            print("WompWomp value of drive X: "+ str(driveX) )
-            print("WompWomp value of drive Y: "+ str(driveY) )
-            print("WompWomp value of claw open: "+ str(clawOpen) )
-            print("WompWomp value of claw close: "+ str(clawClose) )
+        clawClose = int(str(clawClose))    
+        print("WompWomp value of arm X: "+ str(armX) )
+        print("WompWomp value of arm Y: "+ str(armY) )
+        print("WompWomp value of drive X: "+ str(driveX) )
+        print("WompWomp value of drive Y: "+ str(driveY) )
+        print("WompWomp value of claw open: "+ str(clawOpen) )
+        print("WompWomp value of claw close: "+ str(clawClose) )
             
     def __init__(self, **kwargs):
         Controller.__init__(self, **kwargs)
