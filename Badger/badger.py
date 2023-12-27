@@ -34,13 +34,12 @@ left_track = dcMotor(16, 20, 21)
 right_track = dcMotor(5, 6, 13)
 drivesys = Drive(left_track, right_track)
 automation1 = Automation()
-
-def ticks():
+#send the value from the contrller to the arm
+def ticks():#works
     while(True):
         times = time.time()
         floatingTime = float(times)
         if(round(floatingTime)%2==0):
-            print("i was here")
             controller.checker()
 
 controller = BadgerController(arm1, arm1.claw_servo, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)

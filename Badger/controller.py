@@ -31,12 +31,21 @@ class BadgerController(Controller):
         self.vacuum = vacuum
         self.wrist = wrist
         self.automation = automation
+        
         self.lastValueArmX = 0
-        self.lastValueArmY =0
+        self.lastValueArmNegX = 0
+        self.lastValueArmY = 0
+        self.lastValueArmNegY =0
+        
+        
         self.lastValueDriveX = 0
+        self.lastValueDriveNegX =0
         self.lastValueDriveY = 0
+        self.lastValueDriveNegY=0
+        
         self.lastValueOpenClaw = 0
         self.lastValueCloseClaw = 0
+        
         
         
         Controller.__init__(self, **kwargs)
@@ -74,13 +83,13 @@ class BadgerController(Controller):
 
     # Drive back
     def on_L3_down(self, value):
-        self.lastValueDriveY = value
+        self.lastValueDriveNegY = value
         print("move back")
         self.drive.move_back()
 
     # Drive left
     def on_L3_left(self, value):
-        self.lastValueDriveX = value
+        self.lastValueDriveNegX = value
         print("move left")
         self.drive.move_left()
 
@@ -101,7 +110,7 @@ class BadgerController(Controller):
 
     # Arm x-neg
     def on_R3_down(self, value):
-        self.lastValueArmX = value;
+        self.lastValueArmNegX = value;
         print("arm x-neg")
         self.arm.x_neg(value)
 
@@ -113,7 +122,7 @@ class BadgerController(Controller):
 
     # Arm y-neg
     def on_R3_right(self, value):
-        self.lastValueArmY = value;
+        self.lastValueArmNegY = value;
         print("arm y-neg")
         self.arm.y_neg(value)
 
@@ -174,12 +183,33 @@ class BadgerController(Controller):
         
     #getting the values of the placeholder    
 
-    def checker(self):
-            print("WompWomp value of arm X: " + str(self.lastValueArmX))
-            print("WompWomp value of arm Y: " + str(self.lastValueArmY))
-            print("WompWomp value of drive X: " + str(self.lastValueDriveX))
-            print("WompWomp value of drive Y: " + str(self.lastValueDriveY))
-            print("WompWomp value of claw open: " + str(self.lastValueOpenClaw))
+    def checker(self):      
+            self.lastValueOpenClaw = 0
+            self.lastValueCloseClaw = 0
+            #arms if
+            if( self.lastValueArmX >100):
+                print("WompWomp value of arm X: " + str(self.lastValueArmX))
+            elif(self.lastValueArmNegX < -100):
+                print("WompWomp value of arm X: " + str(self.lastValueArmNegX))
+            if(self.lastValueArmY >100):   
+                print("WompWomp value of arm Y: " + str(self.lastValueArmY))                
+            elif(self.lastValueArmNegY <-100):
+               print("WompWomp value of arm Y: " + str(self.lastValueArmNegY))
+               
+            #drive if
+            if(self.lastValueDriveX >100):
+                print("WompWomp value of drive X: " + str(self.lastValueDriveX))
+            elif(self.lastValueDriveNegX < -100):
+                print("WompWomp value of drive X: " + str(self.lastValueDriveNegX))
+            if(self.lastValueDriveY >100):               
+                print("WompWomp value of drive Y: " + str(self.lastValueDriveY))
+            elif(self.lastValueDriveNegY <-100):
+                print("WompWomp value of drive Y: " + str(self.lastValueDriveY))
+            
+            #claw if
+            if(self.lastValueOpenClaw >100):    
+                print("WompWomp value of claw open: " + str(self.lastValueOpenClaw))
+            if(self.lastValueCloseClaw >100):    
             print("WompWomp value of claw close: " + str(self. lastValueCloseClaw))
     
         
