@@ -5,6 +5,7 @@ from vacuum import Vacuum
 from automation import Automation
 from motors import dcMotor
 from motors import stepperMotor
+import time
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
@@ -12,10 +13,6 @@ from motors import stepperMotor
     options             start manual control
     left joystick       drive (front, back, left, right)
     right joystick      arm (x-pos, x-neg, y-pos, y-neg)
-    down arrow          height 1 (lowest)
-    left arrow          height 2 (middle)
-    up arrow            height 3 (highest)
-    circle              height to reach ball on floor
     square              start vacuum
     x                   stop vacuum
     L1                  open claw
@@ -25,6 +22,10 @@ from motors import stepperMotor
 '''
 
 class BadgerController(Controller):
+    constValue =0
+    time = round(time.perf_counter())
+    if(time%2):
+        print(constValue)
     def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
         self.claw = claw
@@ -39,6 +40,7 @@ class BadgerController(Controller):
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
     def on_options_press(self):
+        
         print("start automatic control")
         self.automation.start()
 
@@ -54,21 +56,25 @@ class BadgerController(Controller):
     '''
     # Drive front
     def on_L3_up(self, value):
+        constValue = value
         print("move front")
         self.drive.move_front()
 
     # Drive back
     def on_L3_down(self, value):
+        constValue = value
         print("move back")
         self.drive.move_back()
 
     # Drive left
     def on_L3_left(self, value):
+        constValue = value
         print("move left")
         self.drive.move_left()
 
     # Drive right
     def on_L3_right(self, value):
+        constValue = value
         print("move right")
         self.drive.move_right()
 
@@ -77,21 +83,25 @@ class BadgerController(Controller):
     '''
     # Arm x-pos
     def on_R3_up(self, value):
+        constValue = value
         print("arm x-pos")
         self.arm.x_pos(value)
 
     # Arm x-neg
     def on_R3_down(self, value):
+        constValue = value
         print("arm x-neg")
         self.arm.x_neg(value)
 
     # Arm y-pos
     def on_R3_left(self, value):
+        constValue = value
         print("arm y-pos")
         self.arm.y_pos(value)
 
     # Arm y-neg
     def on_R3_right(self, value):
+        constValue = value
         print("arm y-neg")
         self.arm.y_neg(value)
 
