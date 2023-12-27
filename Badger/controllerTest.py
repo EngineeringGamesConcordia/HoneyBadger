@@ -8,20 +8,24 @@ class MyController(Controller):
     print(time)
     while(True):
         armX = (BadgerController.getLastValueArmX) 
-        
+        armX = int(armX,16)
         
         armY = (BadgerController.getLastValueArmY) 
-       
+        armY = int(armY,16)
         
         driveX = (BadgerController.getLastValueDriveX)
-        
+        driveX = int(driveX,16)
+
         driveY = (BadgerController.getLastValueDriveY)
+        driveY = int(driveY,16)
        
         
         clawOpen = (BadgerController.getLastValueOpenClaw) 
+        clawOpen = int(clawOpen, 16)
     
         
         clawClose = (BadgerController.getLastValueOpenClaw) 
+        clawClose = int(clawClose,16)
    
         
         if(time%2==0):
