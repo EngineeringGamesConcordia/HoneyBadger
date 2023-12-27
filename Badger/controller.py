@@ -184,32 +184,31 @@ class BadgerController(Controller):
     #getting the values of the placeholder    
 
     def checker(self):      
-            self.lastValueOpenClaw = 0
-            self.lastValueCloseClaw = 0
             #arms if
             if( self.lastValueArmX >100):
-                print("WompWomp value of arm X: " + str(self.lastValueArmX))
+                self.on_R3_up(self.lastValueArmX)
             elif(self.lastValueArmNegX < -100):
-                print("WompWomp value of arm X: " + str(self.lastValueArmNegX))
+                self.on_R3_down(self.lastValueArmNegX)
             if(self.lastValueArmY >100):   
-                print("WompWomp value of arm Y: " + str(self.lastValueArmY))                
+                self.on_R3_left(self.lastValueArmY)            
             elif(self.lastValueArmNegY <-100):
-               print("WompWomp value of arm Y: " + str(self.lastValueArmNegY))
+               self.on_R3_right(self.lastValueArmNegY)
                
             #drive if
             if(self.lastValueDriveX >100):
-                print("WompWomp value of drive X: " + str(self.lastValueDriveX))
+                self.on_L3_right(self.lastValueDriveX)
             elif(self.lastValueDriveNegX < -100):
-                print("WompWomp value of drive X: " + str(self.lastValueDriveNegX))
+                self.on_L3_left(self.lastValueDriveNegX)
             if(self.lastValueDriveY >100):               
-                print("WompWomp value of drive Y: " + str(self.lastValueDriveY))
+                self.on_L3_up(self.lastValueDriveY)
             elif(self.lastValueDriveNegY <-100):
-                print("WompWomp value of drive Y: " + str(self.lastValueDriveY))
+                self.on_L3_down(self.lastValueDriveNegY)
+                
             
             #claw if
             if(self.lastValueOpenClaw >100):    
-                print("WompWomp value of claw open: " + str(self.lastValueOpenClaw))
+                self.on_L2_press(self.lastValueOpenClaw)
             if(self.lastValueCloseClaw >100):    
-                print("WompWomp value of claw close: " + str(self. lastValueCloseClaw))
+                self.on_R2_press(self.lastValueCloseClaw)
     
         
