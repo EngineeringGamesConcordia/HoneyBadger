@@ -34,14 +34,11 @@ right_track = dcMotor(5, 6, 13)
 drivesys = Drive(left_track, right_track)
 automation1 = Automation()
 
+
 controller = BadgerController(arm1, arm1.claw_servo, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
-threadFunction(controller)
-t1 = threading.Thread(target=Function, args=(controller,))
-t1.start()
-t2 = threading.Thread(target=Function, args=(controller,))
-t2.start()
-while (True):
-    t1.join()
-    sleep(0.01)
-    t2.join()
-    sleep(0.01)
+controller.listen()
+while(True):
+    time = time.time()
+    floatingTime = float(time)
+    if(round(floatingTime)%2==0):
+        controller.checker()
