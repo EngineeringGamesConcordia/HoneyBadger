@@ -40,6 +40,7 @@ def ticks():#works
         times = time.time()
         floatingTime = float(times)
         if(round(floatingTime)%2==0):
+            print("brrr i checked")
             controller.checker()
 
 controller = BadgerController(arm1, arm1.claw_servo, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
