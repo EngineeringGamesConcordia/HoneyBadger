@@ -35,12 +35,10 @@ right_track = dcMotor(5, 6, 13)
 drivesys = Drive(left_track, right_track)
 automation1 = Automation()
 
-time = time.time()
 def ticks():
     while(True):
-        time = "kill me"
-        time = time.time()
-        floatingTime = float(time)
+        times = time.time()
+        floatingTime = float(times)
         print(floatingTime)
         if(round(floatingTime)%2==0):
             controller.listen()
