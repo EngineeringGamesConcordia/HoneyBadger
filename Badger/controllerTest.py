@@ -1,12 +1,20 @@
 from pyPS4Controller.controller import Controller
+import time
 
 class MyController(Controller):
 
     time = round(time.perf_counter()*1)
-    while(true):
-        value = Controller.getConstValue()
+    print(time)
+    while(True):
+        armX = Controller.getLastValueArmX()
+        armY = Controller.getLastValueArmY()
+        driveX =Controller.getLastValueDriveX()
+        driveY = Controller.getLastValueDriveY()
+        clawOpen = Controller.getLastValueOpenClaw()
+        clawClose = Controller.getLastValueOpenClaw()
+        
         if(time%2==0):
-            print("WompWomp value is: "+ constValue)
+            print("WompWomp value is: "+ armX )
     def __init__(self, **kwargs):
         Controller.__init__(self, **kwargs)
 

@@ -15,15 +15,20 @@ import time
     right joystick      arm (x-pos, x-neg, y-pos, y-neg)
     square              start vacuum
     x                   stop vacuum
-    L1                  open claw
-    R1                  close claw
-    L2                  turn claw wrist left
-    R2                  turn claw wrist right
+    L2                  open claw
+    R2                  close claw
+    L1                  turn claw wrist left
+    R1                  turn claw wrist right
 '''
 
 class BadgerController(Controller):
-        self.constValue =0
-    
+
+    lastValueArmX = 0 
+    lastValueArmY = 0
+    lastValueDriveX = 0
+    lastValueDriveY = 0
+    lastValueOpenClaw = 0
+    lastValueCloseClaw = 0
     def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
         self.claw = claw
@@ -38,7 +43,6 @@ class BadgerController(Controller):
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
     def on_options_press(self):
-        
         print("start automatic control")
         self.automation.start()
 
@@ -54,25 +58,25 @@ class BadgerController(Controller):
     '''
     # Drive front
     def on_L3_up(self, value):
-        self.constValue = value
+        self.lastValueDriveY = value
         print("move front")
         self.drive.move_front()
 
     # Drive back
     def on_L3_down(self, value):
-        self.constValue = value
+        self.lastValueDriveY = value
         print("move back")
         self.drive.move_back()
 
     # Drive left
     def on_L3_left(self, value):
-        self.constValue = value
+        self.lastValueDriveX = value
         print("move left")
         self.drive.move_left()
 
     # Drive right
     def on_L3_right(self, value):
-        self.constValue = value
+        self.lastValueDriveX = value
         print("move right")
         self.drive.move_right()
 
@@ -81,25 +85,25 @@ class BadgerController(Controller):
     '''
     # Arm x-pos
     def on_R3_up(self, value):
-        self.constValue = value
+        self.lastValueArmX = value;
         print("arm x-pos")
         self.arm.x_pos(value)
 
     # Arm x-neg
     def on_R3_down(self, value):
-        self.constValue = value
+        self.lastValueArmX = value;
         print("arm x-neg")
         self.arm.x_neg(value)
 
     # Arm y-pos
     def on_R3_left(self, value):
-        self.constValue = value
+        self.lastValueArmY = value;
         print("arm y-pos")
         self.arm.y_pos(value)
 
     # Arm y-neg
     def on_R3_right(self, value):
-        self.constValue = value
+        self.lastValueArmY = value;
         print("arm y-neg")
         self.arm.y_neg(value)
 
@@ -134,11 +138,13 @@ class BadgerController(Controller):
     '''
     # Open claw
     def on_L2_press(self, value):
+        lastValueOpenClaw = value
         print("claw open")
         self.arm.open_claw(value)
     
     # Close claw
     def on_R2_press(self, value):
+        lastValueCloseClaw = value
         print("claw close")
         self.arm.close_claw(value)
 
@@ -155,6 +161,19 @@ class BadgerController(Controller):
     def on_R1_press(self):
         print("wrist right")
         self.arm.turn_right()
+        
+    #getting the values of the placeholder    
+    def getLastValueArmX(self):
+        return self.lastValueArmX
+    def getLastValueArmY(self):
+        return self.lastValueArmY
+    def getLastValueDriveX(self):
+        return self.lastValueDriveX
+    def getLastValueDriveY(self):
+        return self.lastValueDriveY
+    def getLastValueOpenClaw(self):
+        return self.lastValueOpenClaw
+    def getLastValueCloseClaw(self):
+        return self.lastValueCloseClaw
     
-    def getConstValue():
-        return self.constValue
+        
