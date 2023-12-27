@@ -40,5 +40,6 @@ controller.listen()
 while(True):
     time = time.time()
     floatingTime = float(time)
+    print(floatingTime)
     if(round(floatingTime)%2==0):
         controller.checker()
