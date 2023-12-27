@@ -5,8 +5,8 @@ import time
 
 class MyController(Controller):
     while(True):
-        time =float(time.perf_counter())
-    
+        time =time.perf_counter()
+        time = float(time)
 
    
         print(time)
