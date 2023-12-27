@@ -106,7 +106,7 @@ class BadgerController(Controller):
     def on_R3_up(self, value):
         self.lastValueArmX = value;
         print("arm x-pos")
-        self.arm.x_pos(value)
+       
 
     # Arm x-neg
     def on_R3_down(self, value):
@@ -118,13 +118,12 @@ class BadgerController(Controller):
     def on_R3_left(self, value):
         self.lastValueArmY = value;
         print("arm y-pos")
-        self.arm.y_pos(value)
 
     # Arm y-neg
     def on_R3_right(self, value):
         self.lastValueArmNegY = value;
         print("arm y-neg")
-        self.arm.y_neg(value)
+        
 
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
@@ -157,15 +156,17 @@ class BadgerController(Controller):
     '''
     # Open claw
     def on_L2_press(self, value):
+        value= (value+2**15)
         lastValueOpenClaw = value
         print("claw open")
-        self.arm.open_claw(value)
+        
     
     # Close claw
     def on_R2_press(self, value):
+        value= (value+2**15)
         lastValueCloseClaw = value
         print("claw close")
-        self.arm.close_claw(value)
+        
 
     '''
     ------------------------------ WRIST SYSTEM ------------------------------
@@ -185,31 +186,56 @@ class BadgerController(Controller):
 
     def checker(self):      
             #arms if
-            if( self.lastValueArmX >100):
-                self.on_R3_up(self.lastValueArmX)
-                print("hi")
-            elif(self.lastValueArmNegX < -100):
-                self.on_R3_down(self.lastValueArmNegX)
-            if(self.lastValueArmY >100):   
-                self.on_R3_left(self.lastValueArmY)            
-            elif(self.lastValueArmNegY <-100):
-               self.on_R3_right(self.lastValueArmNegY)
-               
+            if(self.lastValueArmX >100): 
+                self.arm.x_pos(self.lastValueArmX)
+            else:
+                self.lastValueArmX=0
+                         #follow this format for the rest of the functions
+                
+            if(self.lastValueArmNegX < -100):
+                 self.arm.x_neg(self.lastValueArmNegX)
+            else:
+                self.lastValueArmNegX = 0
+                
+            if(self.lastValueArmY >100):
+                self.arm.y_pos(self.lastValueArmY)  
+            else:
+                self.lastValueArmY=0
+                
+
+            if(self.lastValueArmNegY <-100):
+               self.arm.y_neg(self.lastValueDriveNegY)
+            else:
+                self.lastValueArmNegY=0   
+                
             #drive if
             if(self.lastValueDriveX >100):
                 self.on_L3_right(self.lastValueDriveX)
-            elif(self.lastValueDriveNegX < -100):
+            else:
+                    self.lastValueDriveX=0    
+            if(self.lastValueDriveNegX < -100):
                 self.on_L3_left(self.lastValueDriveNegX)
-            if(self.lastValueDriveY >100):               
+            else:
+                 self.lastValueDriveNegX =0
+            if(self.lastValueDriveY >100):   
                 self.on_L3_up(self.lastValueDriveY)
-            elif(self.lastValueDriveNegY <-100):
+            else:
+                    self.lastValueDriveY =0    
+            if(self.lastValueDriveNegY <-100):
                 self.on_L3_down(self.lastValueDriveNegY)
-                
+            else:
+                    self.lastValueDriveNegY =0    
             
             #claw if
-            if(self.lastValueOpenClaw >100):    
+            if(self.lastValueOpenClaw >1000):    
                 self.on_L2_press(self.lastValueOpenClaw)
-            if(self.lastValueCloseClaw >100):    
+            else:
+                    self.lastValueOpenClaw = 0
+                    #do the same for the close
+
+            if(self.lastValueCloseClaw >1000):    
                 self.on_R2_press(self.lastValueCloseClaw)
+            else:
+                self.lastValueCloseClaw=0
     
         
