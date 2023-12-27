@@ -175,8 +175,6 @@ class BadgerController(Controller):
     #getting the values of the placeholder    
 
     def checker(self):
- 
-            clawClose = int(str(clawClose))    
             print("WompWomp value of arm X: " + str(self.lastValueArmX))
             print("WompWomp value of arm Y: " + str(self.lastValueArmY))
             print("WompWomp value of drive X: " + str(self.lastValueDriveX))
