@@ -24,19 +24,19 @@ import time
 class BadgerController(Controller):
 
 
-    def __init__(self, arm, claw, drive, vacuum, wrist, automation,lastValueArmX,lastValueArmY,lastValueDriveX, lastValueDriveY,lastValueOpenClaw,lastValueCloseClaw, **kwargs):
+    def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
         self.claw = claw
         self.drive = drive
         self.vacuum = vacuum
         self.wrist = wrist
         self.automation = automation
-        self.lastValueArmX = lastValueArmX
-        self.lastValueArmY =lastValueArmY
-        self.lastValueDriveX = lastValueDriveX
-        self.lastValueDriveY = lastValueDriveY
-        self.lastValueOpenClaw = lastValueOpenClaw
-        self.lastValueCloseClaw = lastValueCloseClaw
+        self.lastValueArmX = 0
+        self.lastValueArmY =0
+        self.lastValueDriveX = 0
+        self.lastValueDriveY = 0
+        self.lastValueOpenClaw = 0
+        self.lastValueCloseClaw = 0
         
         
         Controller.__init__(self, **kwargs)

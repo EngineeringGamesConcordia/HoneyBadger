@@ -4,11 +4,12 @@ from controller import BadgerController
 import time
 
 class MyController(Controller):
+    bc = BadgerController
     time = time.perf_counter()
     floatTime = float(time)
 
     if round(floatTime) % 2 == 0:
-        BadgerController.checker()
+        bc.checker()
 
         def __init__(self, **kwargs):
             Controller.__init__(self, **kwargs)
