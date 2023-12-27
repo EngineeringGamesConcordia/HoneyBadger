@@ -15,12 +15,12 @@ class MyController(Controller):
         clawClose = BadgerController.getLastValueOpenClaw
         
         if(time%2==0):
-            print("WompWomp value of arm X: "+ armX )
-            print("WompWomp value of arm Y: "+ armY )
-            print("WompWomp value of drive X: "+ driveX )
-            print("WompWomp value of drive Y: "+ driveY )
-            print("WompWomp value of claw open: "+ clawOpen )
-            print("WompWomp value of claw close: "+ clawClose )
+            print("WompWomp value of arm X: "+ str(armX) )
+            print("WompWomp value of arm Y: "+ str(armY) )
+            print("WompWomp value of drive X: "+ str(driveX) )
+            print("WompWomp value of drive Y: "+ str(driveY) )
+            print("WompWomp value of claw open: "+ str(clawOpen) )
+            print("WompWomp value of claw close: "+ str(clawClose) )
             
     def __init__(self, **kwargs):
         Controller.__init__(self, **kwargs)
