@@ -1,4 +1,5 @@
 from pyPS4Controller.controller import Controller
+from controller import BadgerController
 import time
 
 class MyController(Controller):
@@ -6,12 +7,12 @@ class MyController(Controller):
     time = round(time.perf_counter()*1)
     print(time)
     while(True):
-        armX = Controller.getLastValueArmX
-        armY = Controller.getLastValueArmY
-        driveX =Controller.getLastValueDriveX
-        driveY = Controller.getLastValueDriveY
-        clawOpen = Controller.getLastValueOpenClaw
-        clawClose = Controller.getLastValueOpenClaw
+        armX = BadgerController.getLastValueArmX
+        armY = BadgerController.getLastValueArmY
+        driveX =BadgerController.getLastValueDriveX
+        driveY = BadgerController.getLastValueDriveY
+        clawOpen = BadgerController.getLastValueOpenClaw
+        clawClose = BadgerController.getLastValueOpenClaw
         
         if(time%2==0):
             print("WompWomp value of arm X: "+ armX )
