@@ -35,6 +35,7 @@ right_track = dcMotor(5, 6, 13)
 drivesys = Drive(left_track, right_track)
 automation1 = Automation()
 
+ime = time.time()
 def ticks():
     while(True):
         time = time.time()
