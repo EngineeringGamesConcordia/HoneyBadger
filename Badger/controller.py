@@ -22,11 +22,8 @@ import time
 '''
 
 class BadgerController(Controller):
-    constValue =0
-    time = round(time.perf_counter()*1)
-    while(true):
-        if(time%2==0):
-            print("WompWomp value is: "+ constValue)
+        self.constValue =0
+    
     def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
         self.claw = claw
@@ -57,25 +54,25 @@ class BadgerController(Controller):
     '''
     # Drive front
     def on_L3_up(self, value):
-        constValue = value
+        self.constValue = value
         print("move front")
         self.drive.move_front()
 
     # Drive back
     def on_L3_down(self, value):
-        constValue = value
+        self.constValue = value
         print("move back")
         self.drive.move_back()
 
     # Drive left
     def on_L3_left(self, value):
-        constValue = value
+        self.constValue = value
         print("move left")
         self.drive.move_left()
 
     # Drive right
     def on_L3_right(self, value):
-        constValue = value
+        self.constValue = value
         print("move right")
         self.drive.move_right()
 
@@ -84,25 +81,25 @@ class BadgerController(Controller):
     '''
     # Arm x-pos
     def on_R3_up(self, value):
-        constValue = value
+        self.constValue = value
         print("arm x-pos")
         self.arm.x_pos(value)
 
     # Arm x-neg
     def on_R3_down(self, value):
-        constValue = value
+        self.constValue = value
         print("arm x-neg")
         self.arm.x_neg(value)
 
     # Arm y-pos
     def on_R3_left(self, value):
-        constValue = value
+        self.constValue = value
         print("arm y-pos")
         self.arm.y_pos(value)
 
     # Arm y-neg
     def on_R3_right(self, value):
-        constValue = value
+        self.constValue = value
         print("arm y-neg")
         self.arm.y_neg(value)
 
@@ -158,3 +155,6 @@ class BadgerController(Controller):
     def on_R1_press(self):
         print("wrist right")
         self.arm.turn_right()
+    
+    def getConstValue():
+        return self.constValue

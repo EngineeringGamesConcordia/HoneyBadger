@@ -2,6 +2,11 @@ from pyPS4Controller.controller import Controller
 
 class MyController(Controller):
 
+    time = round(time.perf_counter()*1)
+    while(true):
+        value = Controller.getConstValue()
+        if(time%2==0):
+            print("WompWomp value is: "+ constValue)
     def __init__(self, **kwargs):
         Controller.__init__(self, **kwargs)
 
