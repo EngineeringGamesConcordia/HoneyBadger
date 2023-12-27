@@ -10,7 +10,7 @@ class MyController(Controller):
 
    
     print(time)    
-    while(true):
+    while(True):
         time = round(time)
     
     if(time%2==0):
