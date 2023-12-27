@@ -11,6 +11,7 @@ from motors import dcMotor
 from arm import Arm
 from vacuum import Vacuum
 from drive import Drive
+import time
 
 
 def restart():
