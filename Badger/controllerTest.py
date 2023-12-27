@@ -6,15 +6,21 @@ class MyController(Controller):
     time = round(time.perf_counter()*1)
     print(time)
     while(True):
-        armX = Controller.getLastValueArmX()
-        armY = Controller.getLastValueArmY()
-        driveX =Controller.getLastValueDriveX()
-        driveY = Controller.getLastValueDriveY()
-        clawOpen = Controller.getLastValueOpenClaw()
-        clawClose = Controller.getLastValueOpenClaw()
+        armX = Controller.getLastValueArmX
+        armY = Controller.getLastValueArmY
+        driveX =Controller.getLastValueDriveX
+        driveY = Controller.getLastValueDriveY
+        clawOpen = Controller.getLastValueOpenClaw
+        clawClose = Controller.getLastValueOpenClaw
         
         if(time%2==0):
-            print("WompWomp value is: "+ armX )
+            print("WompWomp value of arm X: "+ armX )
+            print("WompWomp value of arm Y: "+ armY )
+            print("WompWomp value of drive X: "+ driveX )
+            print("WompWomp value of drive Y: "+ driveY )
+            print("WompWomp value of claw open: "+ clawOpen )
+            print("WompWomp value of claw close: "+ clawClose )
+            
     def __init__(self, **kwargs):
         Controller.__init__(self, **kwargs)
 
