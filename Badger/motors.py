@@ -4,7 +4,6 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 class dcMotor:
-    GPIO.setmode(GPIO.BOARD)
 
     def __init__(self, in1, in2, pwmPin):
         self.in1 = in1
@@ -16,26 +15,22 @@ class dcMotor:
 
     def cw(self):
         GPIO.output(self.in1, GPIO.HIGH)
-        sleep(5)
+        sleep(0.01)
         GPIO.output(self.in2, GPIO.LOW)
-        sleep(1)
-        GPIO.cleanup()
+        sleep(0.01)
 
     def ccw(self):
         GPIO.output(self.in1, GPIO.LOW)
-        sleep(5)
+        sleep(0.01)
         GPIO.output(self.in2, GPIO.HIGH)
-        sleep(1)
-        GPIO.cleanup()
+        sleep(0.01)
 
     def stop(self):
         GPIO.output(self.in1, GPIO.LOW)
         GPIO.output(self.in2, GPIO.LOW)
-        GPIO.cleanup()
 
 
 class stepperMotor:
-    GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
 
     def __init__(self, pin1, pin2, pin3, pin4):
@@ -78,4 +73,3 @@ class stepperMotor:
                 GPIO.output(self.pin4, seq[halfstep][3])
                 sleep(1)
         
-        GPIO.cleanup()

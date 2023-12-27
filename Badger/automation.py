@@ -3,7 +3,6 @@ from drive import Drive
 from vacuum import Vacuum
 from motors import dcMotor
 from motors import stepperMotor
-from controller import BadgerController
 from time import sleep
 
 class Automation:

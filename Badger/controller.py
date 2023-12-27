@@ -25,15 +25,15 @@ from motors import stepperMotor
 '''
 
 class BadgerController(Controller):
-    def __init__(self, arm, claw, drive, vacuum, wrist, automation, interface, ds4drv):
+    def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
         self.claw = claw
         self.drive = drive
         self.vacuum = vacuum
         self.wrist = wrist
         self.automation = automation
-
-        Controller.__init__(self, interface, ds4drv)
+        
+        Controller.__init__(self, **kwargs)
 
     '''
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
@@ -127,12 +127,12 @@ class BadgerController(Controller):
     # Open claw
     def on_L2_press(self, value):
         print("claw open")
-        self.claw.open_claw(value)
+        self.arm.open_claw(value)
     
     # Close claw
     def on_R2_press(self, value):
         print("claw close")
-        self.claw.close_claw(value)
+        self.arm.close_claw(value)
 
     '''
     ------------------------------ WRIST SYSTEM ------------------------------
@@ -141,9 +141,9 @@ class BadgerController(Controller):
     # Wrist Turn Left
     def on_L1_press(self):
         print("wrist left")
-        self.wrist.turn_left()
+        self.arm.turn_left()
 
     # Wrist Turn Right
     def on_R1_press(self):
         print("wrist right")
-        self.wrist.turn_right()
+        self.arm.turn_right()

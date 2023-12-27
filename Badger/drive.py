@@ -7,7 +7,7 @@ CONTROLLER_SCALE = 2**15
 MOTOR_SCALE = 2**16
 
 class Drive:
-    def __int__(self, l_track, r_track):
+    def __init__(self, l_track, r_track):
         print("Init drive")
         self.l_track = l_track
         self.r_track = r_track
