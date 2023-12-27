@@ -13,24 +13,24 @@ class MyController(Controller):
     
         if(round(time)%2==0):
             armX = (BadgerController.getLastValueArmX)
-            armX = int(str(armX))
+            armX = int(str(armX), 16)
         
             armY = (BadgerController.getLastValueArmY) 
-            armY = int(str(armY))
+            armY = int(str(armY), 16)
         
             driveX = (BadgerController.getLastValueDriveX)
-            driveX = int(str(driveX))
+            driveX = int(str(driveX), 16)
 
             driveY = (BadgerController.getLastValueDriveY)
-            driveY = int(str(driveY))
+            driveY = int(str(driveY), 16)
        
         
             clawOpen = (BadgerController.getLastValueOpenClaw) 
-            clawOpen = int(str(clawOpen))
+            clawOpen = int(str(clawOpen), 16)
     
         
             clawClose = (BadgerController.getLastValueOpenClaw) 
-            clawClose = int(str(clawClose))    
+            clawClose = int(str(clawClose), 16)    
         
             print("WompWomp value of arm X: "+ str(armX) )
             print("WompWomp value of arm Y: "+ str(armY) )
