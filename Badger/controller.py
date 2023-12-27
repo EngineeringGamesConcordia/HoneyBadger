@@ -173,17 +173,15 @@ class BadgerController(Controller):
         self.arm.turn_right()
         
     #getting the values of the placeholder    
-    def getLastValueArmX(self):
-        return self.lastValueArmX
-    def getLastValueArmY(self):
-        return self.lastValueArmY
-    def getLastValueDriveX(self):
-        return self.lastValueDriveX
-    def getLastValueDriveY(self):
-        return self.lastValueDriveY
-    def getLastValueOpenClaw(self):
-        return self.lastValueOpenClaw
-    def getLastValueCloseClaw(self):
-        return self.lastValueCloseClaw
+
+    def checker(self):
+ 
+            clawClose = int(str(clawClose))    
+            print("WompWomp value of arm X: " + str(self.lastValueArmX))
+            print("WompWomp value of arm Y: " + str(self.lastValueArmY))
+            print("WompWomp value of drive X: " + str(self.lastValueDriveX))
+            print("WompWomp value of drive Y: " + str(self.lastValueDriveY))
+            print("WompWomp value of claw open: " + str(self.lastValueOpenClaw))
+            print("WompWomp value of claw close: " + str(self. lastValueCloseClaw))
     
         
