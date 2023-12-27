@@ -8,21 +8,21 @@ class MyController(Controller):
     print(time)
     while(True):
         armX = (BadgerController.getLastValueArmX) 
-        armX = armX *1
+        
         
         armY = (BadgerController.getLastValueArmY) 
-        armY = armY *1
+       
         
         driveX = (BadgerController.getLastValueDriveX)
-        driveX = driveX *1
+        
         driveY = (BadgerController.getLastValueDriveY)
-        driveY = driveY *1
+       
         
         clawOpen = (BadgerController.getLastValueOpenClaw) 
-        clawOpen = clawOpen *1
+    
         
         clawClose = (BadgerController.getLastValueOpenClaw) 
-        clawClose =clawClose *1
+   
         
         if(time%2==0):
             print("WompWomp value of arm X: "+ str(armX) )
