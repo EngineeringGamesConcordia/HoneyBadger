@@ -39,7 +39,6 @@ def ticks():
     while(True):
         times = time.time()
         floatingTime = float(times)
-        print(floatingTime)
         if(round(floatingTime)%2==0):
             print("i was here")
             controller.checker()
