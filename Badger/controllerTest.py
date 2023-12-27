@@ -4,7 +4,7 @@ import time
 
 class MyController(Controller):
 
-    time = round(time.perf_counter()*1)
+    time = time.perf_counter()
 
 
    
@@ -36,7 +36,7 @@ class MyController(Controller):
         print("WompWomp value of drive Y: "+ str(driveY) )
         print("WompWomp value of claw open: "+ str(clawOpen) )
         print("WompWomp value of claw close: "+ str(clawClose) )
-            
+    print(time)        
     def __init__(self, **kwargs):
         Controller.__init__(self, **kwargs)
 
