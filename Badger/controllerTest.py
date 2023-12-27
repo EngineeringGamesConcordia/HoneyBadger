@@ -9,29 +9,29 @@ class MyController(Controller):
     while(True):
         armX = (BadgerController.getLastValueArmX)
         armX =str(armX)
-        armX = int(armX,16)
+        armX = int(armX,0)
         
         armY = (BadgerController.getLastValueArmY) 
         armY = str(armY)
-        armY = int(armY,16)
+        armY = int(armY,0)
         
         driveX = (BadgerController.getLastValueDriveX)
         driveX = str(driveX)
-        driveX = int(driveX,16)
+        driveX = int(driveX,0)
 
         driveY = (BadgerController.getLastValueDriveY)
         driveY = str(driveY)
-        driveY = int(driveY,16)
+        driveY = int(driveY,0)
        
         
         clawOpen = (BadgerController.getLastValueOpenClaw) 
         clawOpen = str(clawOpen)
-        clawOpen = int(clawOpen, 16)
+        clawOpen = int(clawOpen, 0)
     
         
         clawClose = (BadgerController.getLastValueOpenClaw) 
         clawClose = str(clawClose)
-        clawClose = int(clawClose,16)
+        clawClose = int(clawClose,0)
    
         
         if(time%2==0):
