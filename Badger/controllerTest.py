@@ -5,13 +5,13 @@ import time
 
 class MyController(Controller):
 
-    time =time.perf_counter()
+    time =time.percounter()
 
 
    
     print(time)
     
-    if(time%2==0):
+    if(round(time)%2==0):
         armX = (BadgerController.getLastValueArmX)
         armX = int(str(armX), 16)
         
