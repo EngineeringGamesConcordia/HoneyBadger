@@ -38,6 +38,7 @@ automation1 = Automation()
 time = time.time()
 def ticks():
     while(True):
+        time = "kill me"
         time = time.time()
         floatingTime = float(time)
         print(floatingTime)
