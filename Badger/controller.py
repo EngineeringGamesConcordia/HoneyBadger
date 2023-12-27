@@ -23,25 +23,35 @@ import time
 
 class BadgerController(Controller):
 
-    lastValueArmX = 0 
-    lastValueArmY = 0
-    lastValueDriveX = 0
-    lastValueDriveY = 0
-    lastValueOpenClaw = 0
-    lastValueCloseClaw = 0
-    def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
+
+    def __init__(self, arm, claw, drive, vacuum, wrist, automation,lastValueArmX,lastValueArmY,lastValueDriveX, lastValueDriveY,lastValueOpenClaw,lastValueCloseClaw, **kwargs):
         self.arm = arm
         self.claw = claw
         self.drive = drive
         self.vacuum = vacuum
         self.wrist = wrist
         self.automation = automation
+        self.lastValueArmX = lastValueArmX
+        self.lastValueArmY =lastValueArmY
+        self.lastValueDriveX = lastValueDriveX
+        self.lastValueDriveY = lastValueDriveY
+        self.lastValueOpenClaw = lastValueOpenClaw
+        self.lastValueCloseClaw = lastValueCloseClaw
+        
         
         Controller.__init__(self, **kwargs)
+
+
 
     '''
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
+    lastValueArmX = 0 
+    lastValueArmY = 0
+    lastValueDriveX = 0
+    lastValueDriveY = 0
+    lastValueOpenClaw = 0
+    lastValueCloseClaw = 0
     def on_options_press(self):
         print("start automatic control")
         self.automation.start()
