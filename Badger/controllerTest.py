@@ -6,12 +6,12 @@ import time
 class MyController(Controller):
     while(True):
         time =time.perf_counter()
-        time = float(time)
+        floatTime = float(time)
 
    
         print(time)
     
-        if(round(time)%2==0):
+        if(round(floatTime)%2==0):
             armX = (BadgerController.getLastValueArmX)
             armX = int(str(armX), 16)
         
