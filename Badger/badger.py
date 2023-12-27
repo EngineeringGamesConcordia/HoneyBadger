@@ -11,7 +11,7 @@ from motors import dcMotor
 from arm import Arm
 from vacuum import Vacuum
 from drive import Drive
-import time
+import time     
 
 
 def restart():
@@ -36,7 +36,13 @@ drivesys = Drive(left_track, right_track)
 automation1 = Automation()
 
 
+
 controller = BadgerController(arm1, arm1.claw_servo, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
+t1 = threading.Thread(target=threadFunction, args=(controller,))
+t1.start() 
+t1.join()
+
+
 while(True):
     time = time.time()
     floatingTime = float(time)
