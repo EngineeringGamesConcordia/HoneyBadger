@@ -8,7 +8,7 @@ class MyController(Controller):
 
 
    
-        
+    print(time)    
     if(time%2==0):
         armX = (BadgerController.getLastValueArmX)
         armX = int(str(armX))
