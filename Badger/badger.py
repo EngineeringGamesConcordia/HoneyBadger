@@ -36,10 +36,10 @@ automation1 = Automation()
 
 
 controller = BadgerController(arm1, arm1.claw_servo, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
-controller.listen()
 while(True):
     time = time.time()
     floatingTime = float(time)
     print(floatingTime)
     if(round(floatingTime)%2==0):
+        controller.listen()
         controller.checker()
