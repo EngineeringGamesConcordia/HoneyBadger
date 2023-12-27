@@ -1,10 +1,11 @@
+from decimal import ROUND_DOWN, ROUND_FLOOR
 from pyPS4Controller.controller import Controller
 from controller import BadgerController
 import time
 
 class MyController(Controller):
 
-    time = time.perf_counter()
+    time = ROUND_FLOOR(time.perf_counter())
 
 
    
