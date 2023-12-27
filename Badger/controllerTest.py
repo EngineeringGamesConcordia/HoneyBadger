@@ -5,7 +5,7 @@ import time
 
 class MyController(Controller):
 
-    time = ROUND_FLOOR(time.perf_counter())
+    time = round(int(time.perf_counter()))
 
 
    
