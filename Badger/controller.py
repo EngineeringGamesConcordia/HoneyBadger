@@ -210,6 +210,6 @@ class BadgerController(Controller):
             if(self.lastValueOpenClaw >100):    
                 print("WompWomp value of claw open: " + str(self.lastValueOpenClaw))
             if(self.lastValueCloseClaw >100):    
-            print("WompWomp value of claw close: " + str(self. lastValueCloseClaw))
+                print("WompWomp value of claw close: " + str(self. lastValueCloseClaw))
     
         
