@@ -187,6 +187,7 @@ class BadgerController(Controller):
             #arms if
             if( self.lastValueArmX >100):
                 self.on_R3_up(self.lastValueArmX)
+                print("hi")
             elif(self.lastValueArmNegX < -100):
                 self.on_R3_down(self.lastValueArmNegX)
             if(self.lastValueArmY >100):   
