@@ -7,24 +7,30 @@ class MyController(Controller):
     time = round(time.perf_counter()*1)
     print(time)
     while(True):
-        armX = (BadgerController.getLastValueArmX) 
+        armX = (BadgerController.getLastValueArmX)
+        armX =str(armX)
         armX = int(armX,16)
         
         armY = (BadgerController.getLastValueArmY) 
+        armY = str(armY)
         armY = int(armY,16)
         
         driveX = (BadgerController.getLastValueDriveX)
+        driveX = str(driveX)
         driveX = int(driveX,16)
 
         driveY = (BadgerController.getLastValueDriveY)
+        driveY = str(driveY)
         driveY = int(driveY,16)
        
         
         clawOpen = (BadgerController.getLastValueOpenClaw) 
+        clawOpen = str(clawOpen)
         clawOpen = int(clawOpen, 16)
     
         
         clawClose = (BadgerController.getLastValueOpenClaw) 
+        clawClose = str(clawClose)
         clawClose = int(clawClose,16)
    
         
