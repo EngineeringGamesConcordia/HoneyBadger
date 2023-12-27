@@ -5,7 +5,7 @@ import time
 
 class MyController(Controller):
 
-    time =int(time.perf_counter())
+    time =time.perf_counter()
 
 
    
