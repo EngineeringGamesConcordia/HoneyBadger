@@ -41,6 +41,7 @@ def ticks():
         floatingTime = float(times)
         print(floatingTime)
         if(round(floatingTime)%2==0):
+            print("i was here")
             controller.listen()
             controller.checker()
 
