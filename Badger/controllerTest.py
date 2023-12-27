@@ -7,12 +7,12 @@ class MyController(Controller):
     time = round(time.perf_counter()*1)
     print(time)
     while(True):
-        armX = BadgerController.getLastValueArmX *1
-        armY = BadgerController.getLastValueArmY * 1
-        driveX =BadgerController.getLastValueDriveX * 1
-        driveY = BadgerController.getLastValueDriveY * 1
-        clawOpen = BadgerController.getLastValueOpenClaw * 1
-        clawClose = BadgerController.getLastValueOpenClaw * 1
+        armX = (BadgerController.getLastValueArmX) *1
+        armY = (BadgerController.getLastValueArmY) * 1
+        driveX = (BadgerController.getLastValueDriveX) * 1
+        driveY = (BadgerController.getLastValueDriveY) * 1
+        clawOpen = (BadgerController.getLastValueOpenClaw) * 1
+        clawClose = (BadgerController.getLastValueOpenClaw) * 1
         
         if(time%2==0):
             print("WompWomp value of arm X: "+ str(armX) )
