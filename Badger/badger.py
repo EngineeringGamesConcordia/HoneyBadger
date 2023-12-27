@@ -49,7 +49,7 @@ t1 = threading.Thread(target=threadFunction, args=(controller,))
 t2 =  threading.Thread(target=ticks)
 
 t1.start() 
-t2.stat()
+t2.start()
 t1.join()
 t2.join()
 
