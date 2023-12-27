@@ -23,9 +23,10 @@ import time
 
 class BadgerController(Controller):
     constValue =0
-    time = round(time.perf_counter())
-    if(time%2):
-        print(constValue)
+    time = round(time.perf_counter()*1)
+    while(true):
+        if(time%2==0):
+            print("WompWomp value is: "+ constValue)
     def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
         self.claw = claw
