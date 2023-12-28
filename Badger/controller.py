@@ -4,7 +4,7 @@ from arm import Arm
 from drive import Drive
 from vacuum import Vacuum
 from automation import Automation
-from motors import dcMotor
+from motors import dcMotorBTS
 from motors import stepperMotor
 import time
 
