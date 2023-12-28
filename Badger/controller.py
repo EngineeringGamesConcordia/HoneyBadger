@@ -1,5 +1,4 @@
 from nntplib import decode_header
-from sre_parse import State
 from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
@@ -151,6 +150,7 @@ class BadgerController(Controller):
     def on_R3_right(self, value):
         self.lastValueArmX = value;
         print("arm x-pos")
+        
        
     # Arm x-neg
     def on_R3_left(self, value):
