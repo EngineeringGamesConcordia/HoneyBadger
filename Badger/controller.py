@@ -193,6 +193,10 @@ class BadgerController(Controller):
     def on_L3_right(self, value):
         self.lastValueWristRight = value
         print("wrist right")
+        
+    def on_L3_x_at_rest(self):
+        self.lastValueWristRight = 0
+        self.lastValueWristLeft = 0
    
     '''
     ------------------------------ WRIST U+D SYSTEM ------------------------------TO BE FIXED
@@ -207,6 +211,10 @@ class BadgerController(Controller):
     def on_L3_down(self, value):
         self.lastValueWristDown = value
         print("wrist down")
+        
+    def on_L3_y_at_rest(self):
+        self.lastValueWristDown = 0
+        self.lastValueWristUp = 0
         
     #getting the values of the placeholder    
 
