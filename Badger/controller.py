@@ -119,13 +119,13 @@ class BadgerController(Controller):
         self.lastValueArmNegX = 0
         
     # Arm y-pos
-    def on_R3_up(self, value):
+    def on_R3_down(self, value):
         self.lastValueArmY = value;
         print("arm y-pos")
         print("Value = " + str(value))
 
     # Arm y-neg
-    def on_R3_down(self, value):
+    def on_R3_up(self, value):
         self.lastValueArmNegY = value;
         print("arm y-neg")
         print("Value = " + str(value))
@@ -184,7 +184,7 @@ class BadgerController(Controller):
 
     # Wrist Turn Left
     def on_L3_left(self, value):
-        if (value > self.wristdeadzone):
+        if (value < -self.wristdeadzone):
             print("wrist left")
             self.arm.turn_left()
 
@@ -200,7 +200,7 @@ class BadgerController(Controller):
 
     # Wrist Go Up
     def on_L3_up(self, value):
-        if (value > self.wristdeadzone):
+        if (value < -self.wristdeadzone):
             print("wrist up")
             self.arm.go_up()
 
