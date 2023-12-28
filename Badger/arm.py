@@ -1,4 +1,5 @@
-from numpy import *
+from numpy import * as np
+import tinyik
 from motors import stepperMotor
 import RPi.GPIO as GPIO
 from time import sleep
@@ -16,33 +17,15 @@ py = 0
 
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(px, py):
-    # lengths of links in cm
-    link_bot = 22
-    link_mid = 4.2
-    link_top = 22
 
-    phi = 180
-    phi = deg2rad(phi)
+    #lengths of the arm are 22
+    arm = tinyik.Actuator(['z', [22., 0., 0.], 'z', [22., 0., 0.]])
 
-    # equations for inverse kinematics
-    wx = px - link_top * cos(phi)
-    wy = py - link_top * sin(phi)
-
-    delta = wx ** 2 + wy ** 2
-    c2 = (delta - link_bot ** 2 - link_mid ** 2) / (2 * link_bot * link_mid)
-    s2 = sqrt(1 - c2 ** 2)  # elbow down
-    theta_2 = arctan2(s2, c2)
-
-    s1 = ((link_bot + link_mid * c2) * wy - link_mid * s2 * wx) / delta
-    c1 = ((link_bot + link_mid * c2) * wx + link_mid * s2 * wy) / delta
-    theta_1 = arctan2(s1, c1)
-    theta_3 = phi - theta_1 - theta_2
-
-    # print('theta_1: ', rad2deg(theta_1))
-    # print('theta_2: ', rad2deg(theta_2))
-    # print('theta_3: ', rad2deg(theta_3))
-
-    return theta_1, theta_2, theta_3
+    ikangles = [theta_1, theta_2]
+    arm.ee = [px, py]
+    ikangles = np.round(np.rad2deg(arm.angles))
+    
+    return theta_1, theta_2
 
 
 class Arm:
@@ -87,7 +70,7 @@ class Arm:
     # ------------------------------ ROTATIONAL MOVEMENTS
     def turn_left(self):
         print("> wrist rotating left")
-        self.wrist_r_servo = self.wrist_r_servo + self.moveVal
+        self.wrist_r_servo = self.wrist_r_servo - self.moveVal
         self.kit.servo[2].angle = self.wrist_r_servo
 
     def turn_right(self):
@@ -95,46 +78,52 @@ class Arm:
         self.wrist_r_servo = self.wrist_r_servo + self.moveVal
         self.kit.servo[2].angle = self.wrist_r_servo
 
+    # ------------------------------ ROTATIONAL MOVEMENTS
+    def go_up(self):
+        print("> wrist rotating left")
+        self.wrist_ud_servo = self.wrist_ud_servo - self.moveVal
+        self.kit.servo[3].angle = self.wrist_ud_servo
+
+    def go_down(self):
+        print("> wrist rotating right")
+        self.wrist_ud_servo = self.wrist_ud_servo + self.moveVal
+        self.kit.servo[3].angle = self.wrist_ud_servo
 
     # ------------------------------ Move x-pos
     def x_pos(self, val):
         print("> arm x_pos")
         val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
         self.px = self.px + val;
-        theta_1, theta_2, theta_3 = calculate_inverse_kinematic(self.px, 0)
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-        self.kit.servo[3].angle = theta_3
 
     # ------------------------------ Move x-neg
     def x_neg(self, val):
         print("> arm x_neg")
         val = -KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
         self.px = self.px + val;
-        theta_1, theta_2, theta_3 = calculate_inverse_kinematic(self.px, 0)
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-        self.kit.servo[3].angle = theta_3
 
     # ------------------------------ Move y-pos
     def y_pos(self, val):
         print("> arm y_pos")
         val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
         self.py = self.py + val;
-        theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, self.py)
+        theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-        self.kit.servo[3].angle = theta_3
 
     # ------------------------------ Move y-neg
     def y_neg(self, val):
         print("> arm y_neg")
         val = -KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
         self.py = self.py + val;
-        theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, self.py)
+        theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-        self.kit.servo[3].angle = theta_3
 
     # ------------------------------ STEPPER Set up
 

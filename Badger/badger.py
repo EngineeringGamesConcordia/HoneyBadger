@@ -27,15 +27,12 @@ GPIO.setmode(GPIO.BCM)
 
 #TODO test and fix parameters
 kit = ServoKit(channels=16)
-angles = [80,80,80,0,20]
-base_stepper = stepperMotor(25, 8, 7, 12)
+angles = [80,80,40,80,20]
+#base_stepper = stepperMotor(25, 8, 7, 12)
 arm1 = Arm(base_stepper, kit, angles)
-#vacuum1 = Vacuum(10, 9, 11)
 vacuum1 = Vacuum(22)
-#left_track = dcMotor(16, 20, 21)
 left_track = dcMotorBTS(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction
 right_track = dcMotorBTS(13, 19)
-#right_track = dcMotor(5, 6, 13)
 drivesys = Drive(left_track, right_track)
 automation1 = Automation()
 #send the value from the contrller to the arm
