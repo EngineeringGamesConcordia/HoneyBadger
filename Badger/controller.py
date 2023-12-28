@@ -122,13 +122,11 @@ class BadgerController(Controller):
     def on_R3_down(self, value):
         self.lastValueArmY = value;
         print("arm y-pos")
-        print("Value = " + str(value))
 
     # Arm y-neg
     def on_R3_up(self, value):
         self.lastValueArmNegY = value;
         print("arm y-neg")
-        print("Value = " + str(value))
         
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
@@ -203,12 +201,14 @@ class BadgerController(Controller):
         if (value < -self.wristdeadzone):
             print("wrist up")
             self.arm.go_up()
+            print("Value = " + str(value))
 
     # Wrist Go Down
     def on_L3_down(self, value):
         if (value > self.wristdeadzone):
             print("wrist down")
             self.arm.go_down()
+            print("Value = " + str(value))
         
     #getting the values of the placeholder    
 

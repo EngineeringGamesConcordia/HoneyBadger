@@ -115,7 +115,7 @@ class Arm:
     def y_pos(self, val):
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.py = self.py + val;
+        self.py = self.py - val;
         print ("py = " + str(self.py))
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -126,7 +126,7 @@ class Arm:
     def y_neg(self, val):
         print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.py = self.py - val;
+        self.py = self.py + val;
         print ("py = " + str(self.py))
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
