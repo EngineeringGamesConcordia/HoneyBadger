@@ -46,7 +46,7 @@ class Arm:
         self.claw_servo = angles[4]
         self.kit = kit
         self.base_stepper = base_stepper
-        self.kit.servo[0].angle = angles[0]
+        self.kit.servo[0].angle = angles[0] 
         self.kit.servo[1].angle = angles[1]
         self.kit.servo[2].angle = angles[2]
         self.kit.servo[3].angle = angles[3]
@@ -66,7 +66,24 @@ class Arm:
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.claw_servo = self.claw_servo - val
         self.kit.servo[4].angle = self.claw_servo
-
+    # ------------------------------ SERVO0 MOVEMENTS
+    def serv0_turn_left(self):
+        print("> servo0 rotating left")
+        self.base_servo = self.base_servo - self.moveVal
+        self.kit.servo[0].angle = self.base_servo
+    def serv0_turn_right(self):
+        print("> servo0 rotating right")
+        self.base_servo = self.base_servo + self.moveVal
+        self.kit.servo[0].angle = self.base_servo
+    # ------------------------------ SERVO1 MOVEMENTS
+    def serv1_turn_left(self):
+        print("> servo1 rotating left")
+        self.elbow_servo = self.elbow_servo - self.moveVal
+        self.kit.servo[1].angle = self.elbow_servo
+    def serv1_turn_right(self):
+        print("> servo1 rotating right")
+        self.elbow_servo = self.elbow_servo + self.moveVal
+        self.kit.servo[1].angle = self.elbow_servo   
     # ------------------------------ ROTATIONAL MOVEMENTS
     def turn_left(self):
         print("> wrist rotating left")
