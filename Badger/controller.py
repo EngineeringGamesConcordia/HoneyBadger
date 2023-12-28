@@ -25,6 +25,7 @@ import time
 class BadgerController(Controller):
     clawDeadZone = 10000
     deadzone = 2000
+    wristdeadzone = 30000
 
     def __init__(self, arm, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
@@ -176,32 +177,36 @@ class BadgerController(Controller):
         self.lastValueCloseClaw = 0
 
     '''
-    ------------------------------ WRIST L+R SYSTEM ------------------------------
+    ------------------------------ WRIST L+R SYSTEM ------------------------------TO BE FIXED
     '''
 
     # Wrist Turn Left
     def on_L3_left(self, value):
-        print("wrist left")
-        self.arm.turn_left()
+        if (value > self.wristdeadzone)
+            print("wrist left")
+            self.arm.turn_left()
 
     # Wrist Turn Right
     def on_L3_right(self, value):
-        print("wrist right")
-        self.arm.turn_right()
+        if (value > self.wristdeadzone)
+            print("wrist right")
+            self.arm.turn_right()
    
     '''
-    ------------------------------ WRIST U+D SYSTEM ------------------------------
+    ------------------------------ WRIST U+D SYSTEM ------------------------------TO BE FIXED
     '''
 
     # Wrist Go Up
     def on_L3_up(self, value):
-        print("wrist up")
-        self.arm.go_up()
+        if (value > self.wristdeadzone)
+            print("wrist up")
+            self.arm.go_up()
 
     # Wrist Go Down
     def on_L3_down(self, value):
-        print("wrist down")
-        self.arm.go_down()
+        if (value > self.wristdeadzone)
+            print("wrist down")
+            self.arm.go_down()
         
     #getting the values of the placeholder    
 
