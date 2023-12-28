@@ -14,16 +14,12 @@ class dcMotor:
         
 
     def cw(self):
+        GPIO.output(self.bpwm, GPIO.LOW)
         GPIO.output(self.fpwm, GPIO.HIGH)
-        sleep(0.01)
-        GPIO.output(self.fpwm, GPIO.LOW)
-        sleep(0.01)
 
     def ccw(self):
+        GPIO.output(self.fpwm, GPIO.LOW)
         GPIO.output(self.bpwm, GPIO.HIGH)
-        sleep(0.01)
-        GPIO.output(self.bpwm, GPIO.LOW)
-        sleep(0.01)
 
     def stop(self):
         GPIO.output(self.fpwm, GPIO.LOW)
