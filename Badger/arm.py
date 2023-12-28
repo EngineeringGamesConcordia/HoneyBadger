@@ -167,7 +167,7 @@ class Arm:
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
         theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        while (cost > 1.5):
+        if (cost > 0.75):
             val_new = val * (KINEMATIC_SCALE_SLOW / cost)
             val_new = val - val_new
             self.px = self.px - val_new
@@ -183,7 +183,7 @@ class Arm:
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px - val;
         theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        while (cost > 1.5):
+        if (cost > 0.75):
             val_new = val * (KINEMATIC_SCALE_SLOW / cost)
             val_new = val - val_new
             self.px = self.px + val_new
@@ -199,7 +199,7 @@ class Arm:
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
         theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        while (cost > 1.5):
+        if (cost > 0.75):
             val_new = val * (KINEMATIC_SCALE_SLOW / cost)
             val_new = val - val_new
             self.py = self.py + val_new
@@ -215,7 +215,7 @@ class Arm:
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
         theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        while (cost > 1.5):
+        if (cost > 0.75):
             val_new = val * (KINEMATIC_SCALE_SLOW / cost)
             val_new = val - val_new
             self.py = self.py - val_new
