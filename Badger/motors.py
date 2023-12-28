@@ -3,7 +3,7 @@ import busio
 import RPi.GPIO as GPIO
 from time import sleep
 
-class dcMotorBTS:
+class dcMotor:
     def __init__(self, fpwm, bpwm):
         self.fpwm = fpwm
         self.bpwm = bpwm
