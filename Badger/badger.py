@@ -28,7 +28,7 @@ GPIO.setmode(GPIO.BCM)
 #TODO test and fix parameters
 kit = ServoKit(channels=16)
 angles = [80,80,40,80,20]
-base_stepper = stepperMotor()#to be fixed later
+base_stepper = stepperMotor(19,26,.0108)#dir, step, speed
 arm1 = Arm(base_stepper, kit, angles)
 vacuum1 = Vacuum(22)
 left_track = dcMotor(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction

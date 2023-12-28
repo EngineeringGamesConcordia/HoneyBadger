@@ -28,14 +28,26 @@ class dcMotor:
 
         #code below to get rid of
 class stepperMotor:
-    DIR = 19   # Direction GPIO Pin
-    STEP = 26  # Step GPIO Pin
-    CW = 1     # Clockwise Rotation
-    CCW = 0    # Counterclockwise Rotation
-    SPR = 60   # Steps per Revolution (360 / 7.5)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(DIR, GPIO.OUT)
-    GPIO.setup(STEP, GPIO.OUT)
-    step_count = SPR
-    delay = .0108
+    def __init__(self, dir, step, speed): #should be 19, 26,.0108
+        self.dir = dir
+        self.step = step
+        self.delay = speed #.0208 #speed
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.dir, GPIO.OUT)
+        GPIO.setup(self.step, GPIO.OUT)
+    def cw(self):
+        #could have a small for loop which will make it do a few movement
+        GPIO.output(self.dir, 1)
+        GPIO.output(self.step, GPIO.HIGH)
+        sleep(self.delay)
+        GPIO.output(self.step, GPIO.LOW)
+        sleep(self.delay)
+        
+    def ccw(self):
+        GPIO.output(self.dir, 0)
+        GPIO.output(self.step, GPIO.HIGH)
+        sleep(self.delay)
+        GPIO.output(self.step, GPIO.LOW)
+        sleep(self.delay)
+    #no need for stop function has works by step
         
