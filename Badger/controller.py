@@ -127,9 +127,9 @@ class BadgerController(Controller):
         self.lastValueArmNegY = value;
         print("arm y-neg")
         
-    #def on_R3_y_at_rest(self):
-     #   self.lastValueArmY = 0
-      #  self.lastValueArmNegY = 0
+    def on_R3_y_at_rest(self):
+        self.lastValueArmY = 0
+        self.lastValueArmNegY = 0
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
     '''
@@ -178,33 +178,33 @@ class BadgerController(Controller):
     '''
     ------------------------------ WRIST L+R SYSTEM ------------------------------
     '''
-    '''
+
     # Wrist Turn Left
-    def on_left_arrow_press(self):
+    def on_L3_left(self):
         print("wrist left")
         self.arm.turn_left()
 
     # Wrist Turn Right
-    def on_right_arrow_press(self):
+    def on_L3_right(self):
         print("wrist right")
         self.arm.turn_right()
-    '''    
+   
     '''
     ------------------------------ WRIST U+D SYSTEM ------------------------------
     '''
-    '''
+
     # Wrist Go Up
-    def on_up_arrow_press(self):
+    def on_L3_up(self):
         print("wrist up")
         self.arm.go_up()
 
     # Wrist Go Down
-    def on_down_arrow_press(self):
+    def on_L3_down(self):
         print("wrist down")
         self.arm.go_down()
         
     #getting the values of the placeholder    
-    '''
+
     '''
     ------------------------------TICK SYSTEM ------------------------------
     '''   
