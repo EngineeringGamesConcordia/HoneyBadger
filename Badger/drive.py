@@ -1,5 +1,5 @@
 from math import ceil
-from motors import dcMotor
+from motors import dcMotorBTS
 
 # d-pad will go direct lines at 1/4 speed
 # normal control and d-pad control will not work at the same time
