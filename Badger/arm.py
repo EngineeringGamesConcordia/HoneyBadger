@@ -16,7 +16,7 @@ px = 22
 py = 22
 l1 = 22
 l2 = 22
-initial_theta1, initial_theta2 = 80, 80
+initial_theta1, initial_theta2 = np.deg2rad(80), np.deg2rad(80)
 
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target):
