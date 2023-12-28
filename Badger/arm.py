@@ -3,6 +3,7 @@ import tinyik
 from motors import stepperMotor
 import RPi.GPIO as GPIO
 from time import sleep
+from adafruit_servokit import ServoKit
 # reference: https://github.com/aakieu/3-dof-planar/blob/master/InverseKinematics.py
 
 CONTROLLER_SCALE = 2**15
@@ -14,7 +15,7 @@ KINEMATIC_SCALE = 2/(2**18)
 moveVal = 0.1
 l1 = 22
 l2 = 21.16
-initial_theta1, initial_theta2 = np.deg2rad(self.kit.servo[0].angle), np.deg2rad(self.kit.servo[1].angle)
+initial_theta1, initial_theta2 = np.deg2rad(kit.servo[0].angle), np.deg2rad(kit.servo[1].angle)
 offset2 = 6
 offset_x=0
 offset_y=0
