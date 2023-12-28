@@ -44,32 +44,24 @@ def calculate_inverse_kinematic(x_target, y_target):
     theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
     # Define joint angle limits
+    # Define joint angle limits in radians
     theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(160)
     theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(160)
-    
-    if not (theta1_min <= theta1_1 <= theta1_max and theta2_min <= theta2_1 <= theta2_max):
-        print("Solution 1 outside joint angle limits.")
-    
-    if not (theta1_min <= theta1_2 <= theta1_max and theta2_min <= theta2_2 <= theta2_max):
-        print("Solution 2 outside joint angle limits.")
-    
-    solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
-    
-    print("Possible solutions for inverse kinematics:")
-    optimal_solution = None
-    min_cost = float('inf')
-    
+
+# ...
+
     for sol in solutions:
-        theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
-        
+        theta1, theta2 = sol[0], sol[1]
+
+    # Check joint angle limits
         if (theta1_min <= theta1 <= theta1_max) and (theta2_min <= theta2 <= theta2_max):
             cost = calculate_cost(theta1, theta2)
-            
+
             if cost < min_cost:
                 min_cost = cost
                 optimal_solution = sol
-                
-            print("Theta1: {:.2f}, Theta2: {:.2f}, Cost: {:.2f}".format(theta1, theta2, cost))
+
+            print("Theta1: {:.2f}, Theta2: {:.2f}, Cost: {:.2f}".format(np.rad2deg(theta1), np.rad2deg(theta2), cost))
     
     if optimal_solution:
         print("\nOptimal Solution:")
