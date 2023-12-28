@@ -63,7 +63,7 @@ class Arm:
 
     def close_claw(self, val):
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.claw_servo = self.claw_servo + val
+        self.claw_servo = self.claw_servo - val
         print ("Claw servo degree = " + str(self.claw_servo))
         self.kit.servo[4].angle = self.claw_servo
 
