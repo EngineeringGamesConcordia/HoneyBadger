@@ -58,13 +58,11 @@ class Arm:
     def open_claw(self, val):
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.claw_servo = self.claw_servo + val
-        print ("Claw servo degree = " + str(self.claw_servo))
         self.kit.servo[4].angle = self.claw_servo
 
     def close_claw(self, val):
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.claw_servo = self.claw_servo - val
-        print ("Claw servo degree = " + str(self.claw_servo))
         self.kit.servo[4].angle = self.claw_servo
 
     # ------------------------------ ROTATIONAL MOVEMENTS
@@ -94,7 +92,9 @@ class Arm:
         print("> arm x_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
+        print ("px = " + str(self.px))
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
+        print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -103,7 +103,9 @@ class Arm:
         print("> arm x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px - val;
+        print ("px = " + str(self.px))
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
+        print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -112,7 +114,9 @@ class Arm:
         print("> arm y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
+        print ("py = " + str(self.py))
         theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
+        print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -121,7 +125,9 @@ class Arm:
         print("> arm y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
+        print ("py = " + str(self.py))
         theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
+        print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
