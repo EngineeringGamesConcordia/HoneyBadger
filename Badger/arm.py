@@ -89,7 +89,7 @@ class Arm:
 
     # ------------------------------ Move x-pos
     def x_pos(self, val):
-        print("> arm x_pos")
+        print("> arm22 x_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
         print ("px = " + str(self.px))
@@ -100,7 +100,7 @@ class Arm:
 
     # ------------------------------ Move x-neg
     def x_neg(self, val):
-        print("> arm x_neg")
+        print("> arm22 x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px - val;
         print ("px = " + str(self.px))
@@ -111,7 +111,7 @@ class Arm:
 
     # ------------------------------ Move y-pos
     def y_pos(self, val):
-        print("> arm y_pos")
+        print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
         print ("py = " + str(self.py))
@@ -122,7 +122,7 @@ class Arm:
 
     # ------------------------------ Move y-neg
     def y_neg(self, val):
-        print("> arm y_neg")
+        print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
         print ("py = " + str(self.py))
