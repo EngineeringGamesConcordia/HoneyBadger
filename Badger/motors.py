@@ -3,6 +3,29 @@ import busio
 import RPi.GPIO as GPIO
 from time import sleep
 
+class dcMotorBTS:
+    def __init__(self, fpwm, bpwm):
+        self.fpwm = fpwm
+        self.bpwm = bpwm
+        GPIO.setup(self.fpwm, GPIO.OUT)
+        GPIO.setup(self.bpwm, GPIO.OUT)
+
+    def fw(self):
+        GPIO.output(self.in1, GPIO.HIGH)
+        sleep(0.01)
+        GPIO.output(self.in2, GPIO.LOW)
+        sleep(0.01)
+
+    def ccw(self):
+        GPIO.output(self.in1, GPIO.LOW)
+        sleep(0.01)
+        GPIO.output(self.in2, GPIO.HIGH)
+        sleep(0.01)
+
+    def stop(self):
+        GPIO.output(self.in1, GPIO.LOW)
+        GPIO.output(self.in2, GPIO.LOW)
+
 class dcMotor:
 
     def __init__(self, in1, in2, pwmPin):
