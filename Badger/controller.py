@@ -105,12 +105,12 @@ class BadgerController(Controller):
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
     '''
     # Arm x-pos
-    def on_R3_up(self, value):
+    def on_R3_right(self, value):
         self.lastValueArmX = value;
         print("arm x-pos")
        
     # Arm x-neg
-    def on_R3_down(self, value):
+    def on_R3_left(self, value):
         self.lastValueArmNegX = value;
         print("arm x-neg")
         
@@ -119,12 +119,12 @@ class BadgerController(Controller):
         self.lastValueArmNegX = 0
         
     # Arm y-pos
-    def on_R3_left(self, value):
+    def on_R3_up(self, value):
         self.lastValueArmY = value;
         print("arm y-pos")
 
     # Arm y-neg
-    def on_R3_right(self, value):
+    def on_R3_down(self, value):
         self.lastValueArmNegY = value;
         print("arm y-neg")
         
