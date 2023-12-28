@@ -44,6 +44,10 @@ class BadgerController(Controller):
         self.lastValueDriveNegY=0
         self.lastValueOpenClaw = 0
         self.lastValueCloseClaw = 0
+        self.lastValueWristDown = 0
+        self.lastValueWristUp = 0
+        self.lastValueWristLeft = 0
+        self.lastValueWristRight = 0
         self.gas =0
         Controller.__init__(self, **kwargs)
         
