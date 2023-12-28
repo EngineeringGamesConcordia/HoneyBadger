@@ -45,7 +45,7 @@ def ticks():#works
 
 
 try:
-    controller = BadgerController(arm1, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
+    controller = BadgerController(arm1,base_stepper, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 =  threading.Thread(target=ticks)
 

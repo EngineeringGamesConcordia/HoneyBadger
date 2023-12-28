@@ -27,29 +27,24 @@ class BadgerController(Controller):
     deadzone = 2000
     wristdeadzone = 31000
 
-    def __init__(self, arm, drive, vacuum, wrist, automation, **kwargs):
+def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
+        self.motor = motor
         self.drive = drive
         self.vacuum = vacuum
         self.wrist = wrist
         self.automation = automation
-        
         self.lastValueArmX = 0
         self.lastValueArmNegX = 0
         self.lastValueArmY = 0
         self.lastValueArmNegY =0
-        
-        
         self.lastValueDriveX = 0
         self.lastValueDriveNegX =0
         self.lastValueDriveY = 0
         self.lastValueDriveNegY=0
-        
         self.lastValueOpenClaw = 0
         self.lastValueCloseClaw = 0
-        
-        
-        
+        self.gas =0
         Controller.__init__(self, **kwargs)
 
 
@@ -100,7 +95,13 @@ class BadgerController(Controller):
     def on_left_right_arrow_release(self):
         self.drive.move_stop()
         print("i stopped Y")
-
+    # GAS GAS GAS
+    #def on_R2_press(self, value):
+    #    value= (value+2**15)/(2**16)
+    #    self.gas = value
+    #    print("Gas Value" + str(self.gas))
+    #def on_R2_release(self):
+    #    self.gas = 0
     '''
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
     '''
@@ -118,15 +119,15 @@ class BadgerController(Controller):
         self.lastValueArmX = 0
         self.lastValueArmNegX = 0
         
-    # Arm y-pos
+    # Arm y-neg
     def on_R3_down(self, value):
         self.lastValueArmY = value;
-        print("arm y-pos")
+        print("arm y-neg")
 
-    # Arm y-neg
+    # Arm y-pos
     def on_R3_up(self, value):
         self.lastValueArmNegY = value;
-        print("arm y-neg")
+        print("arm y-pos")
         
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
@@ -137,11 +138,12 @@ class BadgerController(Controller):
 
     # Turn Right
     def on_R1_press(self):
+        self.motor.cw()
         print("Stepper Moving Right")
         #insert stepper code for right
-
     # Turn Left
     def on_L1_press(self):
+        self.motor.ccw()
         print("Stepper Moving Left")
         #insert stepper code for left
     
