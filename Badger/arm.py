@@ -16,6 +16,8 @@ l1 = 22
 l2 = 21.16
 initial_theta1, initial_theta2 = np.deg2rad(80), np.deg2rad(80)
 offset2 = 6
+offset_x=0
+offset_y=0
 
 def adjust_to_limits(theta, theta_min, theta_max):
     # Adjust the joint angle to stay within limits
@@ -23,8 +25,8 @@ def adjust_to_limits(theta, theta_min, theta_max):
     return adjusted_theta
 
 def forward_kinematics(theta1, theta2):
-    x = l1 * np.cos(theta1) + l2 * np.cos(theta1 + theta2)
-    y = l1 * np.sin(theta1) + l2 * np.sin(theta1 + theta2)
+    x = offset_x + l1 * np.cos(theta1) + l2 * np.cos(theta1 + theta2)
+    y = offset_y + l1 * np.sin(theta1) + l2 * np.sin(theta1 + theta2)
     return x, y
 
 px, py = forward_kinematics(initial_theta1, initial_theta2)
@@ -37,8 +39,8 @@ def calculate_inverse_kinematic(x_target, y_target):
         return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
     
     theta = np.arctan2(y_target, x_target)
-    x_adjusted = x_target - offset2 * np.cos(theta)
-    y_adjusted = y_target - offset2 * np.sin(theta)
+    x_adjusted = (x_target - offset2 - offset_x) * np.cos(theta)
+    y_adjusted = (y_target - offset2 - offset_y) * np.sin(theta)
     D = (x_adjusted**2 + y_adjusted**2 - l1**2 - l2**2) / (2 * l1 * l2)
     
     if np.abs(D) > 1:
