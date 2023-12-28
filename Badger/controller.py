@@ -24,6 +24,7 @@ import time
 
 class BadgerController(Controller):
     deadzone = 2000
+    clawDeadZone = 10000
 
     def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
@@ -237,16 +238,19 @@ class BadgerController(Controller):
                     self.drive.move_back()
 
             #claw if
-            if(self.lastValueOpenClaw >self.deadzone):    
+            if(self.lastValueOpenClaw >self.clawDeadZone):  
+                print("I am in the if open")
                 self.arm.open_claw(self.lastValueOpenClaw)
             else:
+                    print("I am in the if open")    
                     self.lastValueOpenClaw = 0
                     #do the same for the close
             
-            if(self.lastValueCloseClaw >self.deadzone):    
-                print("I am in the if")
+            if(self.lastValueCloseClaw >self.clawDeadZone):    
+                print("I am in the if close")
                 self.arm.open_claw(self.lastValueCloseClaw)
             else:
+                print("I am in the if close")
                 self.lastValueCloseClaw=0
     
         
