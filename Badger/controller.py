@@ -25,7 +25,7 @@ import time
 class BadgerController(Controller):
     clawDeadZone = 10000
     deadzone = 2000
-    wristdeadzone = 30000
+    wristdeadzone = 31000
 
     def __init__(self, arm, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
@@ -201,14 +201,12 @@ class BadgerController(Controller):
         if (value < -self.wristdeadzone):
             print("wrist up")
             self.arm.go_up()
-            print("Value = " + str(value))
 
     # Wrist Go Down
     def on_L3_down(self, value):
         if (value > self.wristdeadzone):
             print("wrist down")
             self.arm.go_down()
-            print("Value = " + str(value))
         
     #getting the values of the placeholder    
 
