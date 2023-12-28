@@ -12,8 +12,8 @@ CLAW_SCALE = 1/(2**18)
 KINEMATIC_SCALE = 2/(2**18)
 
 moveVal = 0.1
-px = 22
-py = 22
+px = arm.ee[0]
+py = arm.ee[1]
 
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(px, py):
@@ -24,7 +24,7 @@ def calculate_inverse_kinematic(px, py):
     theta_2 = 0
 
     ikangles = [theta_1, theta_2]
-    arm.ee = [px, py]
+    arm.ee = [px, py, 0.]
     ikangles = round(rad2deg(arm.angles))
     
     return theta_1, theta_2
