@@ -79,7 +79,9 @@ class BadgerController(Controller):
     def on_L3_down(self, value):
         self.lastValueDriveNegY = value
         print("move back")
-        
+    def on_L3_y_at_rest(self):    
+        self.lastValueDriveY=0
+        self.lastValueDriveNegY=0
 
     # Drive left
     def on_L3_left(self, value):
@@ -92,33 +94,40 @@ class BadgerController(Controller):
         self.lastValueDriveX = value
         print("move right")
         
-
+    def on_L3_x_at_rest(self):
+        self.lastValueDriveX = 0
+        self.lastValueDriveNegX =0
     '''
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
     '''
     # Arm x-pos
     def on_R3_up(self, value):
-        self.lastValueArmX = value;
+        self.lastValueArmX = value
         print("arm x-pos")
        
 
     # Arm x-neg
     def on_R3_down(self, value):
-        self.lastValueArmNegX = value;
+        self.lastValueArmNegX = value
         print("arm x-neg")
         
+    def on_R3_x_at_rest(self):
+         self.lastValueArmX =0
+         self.lastValueArmNegX = 0
 
     # Arm y-pos
     def on_R3_left(self, value):
-        self.lastValueArmY = value;
+        self.lastValueArmY = value
         print("arm y-pos")
 
     # Arm y-neg
     def on_R3_right(self, value):
-        self.lastValueArmNegY = value;
+        self.lastValueArmNegY = value
         print("arm y-neg")
         
-
+    def on_R3_y_at_rest(self):
+         self.lastValueArmY = 0
+         self.lastValueArmNegY = 0
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
     '''
@@ -158,7 +167,7 @@ class BadgerController(Controller):
     # Close claw
     def on_R2_press(self, value):
         value= (value+2**15)
-        lastValueCloseClaw = value
+        self.lastValueCloseClaw = value
         print("claw close")
         
 
@@ -184,55 +193,44 @@ class BadgerController(Controller):
             #arms if
             if(self.lastValueArmX >self.deadzone): 
                 self.arm.x_pos(self.lastValueArmX)
-            else:
-                self.lastValueArmX=0
-                         #follow this format for the rest of the functions
+
                 
             if(self.lastValueArmNegX < -self.deadzone):
                  self.arm.x_neg(self.lastValueArmNegX)
-            else:
-                self.lastValueArmNegX = 0
                 
             if(self.lastValueArmY >self.deadzone):
                 self.arm.y_pos(self.lastValueArmY)  
-            else:
-                self.lastValueArmY=0
                 
 
             if(self.lastValueArmNegY <-self.deadzone):
                self.arm.y_neg(self.lastValueArmNegY)
-            else:
-                self.lastValueArmNegY=0   
              
                 
             #drive if
             if(self.lastValueDriveX >self.deadzone):
                 self.drive.move_right()
-            else:
-                    self.lastValueDriveX=0
-                    
 
             if(self.lastValueDriveNegX < -self.deadzone):
                 self.drive.move_left()
-            else:
-                 self.lastValueDriveNegX =0
+                
                  
             if(self.lastValueDriveY >self.deadzone):   
                 self.drive.move_front()
-            else:
-                    self.lastValueDriveY =0    
+
+
             if(self.lastValueDriveNegY <-self.deadzone):
                     self.drive.move_back()
-            else:
-                    self.lastValueDriveNegY =0    
+
             
             #claw if
+            print("Open Claw"+str(self.lastValueOpenClaw))
             if(self.lastValueOpenClaw >self.deadzone):    
                 self.claw.open_claw(self.lastValueOpenClaw)
             else:
                     self.lastValueOpenClaw = 0
                     #do the same for the close
-
+            
+            print("Open Claw"+str(self.lastValueCloseClaw))
             if(self.lastValueCloseClaw >self.deadzone):    
                 self.claw.open_claw(self.lastValueCloseClaw)
             else:
