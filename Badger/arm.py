@@ -37,8 +37,6 @@ def calculate_inverse_kinematic(x_target, y_target):
     
     
     def calculate_cost(theta1, theta2):
-        nonlocal initial_theta1
-        nonlocal initial_theta2
         return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
     
     theta = np.arctan2(y_target, x_target)
@@ -92,8 +90,6 @@ def calculate_inverse_kinematic(x_target, y_target):
     else:
         print("No optimal solution found within joint angle limits.")
         optimal_solution = (theta, 0)  # Set optimal solution to current angles to prevent damage
-
-    initial_theta1, initial_theta2 = np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
 
     return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
 
@@ -168,6 +164,7 @@ class Arm:
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
+        initial_theta1, initial_theta2 = theta_1, theta_2
 
     # ------------------------------ Move x-neg
     def x_neg(self, val):
@@ -179,6 +176,7 @@ class Arm:
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
+        initial_theta1, initial_theta2 = theta_1, theta_2
 
     # ------------------------------ Move y-pos
     def y_pos(self, val):
@@ -190,6 +188,7 @@ class Arm:
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
+        initial_theta1, initial_theta2 = theta_1, theta_2
 
     # ------------------------------ Move y-neg
     def y_neg(self, val):
@@ -201,6 +200,7 @@ class Arm:
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
+        initial_theta1, initial_theta2 = theta_1, theta_2
 
     # ------------------------------ STEPPER Movements
 
