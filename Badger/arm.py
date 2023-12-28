@@ -11,7 +11,7 @@ SMALL_SERVO_SCALE = 1/(2**18)
 CLAW_SCALE = 1/(2**18)
 KINEMATIC_SCALE = 2/(2**18)
 
-moveVal = 2
+moveVal = 0.1
 px = 22
 py = 22
 
@@ -71,11 +71,13 @@ class Arm:
     def turn_left(self):
         print("> wrist rotating left")
         self.wrist_r_servo = self.wrist_r_servo - self.moveVal
+        print("value = " + str(self.wrist_r_servo))
         self.kit.servo[2].angle = self.wrist_r_servo
 
     def turn_right(self):
         print("> wrist rotating right")
         self.wrist_r_servo = self.wrist_r_servo + self.moveVal
+        print("value = " + str(self.wrist_r_servo))
         self.kit.servo[2].angle = self.wrist_r_servo
 
     # ------------------------------ ROTATIONAL MOVEMENTS
