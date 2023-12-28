@@ -27,9 +27,8 @@ class BadgerController(Controller):
     deadzone = 2000
     wristdeadzone = 32000
 
-    def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
+    def __init__(self, arm, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
-        self.motor = motor
         self.drive = drive
         self.vacuum = vacuum
         self.wrist = wrist
@@ -140,12 +139,12 @@ class BadgerController(Controller):
 
     # Turn Right
     def on_R1_press(self):
-        self.motor.cw()
+        self.arm.cw_stepper()
         print("Stepper Moving Right")
         #insert stepper code for right
     # Turn Left
     def on_L1_press(self):
-        self.motor.ccw()
+        self.arm.ccw_stepper()
         print("Stepper Moving Left")
         #insert stepper code for left
     

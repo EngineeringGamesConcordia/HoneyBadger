@@ -46,6 +46,7 @@ class Arm:
         self.wrist_ud_servo = angles[3]
         self.claw_servo = angles[4]
         self.kit = kit
+        self.base_stepper = base_stepper
         self.kit.servo[0].angle = angles[0]
         self.kit.servo[1].angle = angles[1]
         self.kit.servo[2].angle = angles[2]
@@ -133,22 +134,15 @@ class Arm:
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
-    # ------------------------------ STEPPER Set up
+    # ------------------------------ STEPPER Movements
 
-    # Insert stepper codes lol
     def cw_stepper(self):
-        GPIO.output(DIR, CW)
-        #going forward
-        GPIO.output(STEP, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP, GPIO.LOW)
-        sleep(delay)
+        print("> stepper cw")
+        self.base_stepper.cw()
+        
     def ccw_stepper(self):
-        GPIO.output(DIR, CCW)
-        GPIO.output(STEP, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP, GPIO.LOW)
-        sleep(delay)
+        print("> stepper ccw")
+        self.base_stepper.ccw()
     
 """
     # ------------------------------ Move down
