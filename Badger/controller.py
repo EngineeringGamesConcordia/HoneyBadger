@@ -26,9 +26,8 @@ class BadgerController(Controller):
     clawDeadZone = 10000
     deadzone = 2000
 
-    def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
+    def __init__(self, arm, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
-        self.claw = claw
         self.drive = drive
         self.vacuum = vacuum
         self.wrist = wrist
