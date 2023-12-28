@@ -248,7 +248,7 @@ class BadgerController(Controller):
         if(self.lastValueWristLeft < -self.wristdeadzone): 
             self.arm.turn_left()
                 
-        if(self.lastValueWristRight < self.wristdeadzone):
+        if(self.lastValueWristRight > self.wristdeadzone):
             self.arm.turn_right()  
     
         
