@@ -210,17 +210,17 @@ class BadgerController(Controller):
     '''   
     def checker(self):      
         #arms if
+        if(self.lastValueArmY >self.deadzone):
+            self.arm.y_pos(self.lastValueArmY)  
+                
+        if(self.lastValueArmNegY <-self.deadzone):
+            self.arm.y_neg(self.lastValueArmNegY)  
+            
         if(self.lastValueArmX >0): 
             self.arm.x_pos(self.lastValueArmX)
                 
         if(self.lastValueArmNegX < -self.deadzone):
-            self.arm.x_neg(self.lastValueArmNegX)
-                
-        if(self.lastValueArmY <self.deadzone):
-            self.arm.y_pos(self.lastValueArmY)  
-                
-        if(self.lastValueArmNegY >-self.deadzone):
-            self.arm.y_neg(self.lastValueArmNegY)            
+            self.arm.x_neg(self.lastValueArmNegX)       
 
         #claw if
         if(self.lastValueOpenClaw >self.clawDeadZone):  
