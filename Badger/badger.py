@@ -31,8 +31,8 @@ angles = [80,80,40,80,20]
 base_stepper = stepperMotor()#to be fixed later
 arm1 = Arm(base_stepper, kit, angles)
 vacuum1 = Vacuum(22)
-left_track = dcMotorBTS(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction
-right_track = dcMotorBTS(13, 19)
+left_track = dcMotor(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction
+right_track = dcMotor(13, 19)
 drivesys = Drive(left_track, right_track)
 automation1 = Automation()
 #send the value from the contrller to the arm
