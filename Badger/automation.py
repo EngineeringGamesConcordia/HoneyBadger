@@ -1,7 +1,7 @@
 from arm import Arm
 from drive import Drive
 from vacuum import Vacuum
-from motors import dcMotor
+from motors import dcMotorBTS
 from motors import stepperMotor
 from time import sleep
 
