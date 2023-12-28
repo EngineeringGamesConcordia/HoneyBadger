@@ -47,8 +47,6 @@ def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
         self.gas =0
         Controller.__init__(self, **kwargs)
 
-
-
     '''
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
