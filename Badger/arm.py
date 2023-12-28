@@ -14,7 +14,7 @@ KINEMATIC_SCALE = 2/(2**18)
 moveVal = 0.1
 l1 = 22
 l2 = 21.16
-initial_theta1, initial_theta2 = np.deg2rad(80), np.deg2rad(80)
+initial_theta1, initial_theta2 = np.deg2rad(self.kit.servo[0].angle), np.deg2rad(self.kit.servo[1].angle)
 offset2 = 6
 offset_x=0
 offset_y=0
@@ -166,7 +166,6 @@ class Arm:
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-        initial_theta1, initial_theta2 = theta_1, theta_2
 
     # ------------------------------ Move x-neg
     def x_neg(self, val):
@@ -178,7 +177,6 @@ class Arm:
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-        initial_theta1, initial_theta2 = theta_1, theta_2
 
     # ------------------------------ Move y-pos
     def y_pos(self, val):
@@ -190,7 +188,6 @@ class Arm:
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-        initial_theta1, initial_theta2 = theta_1, theta_2
 
     # ------------------------------ Move y-neg
     def y_neg(self, val):
@@ -202,7 +199,6 @@ class Arm:
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-        initial_theta1, initial_theta2 = theta_1, theta_2
 
     # ------------------------------ STEPPER Movements
 
