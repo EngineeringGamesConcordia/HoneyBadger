@@ -198,7 +198,7 @@ class BadgerController(Controller):
     '''
     ------------------------------ WRIST U+D SYSTEM ------------------------------
     '''
-
+    '''
     # Wrist Go Up
     def on_up_arrow_press(self):
         print("wrist up")
@@ -210,6 +210,7 @@ class BadgerController(Controller):
         self.arm.go_down()
         
     #getting the values of the placeholder    
+    '''
     '''
     ------------------------------TICK SYSTEM ------------------------------
     '''   
