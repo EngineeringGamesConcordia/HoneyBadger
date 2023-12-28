@@ -158,15 +158,19 @@ class BadgerController(Controller):
     '''
     # Open claw
     def on_L2_press(self, value):
+        print("L2Before value" + str(value))
         value= (value+2**15)
-        lastValueOpenClaw = value
+        print("L2After value" + str(value))
+        self.lastValueOpenClaw = value
         print("claw open")
         
     
     # Close claw
     def on_R2_press(self, value):
+        print("R2Before Value" + str(value))
         value= (value+2**15)
-        lastValueCloseClaw = value
+        print("R2After Value" + str(value))
+        self.lastValueCloseClaw = value
         print("claw close")
         
 
@@ -233,16 +237,15 @@ class BadgerController(Controller):
                     self.drive.move_back()
 
             #claw if
-            print("Open Claw" +str(self.lastValueOpenClaw))
             if(self.lastValueOpenClaw >self.deadzone):    
-                self.claw.open_claw(self.lastValueOpenClaw)
+                self.arm.open_claw(self.lastValueOpenClaw)
             else:
                     self.lastValueOpenClaw = 0
                     #do the same for the close
             
-            print("Close Claw" +str(self.lastValueCloseClaw))
             if(self.lastValueCloseClaw >self.deadzone):    
-                self.claw.open_claw(self.lastValueCloseClaw)
+                print("I am in the if")
+                self.arm.open_claw(self.lastValueCloseClaw)
             else:
                 self.lastValueCloseClaw=0
     
