@@ -12,11 +12,17 @@ CLAW_SCALE = 1/(2**18)
 KINEMATIC_SCALE = 2/(2**18)
 
 moveVal = 0.1
-px = 0
-py = 0
 l1 = 22
 l2 = 22
 initial_theta1, initial_theta2 = np.deg2rad(80), np.deg2rad(80)
+
+def forward_kinematics(theta1, theta2):
+    x = l1 * np.cos(theta1) + l2 * np.cos(theta1 + theta2)
+    y = l1 * np.sin(theta1) + l2 * np.sin(theta1 + theta2)
+    return x, y
+
+px, py = forward_kinematics(initial_theta1, initial_theta2)
+
 
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target):
