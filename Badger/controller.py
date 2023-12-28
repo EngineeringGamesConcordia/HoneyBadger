@@ -133,12 +133,12 @@ class BadgerController(Controller):
     '''
 
     # Turn Right
-    def on_right_arrow_press(self):
+    def on_R1_press(self):
         print("Stepper Moving Right")
         #insert stepper code for right
 
     # Turn Left
-    def on_left_arrow_press(self):
+    def on_L1_press(self):
         print("Stepper Moving Left")
         #insert stepper code for left
     
@@ -172,18 +172,32 @@ class BadgerController(Controller):
         
 
     '''
-    ------------------------------ WRIST SYSTEM ------------------------------
+    ------------------------------ WRIST L+R SYSTEM ------------------------------
     '''
 
     # Wrist Turn Left
-    def on_L1_press(self):
+    def on_left_arrow_press(self):
         print("wrist left")
         self.arm.turn_left()
 
     # Wrist Turn Right
-    def on_R1_press(self):
+    def on_right_arrow_press(self):
         print("wrist right")
         self.arm.turn_right()
+        
+    '''
+    ------------------------------ WRIST U+D SYSTEM ------------------------------
+    '''
+
+    # Wrist Go Up
+    def on_up_arrow_press(self):
+        print("wrist up")
+        self.arm.go_up()
+
+    # Wrist Go Down
+    def on_down_arrow_press(self):
+        print("wrist down")
+        self.arm.go_down()
         
     #getting the values of the placeholder    
     '''

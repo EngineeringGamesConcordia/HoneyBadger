@@ -14,7 +14,7 @@ class Drive:
 
     # ------------------------------ Drive stop
     def move_stop(self):
-        print("> vacuum start")
+        print("> dc stop")
         self.l_track.stop()
         self.r_track.stop()
 

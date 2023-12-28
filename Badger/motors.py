@@ -10,47 +10,21 @@ class dcMotorBTS:
         GPIO.setup(self.fpwm, GPIO.OUT)
         GPIO.setup(self.bpwm, GPIO.OUT)
 
-    def fw(self):
-        GPIO.output(self.in1, GPIO.HIGH)
-        sleep(0.01)
-        GPIO.output(self.in2, GPIO.LOW)
-        sleep(0.01)
-
-    def ccw(self):
-        GPIO.output(self.in1, GPIO.LOW)
-        sleep(0.01)
-        GPIO.output(self.in2, GPIO.HIGH)
-        sleep(0.01)
-
-    def stop(self):
-        GPIO.output(self.in1, GPIO.LOW)
-        GPIO.output(self.in2, GPIO.LOW)
-
-class dcMotor:
-
-    def __init__(self, in1, in2, pwmPin):
-        self.in1 = in1
-        self.in2 = in2
-        self.pwmPin = pwmPin
-        GPIO.setup(self.in1, GPIO.OUT)
-        GPIO.setup(self.in2, GPIO.OUT)
-        GPIO.setup(self.pwmPin, GPIO.OUT)
-
     def cw(self):
-        GPIO.output(self.in1, GPIO.HIGH)
+        GPIO.output(self.fpwm, GPIO.HIGH)
         sleep(0.01)
-        GPIO.output(self.in2, GPIO.LOW)
+        GPIO.output(self.bpwm, GPIO.LOW)
         sleep(0.01)
 
     def ccw(self):
-        GPIO.output(self.in1, GPIO.LOW)
+        GPIO.output(self.fpwm, GPIO.LOW)
         sleep(0.01)
-        GPIO.output(self.in2, GPIO.HIGH)
+        GPIO.output(self.bpwm, GPIO.HIGH)
         sleep(0.01)
 
     def stop(self):
-        GPIO.output(self.in1, GPIO.LOW)
-        GPIO.output(self.in2, GPIO.LOW)
+        GPIO.output(self.fpwm, GPIO.LOW)
+        GPIO.output(self.bpwm, GPIO.LOW)
 
         #code below to get rid of
 class stepperMotor:
