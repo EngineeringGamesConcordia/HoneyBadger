@@ -184,7 +184,7 @@ class BadgerController(Controller):
     '''
     ------------------------------ WRIST L+R SYSTEM ------------------------------
     '''
-
+    '''
     # Wrist Turn Left
     def on_left_arrow_press(self):
         print("wrist left")
@@ -194,7 +194,7 @@ class BadgerController(Controller):
     def on_right_arrow_press(self):
         print("wrist right")
         self.arm.turn_right()
-        
+    '''    
     '''
     ------------------------------ WRIST U+D SYSTEM ------------------------------
     '''
