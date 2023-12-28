@@ -38,7 +38,7 @@ def calculate_inverse_kinematic(x_target, y_target):
     
     if np.abs(D) > 1:
         print("No solution for given x, y.")
-        return
+        return np.rad2deg(theta), 0
     
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
     theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
