@@ -23,7 +23,6 @@ import time
 '''
 
 class BadgerController(Controller):
-    deadzone = 2000
     clawDeadZone = 10000
 
     def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
@@ -165,6 +164,8 @@ class BadgerController(Controller):
         self.lastValueOpenClaw = value
         print("claw open")
         
+    def on_R2_release(self):
+        self.lastValueOpenClaw = 0     
     
     # Close claw
     def on_R2_press(self, value):
@@ -173,7 +174,9 @@ class BadgerController(Controller):
         print("R2After Value" + str(value))
         self.lastValueCloseClaw = value
         print("claw close")
-        
+    
+    def on_R2_release(self):
+        self.lastValueCloseClaw = 0
 
     '''
     ------------------------------ WRIST L+R SYSTEM ------------------------------
@@ -209,7 +212,7 @@ class BadgerController(Controller):
     '''   
     def checker(self):      
             #arms if
-            if(self.lastValueArmX >self.deadzone): 
+            if(self.lastValueArmX >0): 
                 self.arm.x_pos(self.lastValueArmX)
                 
             if(self.lastValueArmNegX < -self.deadzone):
