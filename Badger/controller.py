@@ -240,15 +240,15 @@ class BadgerController(Controller):
             self.lastValueCloseClaw=0
             
         if(self.lastValueWristDown >self.wristdeadzone):
-            self.arm.go_down(self.lastValueWristDown)  
+            self.arm.go_down()  
                 
         if(self.lastValueWristUp < -self.wristdeadzone):
-            self.arm.go_up(self.lastValueWristUp)  
+            self.arm.go_up()  
             
         if(self.lastValueWristLeft < -self.wristdeadzone): 
-            self.arm.turn_left(self.lastValueWristLeft)
+            self.arm.turn_left()
                 
         if(self.lastValueWristRight < self.wristdeadzone):
-            self.arm.turn_right(self.lastValueWristRight)  
+            self.arm.turn_right()  
     
         
