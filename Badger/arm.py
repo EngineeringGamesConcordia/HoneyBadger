@@ -8,7 +8,7 @@ from time import sleep
 CONTROLLER_SCALE = 2**15
 BIG_SERVO_SCALE = 1/(2**12)
 SMALL_SERVO_SCALE = 1/(2**14)
-CLAW_SCALE = 1/(2**12)
+CLAW_SCALE = 1/(2**14)
 KINEMATIC_SCALE = 2/(2**14)
 
 moveVal = 2
@@ -56,13 +56,11 @@ class Arm:
 
     # ------------------------------ CLAW MOVEMENTS
     def open_claw(self, val):
-        print("> arm claw open")
         val = CLAW_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
         self.claw_servo = self.claw_servo + val
         self.kit.servo[4].angle = self.claw_servo
 
     def close_claw(self, val):
-        print("> arm claw close")
         val = -CLAW_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
         self.claw_servo = self.claw_servo + val
         self.kit.servo[4].angle = self.claw_servo
