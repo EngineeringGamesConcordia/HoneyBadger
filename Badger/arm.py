@@ -42,8 +42,9 @@ def calculate_inverse_kinematic(x_target, y_target):
     print ("Initital theta2 = " + str(initial_theta2))
     
     def calculate_cost(theta1, theta2):
-        return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
-    
+        #return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
+        return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
+        
     theta = np.arctan2(y_target, x_target)
     x_adjusted = (x_target - offset2 - offset_x) * np.cos(theta)
     y_adjusted = (y_target - offset2 - offset_y) * np.sin(theta)
@@ -167,11 +168,11 @@ class Arm:
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
         theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        if (cost > 0.75):
-            val_new = val * (KINEMATIC_SCALE_SLOW / cost)
-            val_new = val - val_new
-            self.px = self.px - val_new
-            theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
+        #while (cost > 1.5):
+        #    val_new = val * (KINEMATIC_SCALE_SLOW / cost)
+        #    val_new = val - val_new
+        #    self.px = self.px - val_new
+        #    theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
@@ -183,11 +184,11 @@ class Arm:
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px - val;
         theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        if (cost > 0.75):
-            val_new = val * (KINEMATIC_SCALE_SLOW / cost)
-            val_new = val - val_new
-            self.px = self.px + val_new
-            theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
+        #while (cost > 5.0):
+        #    val_new = val * (KINEMATIC_SCALE_SLOW / cost)
+        #    val_new = val - val_new
+        #    self.px = self.px + val_new
+        #    theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
@@ -199,11 +200,11 @@ class Arm:
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
         theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        if (cost > 0.75):
-            val_new = val * (KINEMATIC_SCALE_SLOW / cost)
-            val_new = val - val_new
-            self.py = self.py + val_new
-            theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
+        #while (cost > 1.5):
+        #    val_new = val * (KINEMATIC_SCALE_SLOW / cost)
+        #    val_new = val - val_new
+        #    self.py = self.py + val_new
+        #    theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
@@ -215,11 +216,11 @@ class Arm:
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
         theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        if (cost > 0.75):
-            val_new = val * (KINEMATIC_SCALE_SLOW / cost)
-            val_new = val - val_new
-            self.py = self.py - val_new
-            theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
+        #while (cost > 1.5):
+        #    val_new = val * (KINEMATIC_SCALE_SLOW / cost)
+        #    val_new = val - val_new
+        #    self.py = self.py - val_new
+        #    theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
