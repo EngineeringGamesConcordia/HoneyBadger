@@ -37,6 +37,7 @@ px, py = forward_kinematics(initial_theta1, initial_theta2)
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target):
     
+    initial_theta1, initial_theta2 = np.deg2rad(kit.servo[0].angle), np.deg2rad(kit.servo[1].angle)
     print ("Initital theta1 = " + str(initial_theta1))
     print ("Initital theta2 = " + str(initial_theta2))
     
