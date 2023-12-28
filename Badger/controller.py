@@ -182,15 +182,13 @@ class BadgerController(Controller):
 
     # Wrist Turn Left
     def on_L3_left(self, value):
-        if (value < -self.wristdeadzone):
-            print("wrist left")
-            self.arm.turn_left()
+        self.lastValueWristLeft = value
+        self.arm.turn_left()
 
     # Wrist Turn Right
     def on_L3_right(self, value):
-        if (value > self.wristdeadzone):
-            print("wrist right")
-            self.arm.turn_right()
+        self.lastValueWristRight = value
+        print("wrist right")
    
     '''
     ------------------------------ WRIST U+D SYSTEM ------------------------------TO BE FIXED
@@ -198,15 +196,13 @@ class BadgerController(Controller):
 
     # Wrist Go Up
     def on_L3_up(self, value):
-        if (value < -self.wristdeadzone):
-            print("wrist up")
-            self.arm.go_up()
+        self.lastValueWristUp = value
+        print("wrist up")
 
     # Wrist Go Down
     def on_L3_down(self, value):
-        if (value > self.wristdeadzone):
-            print("wrist down")
-            self.arm.go_down()
+        self.lastValueWristDown = value
+        print("wrist down")
         
     #getting the values of the placeholder    
 
@@ -238,5 +234,17 @@ class BadgerController(Controller):
             self.arm.close_claw(self.lastValueCloseClaw)
         else:
             self.lastValueCloseClaw=0
+            
+        if(self.lastValueWristDown >self.wristdeadzone):
+            self.arm.go_down(self.lastValueWristDown)  
+                
+        if(self.lastValueWristUp < -self.wristdeadzone):
+            self.arm.go_up(self.lastValueWristUp)  
+            
+        if(self.lastValueWristLeft < -self.wristdeadzone): 
+            self.arm.turn_left(self.lastValueWristLeft)
+                
+        if(self.lastValueWristRight < self.wristdeadzone):
+            self.arm.turn_right(self.lastValueWristRight)  
     
         
