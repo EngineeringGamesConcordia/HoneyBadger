@@ -43,11 +43,9 @@ def calculate_inverse_kinematic(x_target, y_target):
     
     if not (theta1_min <= theta1_1 <= theta1_max and theta2_min <= theta2_1 <= theta2_max):
         print("Solution 1 outside joint angle limits.")
-        return
     
     if not (theta1_min <= theta1_2 <= theta1_max and theta2_min <= theta2_2 <= theta2_max):
         print("Solution 2 outside joint angle limits.")
-        return
     
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
