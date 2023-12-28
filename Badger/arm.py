@@ -8,7 +8,7 @@ from time import sleep
 CONTROLLER_SCALE = 2**15
 BIG_SERVO_SCALE = 1/(2**12)
 SMALL_SERVO_SCALE = 1/(2**14)
-CLAW_SCALE = 1/(4**17)
+CLAW_SCALE = 1/(2**18)
 KINEMATIC_SCALE = 2/(2**14)
 
 moveVal = 2
