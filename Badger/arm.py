@@ -6,6 +6,7 @@ from time import sleep
 from adafruit_servokit import ServoKit
 # reference: https://github.com/aakieu/3-dof-planar/blob/master/InverseKinematics.py
 
+kit = ServoKit(channels=16)
 CONTROLLER_SCALE = 2**15
 BIG_SERVO_SCALE = 1/(2**18)
 SMALL_SERVO_SCALE = 1/(2**18)
