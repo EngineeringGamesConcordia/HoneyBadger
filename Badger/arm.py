@@ -1,4 +1,4 @@
-from numpy import * as np
+from numpy import *
 import tinyik
 from motors import stepperMotor
 import RPi.GPIO as GPIO
@@ -9,11 +9,11 @@ CONTROLLER_SCALE = 2**15
 BIG_SERVO_SCALE = 1/(2**12)
 SMALL_SERVO_SCALE = 1/(2**14)
 CLAW_SCALE = 1/(2**12)
-KINEMATIC_SCALE = 2/(2**15)
+KINEMATIC_SCALE = 2/(2**14)
 
-moveVal = 1
-px = 0
-py = 0
+moveVal = 2
+px = 22
+py = 22
 
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(px, py):
@@ -23,7 +23,7 @@ def calculate_inverse_kinematic(px, py):
 
     ikangles = [theta_1, theta_2]
     arm.ee = [px, py]
-    ikangles = np.round(np.rad2deg(arm.angles))
+    ikangles = round(rad2deg(arm.angles))
     
     return theta_1, theta_2
 
@@ -101,7 +101,7 @@ class Arm:
     # ------------------------------ Move x-neg
     def x_neg(self, val):
         print("> arm x_neg")
-        val = -KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
         self.px = self.px + val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
         self.kit.servo[0].angle = theta_1
@@ -119,7 +119,7 @@ class Arm:
     # ------------------------------ Move y-neg
     def y_neg(self, val):
         print("> arm y_neg")
-        val = -KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
         self.py = self.py + val;
         theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
         self.kit.servo[0].angle = theta_1

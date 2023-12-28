@@ -28,7 +28,7 @@ GPIO.setmode(GPIO.BCM)
 #TODO test and fix parameters
 kit = ServoKit(channels=16)
 angles = [80,80,40,80,20]
-#base_stepper = stepperMotor(25, 8, 7, 12)
+base_stepper = stepperMotor()#to be fixed later
 arm1 = Arm(base_stepper, kit, angles)
 vacuum1 = Vacuum(22)
 left_track = dcMotorBTS(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction
@@ -43,12 +43,16 @@ def ticks():#works
         if(math.floor(floatingTime)%10==0):
             controller.checker()
 
-controller = BadgerController(arm1, arm1.claw_servo, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
-t1 = threading.Thread(target=threadFunction, args=(controller,))
-t2 =  threading.Thread(target=ticks)
 
-t1.start() 
-t2.start()
-t1.join()
-t2.join()
-GPIO.cleanup()
+try:
+    controller = BadgerController(arm1, arm1.claw_servo, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
+    t1 = threading.Thread(target=threadFunction, args=(controller,))
+    t2 =  threading.Thread(target=ticks)
+
+    t1.start() 
+    t2.start()
+    t1.join()
+    t2.join()
+except KeyboardInterrupt:
+    GPIO.cleanup()
+    
