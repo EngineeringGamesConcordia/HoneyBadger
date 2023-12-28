@@ -6,10 +6,10 @@ from time import sleep
 # reference: https://github.com/aakieu/3-dof-planar/blob/master/InverseKinematics.py
 
 CONTROLLER_SCALE = 2**15
-BIG_SERVO_SCALE = 1/(2**12)
-SMALL_SERVO_SCALE = 1/(2**14)
+BIG_SERVO_SCALE = 1/(2**18)
+SMALL_SERVO_SCALE = 1/(2**18)
 CLAW_SCALE = 1/(2**18)
-KINEMATIC_SCALE = 2/(2**14)
+KINEMATIC_SCALE = 2/(2**18)
 
 moveVal = 2
 px = 22
@@ -92,7 +92,7 @@ class Arm:
     # ------------------------------ Move x-pos
     def x_pos(self, val):
         print("> arm x_pos")
-        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
         self.kit.servo[0].angle = theta_1
@@ -101,8 +101,8 @@ class Arm:
     # ------------------------------ Move x-neg
     def x_neg(self, val):
         print("> arm x_neg")
-        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
-        self.px = self.px + val;
+        val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
+        self.px = self.px - val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
@@ -110,7 +110,7 @@ class Arm:
     # ------------------------------ Move y-pos
     def y_pos(self, val):
         print("> arm y_pos")
-        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
         theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
         self.kit.servo[0].angle = theta_1
@@ -119,8 +119,8 @@ class Arm:
     # ------------------------------ Move y-neg
     def y_neg(self, val):
         print("> arm y_neg")
-        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
-        self.py = self.py + val;
+        val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
+        self.py = self.py - val;
         theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
