@@ -15,6 +15,7 @@ moveVal = 0.1
 l1 = 22
 l2 = 22
 initial_theta1, initial_theta2 = np.deg2rad(80), np.deg2rad(80)
+offset2 = 6
 
 def forward_kinematics(theta1, theta2):
     x = l1 * np.cos(theta1) + l2 * np.cos(theta1 + theta2)
@@ -31,7 +32,9 @@ def calculate_inverse_kinematic(x_target, y_target):
         return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
     
     theta = np.arctan2(y_target, x_target)
-    D = (x_target**2 + y_target**2 - l1**2 - l2**2) / (2 * l1 * l2)
+    x_adjusted = x_target - offset2 * np.cos(theta)
+    y_adjusted = y_target - offset2 * np.sin(theta)
+    D = (x_adjusted**2 + y_adjusted**2 - l1**2 - l2**2) / (2 * l1 * l2)
     
     if np.abs(D) > 1:
         print("No solution for given x, y.")
@@ -50,24 +53,25 @@ def calculate_inverse_kinematic(x_target, y_target):
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
+    optimal_solution = None
     min_cost = float('inf')
 
     for sol in solutions:
-        theta1, theta2 = sol[0], sol[1]
+        theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
+        cost = calculate_cost(sol[0], sol[1])
 
-    # Check joint angle limits
-        if (theta1_min <= theta1 <= theta1_max) and (theta2_min <= theta2 <= theta2_max):
-            cost = calculate_cost(theta1, theta2)
+        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost:
+            min_cost = cost
+            optimal_solution = sol
 
-            if cost < min_cost:
-                min_cost = cost
-                optimal_solution = sol
+        print("Theta1: {:.2f}, Theta2: {:.2f}, Cost: {:.2f}".format(theta1, theta2, cost))
 
-            print("Theta1: {:.2f}, Theta2: {:.2f}, Cost: {:.2f}".format(np.rad2deg(theta1), np.rad2deg(theta2), cost))
-    
     if optimal_solution:
         print("\nOptimal Solution:")
-        print("Theta1: {:.2f}, Theta2: {:.2f}".format(np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])))
+        print("Theta1: {:.2f}, Theta2: {:.2f}".format(optimal_solution[0], optimal_solution[1]))
+    else:
+        print("No optimal solution found within joint angle limits.")
+        optimal_solution = (theta, 0)  # Set optimal solution to current angles to prevent damage
 
     return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
 
