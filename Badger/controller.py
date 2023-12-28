@@ -25,7 +25,7 @@ import time
 class BadgerController(Controller):
     clawDeadZone = 10000
     deadzone = 2000
-    wristdeadzone = 31000
+    wristdeadzone = 32000
 
     def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
