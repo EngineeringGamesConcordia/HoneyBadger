@@ -27,7 +27,7 @@ class BadgerController(Controller):
     deadzone = 2000
     wristdeadzone = 31000
 
-def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
+    def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
         self.motor = motor
         self.drive = drive
@@ -46,7 +46,7 @@ def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
         self.lastValueCloseClaw = 0
         self.gas =0
         Controller.__init__(self, **kwargs)
-
+        
     '''
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
