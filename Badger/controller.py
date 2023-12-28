@@ -127,9 +127,9 @@ class BadgerController(Controller):
         self.lastValueArmNegY = value;
         print("arm y-neg")
         
-    def on_R3_y_at_rest(self):
-        self.lastValueArmY = 0
-        self.lastValueArmNegY = 0
+    #def on_R3_y_at_rest(self):
+     #   self.lastValueArmY = 0
+      #  self.lastValueArmNegY = 0
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
     '''
@@ -210,10 +210,10 @@ class BadgerController(Controller):
     '''   
     def checker(self):      
         #arms if
-        if(self.lastValueArmY >self.deadzone):
+        if(self.lastValueArmY >0):
             self.arm.y_pos(self.lastValueArmY)  
                 
-        if(self.lastValueArmNegY <-self.deadzone):
+        if(self.lastValueArmNegY < -self.deadzone):
             self.arm.y_neg(self.lastValueArmNegY)  
             
         if(self.lastValueArmX >0): 
