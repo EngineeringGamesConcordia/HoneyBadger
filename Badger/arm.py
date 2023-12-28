@@ -25,7 +25,7 @@ def calculate_inverse_kinematic(px, py):
 
     ikangles = [theta_1, theta_2]
     arm.ee = [px, py, 0.]
-    ikangles = round(rad2deg(arm.angles))
+    ikangles = numpy.round(rad2deg(arm.angles))
     
     return theta_1, theta_2
 
