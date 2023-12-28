@@ -35,8 +35,11 @@ px, py = forward_kinematics(initial_theta1, initial_theta2)
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target):
     
+    nonlocal initial_theta1
+    nonlocal initial_theta2
+    
     def calculate_cost(theta1, theta2):
-        return np.sqrt((theta1 - nonlocal initial_theta1)**2 + (theta2 - nonlocal initial_theta2)**2)
+        return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
     
     theta = np.arctan2(y_target, x_target)
     x_adjusted = (x_target - offset2 - offset_x) * np.cos(theta)
@@ -90,7 +93,7 @@ def calculate_inverse_kinematic(x_target, y_target):
         print("No optimal solution found within joint angle limits.")
         optimal_solution = (theta, 0)  # Set optimal solution to current angles to prevent damage
 
-    nonlocal initial_theta1, nonlocal initial_theta2 = np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
+    initial_theta1, initial_theta2 = np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
 
     return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
 
