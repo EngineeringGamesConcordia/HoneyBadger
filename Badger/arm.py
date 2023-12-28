@@ -1,4 +1,4 @@
-from numpy import *
+import numpy as np
 import tinyik
 from motors import stepperMotor
 import RPi.GPIO as GPIO
@@ -19,15 +19,14 @@ py = 22
 def calculate_inverse_kinematic(px, py):
 
     #lengths of the arm are 22
-    arm = tinyik.Actuator(['z', [22., 0., 0.], 'z', [22., 0., 0.]])
-    theta_1 = 0
-    theta_2 = 0
+    arm = tinyik.Actuator(['z', [0., 22., 0.], 'z', [0., 22., 0.]])
 
-    ikangles = [theta_1, theta_2]
-    arm.ee = [px, py]
-    ikangles = round(rad2deg(arm.angles))
     
-    return theta_1, theta_2
+    arm.ee = [-px, -py, 0.]
+    theta_1ik = np.round(np.rad2deg(arm.angles[0]))
+    theta_2ik = np.round(np.rad2deg(arm.angles[1]))
+    
+    return theta_1ik, theta_2ik
 
 
 class Arm:
@@ -46,7 +45,8 @@ class Arm:
         self.wrist_ud_servo = angles[3]
         self.claw_servo = angles[4]
         self.kit = kit
-        self.kit.servo[0].angle = angles[0]
+        self.base_stepper = base_stepper
+        self.kit.servo[0].angle = angles[0] 
         self.kit.servo[1].angle = angles[1]
         self.kit.servo[2].angle = angles[2]
         self.kit.servo[3].angle = angles[3]
@@ -66,7 +66,24 @@ class Arm:
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.claw_servo = self.claw_servo - val
         self.kit.servo[4].angle = self.claw_servo
-
+    # ------------------------------ SERVO0 MOVEMENTS
+    def serv0_turn_left(self):
+        print("> servo0 rotating left")
+        self.base_servo = self.base_servo - self.moveVal
+        self.kit.servo[0].angle = self.base_servo
+    def serv0_turn_right(self):
+        print("> servo0 rotating right")
+        self.base_servo = self.base_servo + self.moveVal
+        self.kit.servo[0].angle = self.base_servo
+    # ------------------------------ SERVO1 MOVEMENTS
+    def serv1_turn_left(self):
+        print("> servo1 rotating left")
+        self.elbow_servo = self.elbow_servo - self.moveVal
+        self.kit.servo[1].angle = self.elbow_servo
+    def serv1_turn_right(self):
+        print("> servo1 rotating right")
+        self.elbow_servo = self.elbow_servo + self.moveVal
+        self.kit.servo[1].angle = self.elbow_servo   
     # ------------------------------ ROTATIONAL MOVEMENTS
     def turn_left(self):
         print("> wrist rotating left")
@@ -133,22 +150,15 @@ class Arm:
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
-    # ------------------------------ STEPPER Set up
+    # ------------------------------ STEPPER Movements
 
-    # Insert stepper codes lol
     def cw_stepper(self):
-        GPIO.output(DIR, CW)
-        #going forward
-        GPIO.output(STEP, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP, GPIO.LOW)
-        sleep(delay)
+        print("> stepper cw")
+        self.base_stepper.cw()
+        
     def ccw_stepper(self):
-        GPIO.output(DIR, CCW)
-        GPIO.output(STEP, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP, GPIO.LOW)
-        sleep(delay)
+        print("> stepper ccw")
+        self.base_stepper.ccw()
     
 """
     # ------------------------------ Move down

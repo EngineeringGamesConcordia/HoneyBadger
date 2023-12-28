@@ -1,4 +1,5 @@
 from nntplib import decode_header
+from sre_parse import State
 from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
@@ -27,9 +28,8 @@ class BadgerController(Controller):
     deadzone = 2000
     wristdeadzone = 32000
 
-    def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
+    def __init__(self, arm, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
-        self.motor = motor
         self.drive = drive
         self.vacuum = vacuum
         self.wrist = wrist
@@ -44,66 +44,106 @@ class BadgerController(Controller):
         self.lastValueDriveNegY=0
         self.lastValueOpenClaw = 0
         self.lastValueCloseClaw = 0
+        
         self.lastValueWristDown = 0
         self.lastValueWristUp = 0
         self.lastValueWristLeft = 0
         self.lastValueWristRight = 0
+        
+        self.lastValueBaseDown = 0
+        self.lastValueBaseUp = 0
+        self.lastValueBaseLeft = 0
+        self.lastValueBaseRight = 0
+        
+        self.lastValueElbowDown = 0
+        self.lastValueElbowUp = 0
+        self.lastValueElbowLeft = 0
+        self.lastValueElbowRight = 0     
         self.gas =0
         Controller.__init__(self, **kwargs)
+        self.state = False #IKFunctions DRive and Gas
+        #on true: indivual joint control, no drive, open close claw instead of gas
         
-    '''
-    ------------------------------ START AUTOMATIC CONTROL ------------------------------
-    '''
-    def on_options_press(self):
-        print("start automatic control")
-        self.automation.start()
 
     '''
-    ------------------------------ START MANUAL CONTROL ------------------------------
+    ------------------------------ STATE CONTROL (CLAW DRIVE GAS JOINTS)------------------------------
     '''
     def on_share_press(self):
-        print("start manual control")
+        self.state =not(self.state)        
+        print("start manual control" + str(self.state))
+        self.gas =0
+        self.lastValueCloseClaw = 0
+        self.lastValueOpenClaw = 0
         # self.drive.start_manual_control()
+    
+      # GAS GAS GAS && CLOSE
+    def on_R2_press(self, value):
+        if(self.state == False):
+            value= (value+2**15)/(2**16)
+            self.gas = value
+            print("Gas Value" + str(self.gas))
+        else:
+            value= (value+2**15)
+            self.lastValueCloseClaw = value
+
+    def on_R2_release(self):
+        if(self.state == False):
+            self.gas = 0
+        else:    
+            self.lastValueCloseClaw = 0
+    
+        
+    def on_L2_press(self, value):
+        if(self.state == True):
+            value= (value+2**15)
+            self.lastValueOpenClaw = value
+        
+    def on_L2_release(self):
+        if(self.state == True):
+            self.lastValueOpenClaw = 0     
+
+
+
+
 
     '''
     ------------------------------ DRIVE SYSTEM ------------------------------
     '''
     # Drive front
     def on_up_arrow_press(self):
-        self.drive.move_front()
-        print("moved front")
+        if(self.state == False):
+            self.drive.move_front()
+            print("moved front")
         
     #Stop X
     def on_up_down_arrow_release(self):
-        self.drive.move_stop()
-        print("i stopped X")
+        if(self.state == False):
+            self.drive.move_stop()
+            print("i stopped X")
         
     # Drive back
     def on_down_arrow_press(self):
-        self.drive.move_back()
-        print("moved back")
+        if(self.state == False):
+            self.drive.move_back()
+            print("moved back")
         
     # Drive left
     def on_left_arrow_press(self):
-        self.drive.move_left()
-        print("moved left")
+        if(self.state == False):
+            self.drive.move_left()
+            print("moved left")
         
 
     # Drive right
     def on_right_arrow_press(self):
-        self.drive.move_right()
-        print("moved right")
+        if(self.state == False):
+            self.drive.move_right()
+            print("moved right")
     #Stopped Y
     def on_left_right_arrow_release(self):
-        self.drive.move_stop()
-        print("i stopped Y")
-    # GAS GAS GAS
-    #def on_R2_press(self, value):
-    #    value= (value+2**15)/(2**16)
-    #    self.gas = value
-    #    print("Gas Value" + str(self.gas))
-    #def on_R2_release(self):
-    #    self.gas = 0
+        if(self.state == False):
+            self.drive.move_stop()
+            print("i stopped Y")
     '''
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
     '''
@@ -140,12 +180,12 @@ class BadgerController(Controller):
 
     # Turn Right
     def on_R1_press(self):
-        self.motor.cw()
+        self.arm.cw_stepper()
         print("Stepper Moving Right")
         #insert stepper code for right
     # Turn Left
     def on_L1_press(self):
-        self.motor.ccw()
+        self.arm.ccw_stepper()
         print("Stepper Moving Left")
         #insert stepper code for left
     
@@ -164,21 +204,7 @@ class BadgerController(Controller):
     '''
     ------------------------------ CLAW SYSTEM ------------------------------
     '''
-    # Open claw
-    def on_L2_press(self, value):
-        value= (value+2**15)
-        self.lastValueOpenClaw = value
-        
-    def on_L2_release(self):
-        self.lastValueOpenClaw = 0     
-    
-    # Close claw
-    def on_R2_press(self, value):
-        value= (value+2**15)
-        self.lastValueCloseClaw = value
-    
-    def on_R2_release(self):
-        self.lastValueCloseClaw = 0
+
 
     '''
     ------------------------------ WRIST L+R SYSTEM ------------------------------TO BE FIXED
@@ -222,31 +248,53 @@ class BadgerController(Controller):
     ------------------------------TICK SYSTEM ------------------------------
     '''   
     def checker(self):      
-        #arms if
-        if(self.lastValueArmY >0):
+        #Arms
+            #Cervo 0 (Base)
+        if(self.lastValueArmY >0 and self.state == False):
             self.arm.y_pos(self.lastValueArmY)  
+        else:
+            #Cervo 0 Turn Left
+            if(self.lastValueArmY> self.clawDeadZone):
+                self.arm.serv0_turn_left()
                 
-        if(self.lastValueArmNegY < -self.deadzone):
-            self.arm.y_neg(self.lastValueArmNegY)  
-            
-        if(self.lastValueArmX >0): 
-            self.arm.x_pos(self.lastValueArmX)
-                
-        if(self.lastValueArmNegX < -self.deadzone):
-            self.arm.x_neg(self.lastValueArmNegX)       
 
-        #claw if
-        if(self.lastValueOpenClaw >self.clawDeadZone):  
+        if(self.lastValueArmNegY < -self.deadzone and self.state == False):
+            self.arm.y_neg(self.lastValueArmNegY)  
+        else:           
+            #Cervo 0 Turn Right
+            if(self.lastValueArmNegY <-self.clawDeadZone):
+                self.arm.serv0_turn_right()
+                
+
+        if(self.lastValueArmX >0 and self.state == False): 
+            self.arm.x_pos(self.lastValueArmX)
+        else:           
+            #Cervo 1 Turn Right
+            if(self.lastValueArmX >self.clawDeadZone):
+                self.arm.serv1_turn_right()   
+                
+
+        if(self.lastValueArmNegX < -self.deadzone and self.state == False):
+            self.arm.x_neg(self.lastValueArmNegX)       
+        else:           
+            #Cervo 1 Turn Left
+            if(self.lastValueArmX <-self.clawDeadZone):
+                self.arm.serv1_turn_right() 
+                
+
+        #Claw
+        if(self.lastValueOpenClaw >self.clawDeadZone and self.state ==True):  
             self.arm.open_claw(self.lastValueOpenClaw)
         else:  
             self.lastValueOpenClaw = 0
             #do the same for the close
             
-        if(self.lastValueCloseClaw >self.clawDeadZone):    
+        if(self.lastValueCloseClaw >self.clawDeadZone and self.state ==True):    
             self.arm.close_claw(self.lastValueCloseClaw)
         else:
             self.lastValueCloseClaw=0
-            
+         
+         #Wrists   
         if(self.lastValueWristDown >self.wristdeadzone):
             self.arm.go_down()  
                 

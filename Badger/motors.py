@@ -34,16 +34,16 @@ class stepperMotor:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.dir, GPIO.OUT)
         GPIO.setup(self.step, GPIO.OUT)
+        
     def cw(self):
-        #could have a small for loop which will make it do a few movement
-        GPIO.output(self.dir, 1)
+        GPIO.output(self.dir, 0)
         GPIO.output(self.step, GPIO.HIGH)
         sleep(self.delay)
         GPIO.output(self.step, GPIO.LOW)
         sleep(self.delay)
         
     def ccw(self):
-        GPIO.output(self.dir, 0)
+        GPIO.output(self.dir, 1)
         GPIO.output(self.step, GPIO.HIGH)
         sleep(self.delay)
         GPIO.output(self.step, GPIO.LOW)
