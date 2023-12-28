@@ -180,12 +180,12 @@ class BadgerController(Controller):
     '''
 
     # Wrist Turn Left
-    def on_L3_left(self):
+    def on_L3_left(self, value):
         print("wrist left")
         self.arm.turn_left()
 
     # Wrist Turn Right
-    def on_L3_right(self):
+    def on_L3_right(self, value):
         print("wrist right")
         self.arm.turn_right()
    
@@ -194,12 +194,12 @@ class BadgerController(Controller):
     '''
 
     # Wrist Go Up
-    def on_L3_up(self):
+    def on_L3_up(self, value):
         print("wrist up")
         self.arm.go_up()
 
     # Wrist Go Down
-    def on_L3_down(self):
+    def on_L3_down(self, value):
         print("wrist down")
         self.arm.go_down()
         
