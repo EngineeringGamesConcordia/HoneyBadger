@@ -250,7 +250,7 @@ class BadgerController(Controller):
     def checker(self):      
         #Arms
             #Cervo 0 (Base)
-        if(self.lastValueArmY >0 and self.state == False):
+        if(self.lastValueArmY >0 and self.state == True):
             self.arm.y_pos(self.lastValueArmY)  
         else:
             #Cervo 0 Turn Left
@@ -258,7 +258,7 @@ class BadgerController(Controller):
                 self.arm.serv0_turn_left()
                 
 
-        if(self.lastValueArmNegY < -self.deadzone and self.state == False):
+        if(self.lastValueArmNegY < -self.deadzone and self.state == True):
             self.arm.y_neg(self.lastValueArmNegY)  
         else:           
             #Cervo 0 Turn Right
@@ -266,7 +266,7 @@ class BadgerController(Controller):
                 self.arm.serv0_turn_right()
                 
 
-        if(self.lastValueArmX >0 and self.state == False): 
+        if(self.lastValueArmX >0 and self.state == True): 
             self.arm.x_pos(self.lastValueArmX)
         else:           
             #Cervo 1 Turn Right
@@ -274,7 +274,7 @@ class BadgerController(Controller):
                 self.arm.serv1_turn_right()   
                 
 
-        if(self.lastValueArmNegX < -self.deadzone and self.state == False):
+        if(self.lastValueArmNegX < -self.deadzone and self.state == True):
             self.arm.x_neg(self.lastValueArmNegX)       
         else:           
             #Cervo 1 Turn Left
