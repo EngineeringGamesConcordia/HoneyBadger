@@ -135,11 +135,14 @@ class BadgerController(Controller):
     def on_R1_press(self):
         print("Stepper Moving Right")
         #insert stepper code for right
+        self.arm.stepper_cw()
+        
 
     # Turn Left
     def on_L1_press(self):
         print("Stepper Moving Left")
         #insert stepper code for left
+        self.arm.stepper_ccw()
     
     '''
     ------------------------------ VACUUM SYSTEM ------------------------------

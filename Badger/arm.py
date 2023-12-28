@@ -53,6 +53,7 @@ class Arm:
         self.py = py
         self.moveVal = moveVal
         self.SLOW_MODE = False
+        self.base_stepper = base_stepper
 
     # ------------------------------ CLAW MOVEMENTS
     def open_claw(self, val):
@@ -128,20 +129,11 @@ class Arm:
     # ------------------------------ STEPPER Set up
 
     # Insert stepper codes lol
-    def cw_stepper(self):
-        GPIO.output(DIR, CW)
-        #going forward
-        GPIO.output(STEP, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP, GPIO.LOW)
-        sleep(delay)
-    def ccw_stepper(self):
-        GPIO.output(DIR, CCW)
-        GPIO.output(STEP, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP, GPIO.LOW)
-        sleep(delay)
-    
+  
+    def stepper_cw(self):
+        self.base_stepper.cw()
+    def stepper_ccw(self):
+        self.base_stepper.ccw()
 """
     # ------------------------------ Move down
     def move_down(self):
