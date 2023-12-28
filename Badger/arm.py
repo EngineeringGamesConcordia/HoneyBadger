@@ -20,7 +20,11 @@ def calculate_inverse_kinematic(px, py):
 
     #lengths of the arm are 22
     arm = tinyik.Actuator(['z', [0., 22., 0.], 'z', [22., 0., 0.]])
-
+    theta_1ik = np.deg2rad(90)
+    theta_2ik = np.deg2rad(-90)
+    arm.angles[0]=theta_1ik
+    arm.angles[1]=theta_2ik
+    
     arm.ee = [px, py, 0.]
     theta_1ik = np.round(np.rad2deg(arm.angles[0]))
     theta_2ik = np.round(np.rad2deg(arm.angles[1]))
