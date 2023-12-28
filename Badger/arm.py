@@ -35,10 +35,10 @@ px, py = forward_kinematics(initial_theta1, initial_theta2)
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target):
     
-    nonlocal initial_theta1
-    nonlocal initial_theta2
     
     def calculate_cost(theta1, theta2):
+        nonlocal initial_theta1
+        nonlocal initial_theta2
         return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
     
     theta = np.arctan2(y_target, x_target)
