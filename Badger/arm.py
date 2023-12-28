@@ -80,12 +80,12 @@ class Arm:
 
     # ------------------------------ ROTATIONAL MOVEMENTS
     def go_up(self):
-        print("> wrist rotating left")
+        print("> wrist up")
         self.wrist_ud_servo = self.wrist_ud_servo - self.moveVal
         self.kit.servo[3].angle = self.wrist_ud_servo
 
     def go_down(self):
-        print("> wrist rotating right")
+        print("> wrist down")
         self.wrist_ud_servo = self.wrist_ud_servo + self.moveVal
         self.kit.servo[3].angle = self.wrist_ud_servo
 
