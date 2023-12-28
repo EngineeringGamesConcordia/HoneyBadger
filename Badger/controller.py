@@ -169,10 +169,11 @@ class BadgerController(Controller):
         self.lastValueOpenClaw = 0     
     
     # Close claw
+    def on_L2_press(self, value):
         value= (value+2**15)
         self.lastValueCloseClaw = value
     
-    def on_R2_release(self):
+    def on_L2_release(self):
         self.lastValueCloseClaw = 0
 
     '''
