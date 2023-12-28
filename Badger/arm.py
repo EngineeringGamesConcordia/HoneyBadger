@@ -1,4 +1,4 @@
-from numpy import *
+import numpy as np
 import tinyik
 from motors import stepperMotor
 import RPi.GPIO as GPIO
@@ -25,7 +25,7 @@ def calculate_inverse_kinematic(px, py):
 
     ikangles = [theta_1, theta_2]
     arm.ee = [px, py, 0.]
-    ikangles = numpy.round(rad2deg(arm.angles))
+    ikangles = np.round(np.rad2deg(arm.angles))
     
     return theta_1, theta_2
 
