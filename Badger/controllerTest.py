@@ -1,4 +1,5 @@
 from pyPS4Controller.controller import Controller
+from controller import BadgerController
 
 class MyController(Controller):
 

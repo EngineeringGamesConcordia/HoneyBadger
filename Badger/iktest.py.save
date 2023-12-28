@@ -1,0 +1,37 @@
+from ikpy.chain import Chain
+from ikpy.link import OriginLink, URDFLink
+import ikpy.chain
+import numpy as np
+import ikpy.utils.plot as plot_utils
+
+arm_chain = Chain(name='left_arm', links=[
+    OriginLink(),
+    URDFLink(
+      name="shoulder",
+      origin_translation=[-10, 0, 5],
+      origin_orientation=[0, 1.57, 0],
+      rotation=[0, 1, 0],
+    ),
+    URDFLink(
+      name="elbow",
+      origin_translation=[25, 0, 0],
+      origin_orientation=[0, 0, 0],
+      rotation=[0, 1, 0],
+    ),
+    URDFLink(
+      name="wrist",
+      origin_translation=[22, 0, 0],
+      origin_orientation=[0, 0, 0],
+      rotation=[0, 1, 0],
+    )
+])
+
+target_position = [ 2, 2, 2]
+print("The angles of each joints are : ", arm_chain.inverse_kinematics(target_position))
+
+%matplotlib widget
+import matplotlib.pyplot as plt
+fig, ax = plot_utils.init_3d_figure()
+my_chain.plot(my_chain.inverse_kinematics(target_position), ax, target=target_position)
+plt.xlim(-0.1, 0.1)
+plt.ylim(-0.1, 0.1)
