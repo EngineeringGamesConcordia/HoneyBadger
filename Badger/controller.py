@@ -24,6 +24,7 @@ import time
 
 class BadgerController(Controller):
     clawDeadZone = 10000
+    deadzone = 2000
 
     def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
@@ -215,34 +216,33 @@ class BadgerController(Controller):
     ------------------------------TICK SYSTEM ------------------------------
     '''   
     def checker(self):      
-            #arms if
-            if(self.lastValueArmX >0): 
-                self.arm.x_pos(self.lastValueArmX)
+        #arms if
+        if(self.lastValueArmX >0): 
+            self.arm.x_pos(self.lastValueArmX)
                 
-            if(self.lastValueArmNegX < -self.deadzone):
-                 self.arm.x_neg(self.lastValueArmNegX)
+        if(self.lastValueArmNegX < -self.deadzone):
+            self.arm.x_neg(self.lastValueArmNegX)
                 
-            if(self.lastValueArmY >self.deadzone):
-                self.arm.y_pos(self.lastValueArmY)  
+        if(self.lastValueArmY >self.deadzone):
+            self.arm.y_pos(self.lastValueArmY)  
                 
+        if(self.lastValueArmNegY <-self.deadzone):
+            self.arm.y_neg(self.lastValueArmNegY)            
 
-            if(self.lastValueArmNegY <-self.deadzone):
-               self.arm.y_neg(self.lastValueArmNegY)            
-
-            #claw if
-            if(self.lastValueOpenClaw >self.clawDeadZone):  
-                print("I am in the if open")
-                self.arm.open_claw(self.lastValueOpenClaw)
-            else:
-                    print("I am in the if open")    
-                    self.lastValueOpenClaw = 0
-                    #do the same for the close
+        #claw if
+        if(self.lastValueOpenClaw >self.clawDeadZone):  
+            print("I am in the if open")
+            self.arm.open_claw(self.lastValueOpenClaw)
+        else:
+            print("I am in the else open")    
+            self.lastValueOpenClaw = 0
+            #do the same for the close
             
-            if(self.lastValueCloseClaw >self.clawDeadZone):    
-                print("I am in the if close")
-                self.arm.open_claw(self.lastValueCloseClaw)
-            else:
-                print("I am in the if close")
-                self.lastValueCloseClaw=0
+        if(self.lastValueCloseClaw >self.clawDeadZone):    
+            print("I am in the if close")
+            self.arm.open_claw(self.lastValueCloseClaw)
+        else:
+            print("I am in the else close")
+            self.lastValueCloseClaw=0
     
         
