@@ -4,7 +4,6 @@ from arm import Arm
 from drive import Drive
 from vacuum import Vacuum
 from automation import Automation
-from motors import dcMotor
 from motors import stepperMotor
 import time
 
@@ -12,22 +11,23 @@ import time
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
     share               start automatic control
     options             start manual control
-    left joystick       drive (front, back, left, right)
+    dpad                drive (front, back, left, right)
+    left joystick       turn wrist (wrist LF =x) (wrist UD=y) (remove a thing)
     right joystick      arm (x-pos, x-neg, y-pos, y-neg)
     square              start vacuum
     x                   stop vacuum
-    L2                  open claw
-    R2                  close claw
-    L1                  turn claw wrist left
-    R1                  turn claw wrist right
+    L2                  open claw (only when we change to manual control)
+    R2                  GAS GAS GAS
+    L1                  Stepper
+    R1                  Stepper
 '''
 
 class BadgerController(Controller):
     clawDeadZone = 10000
 
-    def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
+    def __init__(self, arm, motor, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
-        self.claw = claw
+        self.motor = motor
         self.drive = drive
         self.vacuum = vacuum
         self.wrist = wrist
@@ -136,11 +136,13 @@ class BadgerController(Controller):
 
     # Turn Right
     def on_R1_press(self):
+        self.motor.cw()
         print("Stepper Moving Right")
         #insert stepper code for right
 
     # Turn Left
     def on_L1_press(self):
+        self.motor.ccw()
         print("Stepper Moving Left")
         #insert stepper code for left
     
@@ -186,7 +188,7 @@ class BadgerController(Controller):
     '''
     '''
     # Wrist Turn Left
-    def on_left_arrow_press(self):
+    def L3(self):
         print("wrist left")
         self.arm.turn_left()
 
@@ -210,6 +212,7 @@ class BadgerController(Controller):
         self.arm.go_down()
         
     #getting the values of the placeholder    
+    #have a L3pressed set it to default
     '''
     '''
     ------------------------------TICK SYSTEM ------------------------------
