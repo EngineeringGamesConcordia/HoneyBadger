@@ -29,47 +29,16 @@ class dcMotor:
         GPIO.output(self.in1, GPIO.LOW)
         GPIO.output(self.in2, GPIO.LOW)
 
-
+        #code below to get rid of
 class stepperMotor:
-    GPIO.setwarnings(False)
-
-    def __init__(self, pin1, pin2, pin3, pin4):
-        self.pin1 = pin1
-        self.pin2 = pin2
-        self.pin3 = pin3
-        self.pin4 = pin4
-        GPIO.setup(self.pin1, GPIO.OUT)
-        GPIO.setup(self.pin2, GPIO.OUT)
-        GPIO.setup(self.pin3, GPIO.OUT)
-        GPIO.setup(self.pin4, GPIO.OUT)
-
-    # direction (str): the direction the motor should turn. 'clockwise' and 'anticlockwise'
-    # angle (int): the angle in degrees the motor should turn. between 0 an 360
-    def turn_stepper_motor(self, direction, angle):
-        # Define motor sequence
-        seq = [[1, 0, 0, 1],
-               [1, 0, 0, 0],
-               [1, 1, 0, 0],
-               [0, 1, 0, 0],
-               [0, 1, 1, 0],
-               [0, 0, 1, 0],
-               [0, 0, 1, 1],
-               [0, 0, 0, 1]]
-
-        # Calculate steps required for given angle
-        steps_per_rev = 512
-        steps = int((angle/360) * steps_per_rev)
-
-        # Set direction of motor
-        if direction == 'clockwise':
-            seq = seq[::-1]
-
-        # Turn motor
-        for i in range(steps):
-            for halfstep in range(8):
-                GPIO.output(self.pin1, seq[halfstep][0])
-                GPIO.output(self.pin2, seq[halfstep][1])
-                GPIO.output(self.pin3, seq[halfstep][2])
-                GPIO.output(self.pin4, seq[halfstep][3])
-                sleep(1)
+    DIR = 19   # Direction GPIO Pin
+    STEP = 26  # Step GPIO Pin
+    CW = 1     # Clockwise Rotation
+    CCW = 0    # Counterclockwise Rotation
+    SPR = 60   # Steps per Revolution (360 / 7.5)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(DIR, GPIO.OUT)
+    GPIO.setup(STEP, GPIO.OUT)
+    step_count = SPR
+    delay = .0108
         

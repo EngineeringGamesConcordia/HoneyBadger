@@ -1,3 +1,4 @@
+from nntplib import decode_header
 from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
@@ -22,7 +23,7 @@ import time
 '''
 
 class BadgerController(Controller):
-
+    deadzone = 2000
 
     def __init__(self, arm, claw, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
@@ -55,12 +56,6 @@ class BadgerController(Controller):
     '''
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
-    lastValueArmX = 0 
-    lastValueArmY = 0
-    lastValueDriveX = 0
-    lastValueDriveY = 0
-    lastValueOpenClaw = 0
-    lastValueCloseClaw = 0
     def on_options_press(self):
         print("start automatic control")
         self.automation.start()
@@ -79,25 +74,24 @@ class BadgerController(Controller):
     def on_L3_up(self, value):
         self.lastValueDriveY = value
         print("move front")
-        self.drive.move_front()
 
     # Drive back
     def on_L3_down(self, value):
         self.lastValueDriveNegY = value
         print("move back")
-        self.drive.move_back()
+        
 
     # Drive left
     def on_L3_left(self, value):
         self.lastValueDriveNegX = value
         print("move left")
-        self.drive.move_left()
+        
 
     # Drive right
     def on_L3_right(self, value):
         self.lastValueDriveX = value
         print("move right")
-        self.drive.move_right()
+        
 
     '''
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
@@ -112,7 +106,7 @@ class BadgerController(Controller):
     def on_R3_down(self, value):
         self.lastValueArmNegX = value;
         print("arm x-neg")
-        self.arm.x_neg(value)
+        
 
     # Arm y-pos
     def on_R3_left(self, value):
@@ -183,58 +177,64 @@ class BadgerController(Controller):
         self.arm.turn_right()
         
     #getting the values of the placeholder    
-
+    '''
+    ------------------------------TICK SYSTEM ------------------------------
+    '''   
     def checker(self):      
             #arms if
-            if(self.lastValueArmX >300): 
+            if(self.lastValueArmX >self.deadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             else:
                 self.lastValueArmX=0
                          #follow this format for the rest of the functions
                 
-            if(self.lastValueArmNegX < -300):
+            if(self.lastValueArmNegX < -self.deadzone):
                  self.arm.x_neg(self.lastValueArmNegX)
             else:
                 self.lastValueArmNegX = 0
                 
-            if(self.lastValueArmY >300):
+            if(self.lastValueArmY >self.deadzone):
                 self.arm.y_pos(self.lastValueArmY)  
             else:
                 self.lastValueArmY=0
                 
 
-            if(self.lastValueArmNegY <-300):
-               self.arm.y_neg(self.lastValueDriveNegY)
+            if(self.lastValueArmNegY <-self.deadzone):
+               self.arm.y_neg(self.lastValueArmNegY)
             else:
                 self.lastValueArmNegY=0   
+             
                 
             #drive if
-            if(self.lastValueDriveX >300):
-                self.on_L3_right(self.lastValueDriveX)
+            if(self.lastValueDriveX >self.deadzone):
+                self.drive.move_right()
             else:
-                    self.lastValueDriveX=0    
-            if(self.lastValueDriveNegX < -300):
-                self.on_L3_left(self.lastValueDriveNegX)
+                    self.lastValueDriveX=0
+                    
+
+            if(self.lastValueDriveNegX < -self.deadzone):
+                self.drive.move_left()
             else:
                  self.lastValueDriveNegX =0
-            if(self.lastValueDriveY >300):   
-                self.on_L3_up(self.lastValueDriveY)
+                 
+            if(self.lastValueDriveY >self.deadzone):   
+                self.drive.move_front()
             else:
                     self.lastValueDriveY =0    
-            if(self.lastValueDriveNegY <-300):
-                self.on_L3_down(self.lastValueDriveNegY)
+            if(self.lastValueDriveNegY <-self.deadzone):
+                    self.drive.move_back()
             else:
                     self.lastValueDriveNegY =0    
             
             #claw if
-            if(self.lastValueOpenClaw >1000):    
-                self.on_L2_press(self.lastValueOpenClaw)
+            if(self.lastValueOpenClaw >self.deadzone):    
+                self.claw.open_claw(self.lastValueOpenClaw)
             else:
                     self.lastValueOpenClaw = 0
                     #do the same for the close
 
-            if(self.lastValueCloseClaw >1000):    
-                self.on_R2_press(self.lastValueCloseClaw)
+            if(self.lastValueCloseClaw >self.deadzone):    
+                self.claw.open_claw(self.lastValueCloseClaw)
             else:
                 self.lastValueCloseClaw=0
     
