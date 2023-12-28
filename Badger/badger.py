@@ -6,8 +6,8 @@ from time import sleep
 from adafruit_servokit import ServoKit
 from controller import BadgerController
 from automation import Automation
-from motors import stepperMotor
-from motors import dcMotor
+from motors import *
+
 from arm import Arm
 from vacuum import Vacuum
 from drive import Drive
@@ -30,9 +30,12 @@ kit = ServoKit(channels=16)
 angles = [80,80,80,0,20]
 base_stepper = stepperMotor(25, 8, 7, 12)
 arm1 = Arm(base_stepper, kit, angles)
-vacuum1 = Vacuum(10, 9, 11)
-left_track = dcMotor(16, 20, 21)
-right_track = dcMotor(5, 6, 13)
+#vacuum1 = Vacuum(10, 9, 11)
+vacuum1 = Vacuum(22)
+#left_track = dcMotor(16, 20, 21)
+left_track = dcMotorBTS(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction
+right_track = dcMotorBTS(13, 19)
+#right_track = dcMotor(5, 6, 13)
 drivesys = Drive(left_track, right_track)
 automation1 = Automation()
 #send the value from the contrller to the arm

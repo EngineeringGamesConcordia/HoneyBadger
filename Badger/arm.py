@@ -137,16 +137,7 @@ class Arm:
         self.kit.servo[3].angle = theta_3
 
     # ------------------------------ STEPPER Set up
-    DIR = 19   # Direction GPIO Pin
-    STEP = 26  # Step GPIO Pin
-    CW = 1     # Clockwise Rotation
-    CCW = 0    # Counterclockwise Rotation
-    SPR = 60   # Steps per Revolution (360 / 7.5)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(DIR, GPIO.OUT)
-    GPIO.setup(STEP, GPIO.OUT)
-    step_count = SPR
-    delay = .0108
+
     # Insert stepper codes lol
     def cw_stepper(self):
         GPIO.output(DIR, CW)
