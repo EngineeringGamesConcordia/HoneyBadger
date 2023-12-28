@@ -231,7 +231,7 @@ class BadgerController(Controller):
             #do the same for the close
             
         if(self.lastValueCloseClaw >self.clawDeadZone):    
-            self.arm.open_claw(self.lastValueCloseClaw)
+            self.arm.close_claw(self.lastValueCloseClaw)
         else:
             self.lastValueCloseClaw=0
     
