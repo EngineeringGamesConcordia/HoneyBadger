@@ -4,14 +4,13 @@ from motors import stepperMotor
 import RPi.GPIO as GPIO
 from time import sleep
 from adafruit_servokit import ServoKit
-# reference: https://github.com/aakieu/3-dof-planar/blob/master/InverseKinematics.py
 
 kit = ServoKit(channels=16)
 CONTROLLER_SCALE = 2**15
 BIG_SERVO_SCALE = 1/(2**18)
 SMALL_SERVO_SCALE = 1/(2**18)
 CLAW_SCALE = 1/(2**18)
-KINEMATIC_SCALE = 2/(2**18)
+KINEMATIC_SCALE = 1/(2**18)
 
 moveVal = 0.1
 l1 = 22
@@ -66,8 +65,8 @@ def calculate_inverse_kinematic(x_target, y_target):
     
     # Define joint angle limits
     # Define joint angle limits in radians
-    theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(160)
-    theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(160)
+    theta1_min, theta1_max = np.deg2rad(15), np.deg2rad(160)
+    theta2_min, theta2_max = np.deg2rad(15), np.deg2rad(160)
     
     theta1_1 = adjust_to_limits(theta1_1, theta1_min, theta1_max)
     theta2_1 = adjust_to_limits(theta2_1, theta2_min, theta2_max)
