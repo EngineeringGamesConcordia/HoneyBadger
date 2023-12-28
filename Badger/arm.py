@@ -12,8 +12,8 @@ CLAW_SCALE = 1/(2**18)
 KINEMATIC_SCALE = 2/(2**18)
 
 moveVal = 0.1
-px = 22
-py = 22
+px = 0
+py = 0
 l1 = 22
 l2 = 22
 initial_theta1, initial_theta2 = np.deg2rad(80), np.deg2rad(80)
