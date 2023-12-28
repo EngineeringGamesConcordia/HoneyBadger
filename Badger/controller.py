@@ -71,32 +71,35 @@ class BadgerController(Controller):
     ------------------------------ DRIVE SYSTEM ------------------------------
     '''
     # Drive front
-    def on_L3_up(self, value):
-        self.lastValueDriveY = value
-        print("move front")
-
-    # Drive back
-    def on_L3_down(self, value):
-        self.lastValueDriveNegY = value
-        print("move back")
+    def on_up_arrow_press(self):
+        self.drive.move_front()
+        print("moved front")
         
-    def on_L3_y_at_rest(self):
-        self.lastValueDriveY = 0
-        self.lastValueDriveNegY =0
+    #Stop X
+    def on_up_down_arrow_release(self):
+        self.drive.move_stop()
+        print("i stopped X")
+        
+    # Drive back
+    def on_down_arrow_press(self):
+        self.drive.move_back()
+        print("moved back")
+        
     # Drive left
-    def on_L3_left(self, value):
-        self.lastValueDriveNegX = value
-        print("move left")
+    def on_left_arrow_press(self):
+        self.drive.move_left()
+        print("moved left")
         
 
     # Drive right
-    def on_L3_right(self, value):
-        self.lastValueDriveX = value
-        print("move right")
-        
-    def on_L3_x_at_rest(self):
-        self.lastValueDriveX = 0
-        self.lastValueDriveNegX =0
+    def on_right_arrow_press(self):
+        self.drive.move_right()
+        print("moved right")
+    #Stopped Y
+    def on_left_right_arrow_release(self):
+        self.drive.move_stop()
+        print("i stopped Y")
+
     '''
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
     '''
@@ -223,22 +226,7 @@ class BadgerController(Controller):
                 
 
             if(self.lastValueArmNegY <-self.deadzone):
-               self.arm.y_neg(self.lastValueArmNegY) 
-             
-                
-            #drive if
-            if(self.lastValueDriveX >self.deadzone):
-                self.drive.move_right()
-                    
-
-            if(self.lastValueDriveNegX < -self.deadzone):
-                self.drive.move_left()
-                 
-            if(self.lastValueDriveY >self.deadzone):   
-                self.drive.move_front()
-                
-            if(self.lastValueDriveNegY <-self.deadzone):
-                    self.drive.move_back()
+               self.arm.y_neg(self.lastValueArmNegY)            
 
             #claw if
             if(self.lastValueOpenClaw >self.clawDeadZone):  
