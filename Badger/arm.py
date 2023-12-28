@@ -14,19 +14,64 @@ KINEMATIC_SCALE = 2/(2**18)
 moveVal = 0.1
 px = 22
 py = 22
+l1 = 22
+l2 = 22
+initial_theta1, initial_theta2 = 80, 80
 
 # ------------------------------ Get angles
-def calculate_inverse_kinematic(px, py):
-
-    #lengths of the arm are 22
-    arm = tinyik.Actuator(['z', [0., 22., 0.], 'z', [0., 22., 0.]])
-
+def calculate_inverse_kinematic(x_target, y_target):
     
-    arm.ee = [-px, -py, 0.]
-    theta_1ik = np.round(np.rad2deg(arm.angles[0]))
-    theta_2ik = np.round(np.rad2deg(arm.angles[1]))
+    def calculate_cost(theta1, theta2):
+        return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
     
-    return theta_1ik, theta_2ik
+    theta = np.arctan2(y_target, x_target)
+    D = (x_target**2 + y_target**2 - l1**2 - l2**2) / (2 * l1 * l2)
+    
+    if np.abs(D) > 1:
+        print("No solution for given x, y.")
+        return
+    
+    theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
+    theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
+    
+    theta1_1 = theta - np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
+    theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
+    
+    # Define joint angle limits
+    theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(160)
+    theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(160)
+    
+    if not (theta1_min <= theta1_1 <= theta1_max and theta2_min <= theta2_1 <= theta2_max):
+        print("Solution 1 outside joint angle limits.")
+        return
+    
+    if not (theta1_min <= theta1_2 <= theta1_max and theta2_min <= theta2_2 <= theta2_max):
+        print("Solution 2 outside joint angle limits.")
+        return
+    
+    solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
+    
+    print("Possible solutions for inverse kinematics:")
+    optimal_solution = None
+    min_cost = float('inf')
+    
+    for sol in solutions:
+        theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
+        
+        if (theta1_min <= theta1 <= theta1_max) and (theta2_min <= theta2 <= theta2_max):
+            cost = calculate_cost(theta1, theta2)
+            
+            if cost < min_cost:
+                min_cost = cost
+                optimal_solution = sol
+                
+            print("Theta1: {:.2f}, Theta2: {:.2f}, Cost: {:.2f}".format(theta1, theta2, cost))
+    
+    if optimal_solution:
+        print("\nOptimal Solution:")
+        print("Theta1: {:.2f}, Theta2: {:.2f}".format(np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])))
+
+    return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
 
 
 class Arm:
