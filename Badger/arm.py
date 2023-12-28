@@ -49,6 +49,8 @@ def calculate_inverse_kinematic(x_target, y_target):
     theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(160)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
+    
+    min_cost = float('inf')
 
     for sol in solutions:
         theta1, theta2 = sol[0], sol[1]
