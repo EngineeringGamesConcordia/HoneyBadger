@@ -13,9 +13,14 @@ KINEMATIC_SCALE = 2/(2**18)
 
 moveVal = 0.1
 l1 = 22
-l2 = 22
+l2 = 21.16
 initial_theta1, initial_theta2 = np.deg2rad(80), np.deg2rad(80)
 offset2 = 6
+
+def adjust_to_limits(theta, theta_min, theta_max):
+    # Adjust the joint angle to stay within limits
+    adjusted_theta = (theta - theta_min) % (theta_max - theta_min) + theta_min
+    return adjusted_theta
 
 def forward_kinematics(theta1, theta2):
     x = l1 * np.cos(theta1) + l2 * np.cos(theta1 + theta2)
@@ -50,6 +55,11 @@ def calculate_inverse_kinematic(x_target, y_target):
     # Define joint angle limits in radians
     theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(160)
     theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(160)
+    
+    theta1_1 = adjust_to_limits(theta1_1, theta1_min, theta1_max)
+    theta2_1 = adjust_to_limits(theta2_1, theta2_min, theta2_max)
+    theta1_2 = adjust_to_limits(theta1_2, theta1_min, theta1_max)
+    theta2_2 = adjust_to_limits(theta2_2, theta2_min, theta2_max)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
