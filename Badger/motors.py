@@ -9,15 +9,18 @@ class dcMotor:
         self.bpwm = bpwm
         GPIO.setup(self.fpwm, GPIO.OUT)
         GPIO.setup(self.bpwm, GPIO.OUT)
+        GPIO.output(self.fpwm, GPIO.LOW)
+        GPIO.output(self.bpwm, GPIO.LOW)
+        
 
     def cw(self):
         GPIO.output(self.fpwm, GPIO.HIGH)
         sleep(0.01)
-        GPIO.output(self.bpwm, GPIO.LOW)
+        GPIO.output(self.fpwm, GPIO.LOW)
         sleep(0.01)
 
     def ccw(self):
-        GPIO.output(self.fpwm, GPIO.LOW)
+        GPIO.output(self.bpwm, GPIO.LOW)
         sleep(0.01)
         GPIO.output(self.bpwm, GPIO.HIGH)
         sleep(0.01)
