@@ -25,7 +25,7 @@ def calculate_inverse_kinematic(px, py):
     theta_1ik = np.round(np.rad2deg(arm.angles[0]))
     theta_2ik = np.round(np.rad2deg(arm.angles[1]))
     
-    return theta_1, theta_2
+    return theta_1ik, theta_2ik
 
 
 class Arm:
