@@ -1,6 +1,7 @@
 from numpy import *
 from motors import stepperMotor
-
+import RPi.GPIO as GPIO
+from time import sleep
 # reference: https://github.com/aakieu/3-dof-planar/blob/master/InverseKinematics.py
 
 CONTROLLER_SCALE = 2**15
@@ -135,8 +136,31 @@ class Arm:
         self.kit.servo[1].angle = theta_2
         self.kit.servo[3].angle = theta_3
 
-    # ------------------------------ STEPPER Movements
+    # ------------------------------ STEPPER Set up
+    DIR = 19   # Direction GPIO Pin
+    STEP = 26  # Step GPIO Pin
+    CW = 1     # Clockwise Rotation
+    CCW = 0    # Counterclockwise Rotation
+    SPR = 60   # Steps per Revolution (360 / 7.5)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(DIR, GPIO.OUT)
+    GPIO.setup(STEP, GPIO.OUT)
+    step_count = SPR
+    delay = .0108
     # Insert stepper codes lol
+    def cw_stepper(self):
+        GPIO.output(DIR, CW)
+        #going forward
+        GPIO.output(STEP, GPIO.HIGH)
+        sleep(delay)
+        GPIO.output(STEP, GPIO.LOW)
+        sleep(delay)
+    def ccw_stepper(self):
+        GPIO.output(DIR, CCW)
+        GPIO.output(STEP, GPIO.HIGH)
+        sleep(delay)
+        GPIO.output(STEP, GPIO.LOW)
+        sleep(delay)
     
 """
     # ------------------------------ Move down

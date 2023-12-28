@@ -186,42 +186,42 @@ class BadgerController(Controller):
 
     def checker(self):      
             #arms if
-            if(self.lastValueArmX >100): 
+            if(self.lastValueArmX >300): 
                 self.arm.x_pos(self.lastValueArmX)
             else:
                 self.lastValueArmX=0
                          #follow this format for the rest of the functions
                 
-            if(self.lastValueArmNegX < -100):
+            if(self.lastValueArmNegX < -300):
                  self.arm.x_neg(self.lastValueArmNegX)
             else:
                 self.lastValueArmNegX = 0
                 
-            if(self.lastValueArmY >100):
+            if(self.lastValueArmY >300):
                 self.arm.y_pos(self.lastValueArmY)  
             else:
                 self.lastValueArmY=0
                 
 
-            if(self.lastValueArmNegY <-100):
+            if(self.lastValueArmNegY <-300):
                self.arm.y_neg(self.lastValueDriveNegY)
             else:
                 self.lastValueArmNegY=0   
                 
             #drive if
-            if(self.lastValueDriveX >100):
+            if(self.lastValueDriveX >300):
                 self.on_L3_right(self.lastValueDriveX)
             else:
                     self.lastValueDriveX=0    
-            if(self.lastValueDriveNegX < -100):
+            if(self.lastValueDriveNegX < -300):
                 self.on_L3_left(self.lastValueDriveNegX)
             else:
                  self.lastValueDriveNegX =0
-            if(self.lastValueDriveY >100):   
+            if(self.lastValueDriveY >300):   
                 self.on_L3_up(self.lastValueDriveY)
             else:
                     self.lastValueDriveY =0    
-            if(self.lastValueDriveNegY <-100):
+            if(self.lastValueDriveNegY <-300):
                 self.on_L3_down(self.lastValueDriveNegY)
             else:
                     self.lastValueDriveNegY =0    
