@@ -101,6 +101,7 @@ class BadgerController(Controller):
         if(self.state == True):
             value= (value+2**15)
             self.lastValueOpenClaw = value
+            print("Open Value" + str(self.lastValueOpemClaw))
         
     def on_L2_release(self):
         if(self.state == True):
@@ -270,7 +271,7 @@ class BadgerController(Controller):
             if(self.lastValueArmX >self.clawDeadZone):
                 self.arm.serv1_turn_right()   
             #Servo 1 Turn Left
-            if(self.lastValueArmX <-self.clawDeadZone):
+            if(self.lastValueArmNegX <-self.clawDeadZone):
                 self.arm.serv1_turn_left() 
 
         else:
@@ -286,13 +287,13 @@ class BadgerController(Controller):
             if(self.lastValueArmNegX < -self.deadzone):
                 self.arm.x_neg(self.lastValueArmNegX)   
         #Claw
-            if(self.lastValueOpenClaw >self.clawDeadZone):  
+            if(self.lastValueOpenClaw >0):  
                 self.arm.open_claw(self.lastValueOpenClaw)
             else:  
                 self.lastValueOpenClaw = 0
                 #do the same for the close
             
-            if(self.lastValueCloseClaw >self.clawDeadZone):    
+            if(self.lastValueCloseClaw >0):    
                 self.arm.close_claw(self.lastValueCloseClaw)
             else:
                 self.lastValueCloseClaw=0
