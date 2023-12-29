@@ -273,7 +273,14 @@ class BadgerController(Controller):
             #Servo 1 Turn Left
             if(self.lastValueArmNegX <-self.clawDeadZone):
                 self.arm.serv1_turn_left() 
-
+            
+            #Arm
+            if(self.lastValueOpenClaw >0):  
+                print("Open Beep")
+                self.arm.open_claw(self.lastValueOpenClaw)
+            if(self.lastValueCloseClaw >0):
+                print("Close Beep")
+                self.arm.close_claw(self.lastValueCloseClaw)
         else:
             if(self.lastValueArmY > self.clawDeadZone):
                 self.arm.y_pos(self.lastValueArmY)  
@@ -286,14 +293,7 @@ class BadgerController(Controller):
             
             if(self.lastValueArmNegX < -self.deadzone):
                 self.arm.x_neg(self.lastValueArmNegX)   
-        #Claw
-            print("i made it here")
-            if(self.lastValueOpenClaw >0):  
-                print("Open Beep")
-                self.arm.open_claw(self.lastValueOpenClaw)
-            if(self.lastValueCloseClaw >0):
-                print("Close Beep")
-                self.arm.close_claw(self.lastValueCloseClaw)
+
 
          #Wrists   
         if(self.lastValueWristDown >self.wristdeadzone):
