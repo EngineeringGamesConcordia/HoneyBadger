@@ -89,7 +89,7 @@ def calculate_inverse_kinematic(x_target, y_target):
 
         print("Theta1: {:.2f}, Theta2: {:.2f}, Cost: {:.2f}".format(theta1, theta2, cost))
 
-    if (optimal_solution not None and cost < 4.0):
+    if ((optimal_solution not None) and (cost < 4.0)):
         print("\nOptimal Solution:")
         print("Theta1: {:.2f}, Theta2: {:.2f}".format(optimal_solution[0], optimal_solution[1]))
     else:
