@@ -37,7 +37,6 @@ def forward_kinematics(theta1, theta2):
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target):
     
-    initial_theta1, initial_theta2 = np.deg2rad(kit.servo[0].angle), np.deg2rad(kit.servo[1].angle)
     print ("Initital theta1 = " + str(initial_theta1))
     print ("Initital theta2 = " + str(initial_theta2))
     
@@ -167,6 +166,7 @@ class Arm:
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
+        initial_theta1, initial_theta2 = theta_1, theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -178,6 +178,7 @@ class Arm:
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
+        initial_theta1, initial_theta2 = theta_1, theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -189,6 +190,7 @@ class Arm:
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
+        initial_theta1, initial_theta2 = theta_1, theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -200,6 +202,7 @@ class Arm:
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
+        initial_theta1, initial_theta2 = theta_1, theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
