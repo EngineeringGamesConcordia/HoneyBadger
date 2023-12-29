@@ -59,8 +59,13 @@ class BadgerController(Controller):
         self.lastValueElbowLeft = 0
         self.lastValueElbowRight = 0     
         self.gas =0
+        
+        self.dPadL = False
+        self.dPadR = False
+        self.dPadU = False
+        self.dPadD = False
         Controller.__init__(self, **kwargs)
-        self.state = False #IKFunctions DRive and Gas
+        self.state = False #IKFunctions Drive and Gas
         #on true: indivual joint control, no drive, open close claw instead of gas
         
 
@@ -117,37 +122,39 @@ class BadgerController(Controller):
     # Drive front
     def on_up_arrow_press(self):
         if(self.state == False):
-            self.drive.move_front()
+            self.dPadU = True
             print("moved front")
         
-    #Stop X
+    #Stop 
     def on_up_down_arrow_release(self):
         if(self.state == False):
-            self.drive.move_stop()
+            self.dPadU = False
+            self.dPadD = False
             print("i stopped X")
         
     # Drive back
     def on_down_arrow_press(self):
         if(self.state == False):
-            self.drive.move_back()
+            self.dPadD = True
             print("moved back")
         
     # Drive left
     def on_left_arrow_press(self):
         if(self.state == False):
-            self.drive.move_left()
+            self.dPadL = True
             print("moved left")
         
 
     # Drive right
     def on_right_arrow_press(self):
         if(self.state == False):
-            self.drive.move_right()
+            self.dPadR = True
             print("moved right")
-    #Stopped Y
+    #Stopped 
     def on_left_right_arrow_release(self):
         if(self.state == False):
-            self.drive.move_stop()
+            self.dPadR = False
+            self.dPadL = False
             print("i stopped Y")
     '''
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
@@ -187,15 +194,15 @@ class BadgerController(Controller):
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
     '''
-
+     
     # Turn Right
     def on_R1_press(self):
-        self.arm.cw_stepper()
+        self.arm.serv5_turn_right()
         print("Stepper Moving Right")
         #insert stepper code for right
     # Turn Left
     def on_L1_press(self):
-        self.arm.ccw_stepper()
+        self.arm.serv5_turn_left()   
         print("Stepper Moving Left")
         #insert stepper code for left
     
@@ -260,7 +267,6 @@ class BadgerController(Controller):
     def checker(self):      
 
         if(self.state):
-            #Servo 0 (Base)
             #Servo 0 Turn Left
             if(self.lastValueArmY> self.clawDeadZone):
                 self.arm.serv0_turn_left()
@@ -272,16 +278,14 @@ class BadgerController(Controller):
                 self.arm.serv1_turn_right()   
             #Servo 1 Turn Left
             if(self.lastValueArmNegX <-self.clawDeadZone):
-                self.arm.serv1_turn_left() 
-            
-            #Arm
+                self.arm.serv1_turn_left()        
+            #Claw
             if(self.lastValueOpenClaw >0):  
-                print("Open Beep")
                 self.arm.open_claw(self.lastValueOpenClaw)
             if(self.lastValueCloseClaw >0):
-                print("Close Beep")
                 self.arm.close_claw(self.lastValueCloseClaw)
         else:
+            #Arm
             if(self.lastValueArmY > self.clawDeadZone):
                 self.arm.y_pos(self.lastValueArmY)  
                 
@@ -293,8 +297,17 @@ class BadgerController(Controller):
             
             if(self.lastValueArmNegX < -self.deadzone):
                 self.arm.x_neg(self.lastValueArmNegX)   
-
-
+            #Driving    
+            if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
+                self.drive.move_stop()                
+            if(self.dPadU):
+                self.drive.move_front(self.gas)
+            if(self.dPadD):
+                self.drive.move_back(self.gas)    
+            if(self.dPadL):
+                self.drive.move_left(self.gas)
+            if(self.dPadR):
+                self.drive.move_right(self.gas)                    
          #Wrists   
         if(self.lastValueWristDown >self.wristdeadzone):
             self.arm.go_down()  
