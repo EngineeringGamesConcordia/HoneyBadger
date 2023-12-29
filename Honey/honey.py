@@ -1,7 +1,7 @@
 from controller import HoneyController
 from arm import Arm
 from drive import Drive
-from vacuum import Vacuum
+from Honey.Vacuum import Vacuum
 from automation import Automation
 
 arm = Arm()

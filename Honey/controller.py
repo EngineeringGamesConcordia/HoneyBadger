@@ -2,7 +2,7 @@ from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
 from throw import Throw
-from vacuum import Vacuum
+from Honey.Vacuum import Vacuum
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------

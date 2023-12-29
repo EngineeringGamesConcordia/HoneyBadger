@@ -1,20 +1,18 @@
-from motors import dcMotor
 
-IN1 = 0
-IN2 = 0
-PWM = 0
+import RPi.GPIO as GPIO
+from time import sleep
 
 class Vacuum:
-    def __init__(self):
-        print("Init vacuum")
-        self.vacuum = dcMotor(IN1, IN2, PWM)
-
+    def __init__(self, IN1):
+        self.IN1 = IN1
+        print("Init relay")
+        GPIO.setup(self.IN1, GPIO.OUT)
     # ------------------------------ Start vacuum
     def start_vacuum(self):
-        print("> vacuum start")
-        self.vacuum.forward()
+        print("> relay start")
+        GPIO.output(self.IN1, GPIO.HIGH)
 
     # ------------------------------ Stop vacuum
     def stop_vacuum(self):
-        print("> vacuum stop")
-        self.vacuum.stop()
+        print("> relay stop")
+        GPIO.output(self.IN1, GPIO.LOW)

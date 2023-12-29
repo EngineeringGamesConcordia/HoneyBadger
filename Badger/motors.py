@@ -1,5 +1,4 @@
-import board
-import busio
+
 import RPi.GPIO as GPIO
 from time import sleep
 
