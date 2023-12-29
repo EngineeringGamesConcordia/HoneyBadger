@@ -84,8 +84,8 @@ class Arm:
         print("> servo1 rotating right")
         self.elbow_servo = self.elbow_servo + self.moveVal
         self.kit.servo[1].angle = self.elbow_servo   
-    # ------------------------------ ROTATIONAL MOVEMENTS
-    def turn_left(self):
+    # ------------------------------ ROTATIONAL MOVEMENTS SERV02
+    def turn_left(self): 
         print("> wrist rotating left")
         self.wrist_r_servo = self.wrist_r_servo - self.moveVal
         self.kit.servo[2].angle = self.wrist_r_servo
@@ -95,7 +95,7 @@ class Arm:
         self.wrist_r_servo = self.wrist_r_servo + self.moveVal
         self.kit.servo[2].angle = self.wrist_r_servo
 
-    # ------------------------------ ROTATIONAL MOVEMENTS
+    # ------------------------------ ROTATIONAL MOVEMENTS SERV03
     def go_up(self):
         print("> wrist up")
         self.wrist_ud_servo = self.wrist_ud_servo - self.moveVal
@@ -105,7 +105,16 @@ class Arm:
         print("> wrist down")
         self.wrist_ud_servo = self.wrist_ud_servo + self.moveVal
         self.kit.servo[3].angle = self.wrist_ud_servo
+    # ------------------------------ ROTATIONAL MOVEMENTS SERV05
+    def serv5_turn_right(self):
+        print("> step right")
+        #self.claw_servo = self.claw_servo - self.moveVal
+        #self.kit.servo[4].angle = self.claw_servo
 
+    def serv_turn_left(self):
+        print("> claw left")
+        #self.claw_servo = self.clawservo + self.moveVal
+        #self.kit.servo[4].angle = self.claw_servo    
     # ------------------------------ Move x-pos
     def x_pos(self, val):
         print("> arm22 x_pos")
