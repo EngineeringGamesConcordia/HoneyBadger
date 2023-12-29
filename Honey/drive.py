@@ -25,7 +25,7 @@ class Drive:
         self.back_right = dcMotor(BACK_RIGHT_IN1, BACK_RIGHT_IN2, BACK_RIGHT_PWM)
 
     # ------------------------------ Drive front
-    def move_front(self):
+    def move_front(self,speedx,speedy):
         print("> drive move front")
         self.front_left.forward()
         self.front_right.forward()
@@ -33,7 +33,7 @@ class Drive:
         self.back_right.forward()
 
     # ------------------------------ Drive back
-    def move_back(self):
+    def move_back(self,speedx,speedy):
         print("> drive move back")
         self.front_left.backward()
         self.front_right.backward()
@@ -41,7 +41,7 @@ class Drive:
         self.back_right.backward()
 
     # ------------------------------ Drive left
-    def move_left(self):
+    def move_left(self,speedx,speedy):
         print("> drive move left")
         self.front_left.backward()
         self.front_right.forward()
@@ -49,7 +49,7 @@ class Drive:
         self.back_right.forward()
 
     # ------------------------------ Drive right
-    def move_right(self):
+    def move_right(self,speedx,speedy):
         print("> drive move right")
         self.front_left.forward()
         self.front_right.backward()
