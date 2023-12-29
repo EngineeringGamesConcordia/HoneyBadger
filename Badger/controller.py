@@ -254,7 +254,7 @@ class BadgerController(Controller):
     '''   
     def checker(self):      
 
-        if(self.state==True):
+        if(self.state):
             if(self.lastValueArmY > self.clawDeadZone):
                 self.arm.y_pos(self.lastValueArmY)  
                 
