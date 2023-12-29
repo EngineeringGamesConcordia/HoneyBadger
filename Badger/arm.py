@@ -31,8 +31,6 @@ def forward_kinematics(theta1, theta2):
     y = offset_y + l1 * np.sin(theta1) + l2 * np.sin(theta1 + theta2)
     return x, y
 
-px, py = forward_kinematics(initial_theta1, initial_theta2)
-
 
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target):
@@ -128,6 +126,8 @@ class Arm:
         self.py = py
         self.moveVal = moveVal
         self.SLOW_MODE = False
+        
+        px, py = forward_kinematics(initial_theta1, initial_theta2)
 
     # ------------------------------ CLAW MOVEMENTS
     def open_claw(self, val):
