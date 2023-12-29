@@ -82,7 +82,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
         cost = calculate_cost(sol[0], sol[1])
 
-        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 3:
+        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 400:
             min_cost = cost
             optimal_solution = sol
 
