@@ -58,7 +58,7 @@ def calculate_inverse_kinematic(x_target, y_target):
     if np.abs(D) > 1:
         print("No solution for given x, y.")
         cost = 0
-        return np.rad2deg(theta), 0, cost
+        return initial_theta1, initial_theta2, cost
     
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
     theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
@@ -96,7 +96,7 @@ def calculate_inverse_kinematic(x_target, y_target):
         print("Theta1: {:.2f}, Theta2: {:.2f}".format(optimal_solution[0], optimal_solution[1]))
     else:
         print("No optimal solution found within joint angle limits.")
-        optimal_solution = (theta, 0)  # Set optimal solution to current angles to prevent damage
+        optimal_solution = (initial_theta1, initial_theta2)  # Set optimal solution to current angles to prevent damage
 
     return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1]), cost
 
