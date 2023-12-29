@@ -286,13 +286,13 @@ class BadgerController(Controller):
                 self.arm.close_claw(self.lastValueCloseClaw)
         else:
             #Arm
-            if(self.lastValueArmY > self.clawDeadZone):
+            if(self.lastValueArmY > self.deadzone):
                 self.arm.y_pos(self.lastValueArmY)  
                 
             if(self.lastValueArmNegY < -self.deadzone):
                 self.arm.y_neg(self.lastValueArmNegY)             
 
-            if(self.lastValueArmX >self.clawDeadZone): 
+            if(self.lastValueArmX >self.deadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.deadzone):
