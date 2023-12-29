@@ -66,11 +66,6 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     # Define joint angle limits in radians
     theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(160)
     theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(160)
-    
-    theta1_1 = adjust_to_limits(theta1_1, theta1_min, theta1_max)
-    theta2_1 = adjust_to_limits(theta2_1, theta2_min, theta2_max)
-    theta1_2 = adjust_to_limits(theta1_2, theta1_min, theta1_max)
-    theta2_2 = adjust_to_limits(theta2_2, theta2_min, theta2_max)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
