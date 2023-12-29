@@ -10,7 +10,7 @@ CONTROLLER_SCALE = 2**15
 BIG_SERVO_SCALE = 1/(2**18)
 SMALL_SERVO_SCALE = 1/(2**18)
 CLAW_SCALE = 1/(2**18)
-KINEMATIC_SCALE = 2.5/(2**20)
+KINEMATIC_SCALE = 3.25/(2**20)
 
 moveVal = 0.1
 l1 = 22
@@ -28,7 +28,7 @@ def adjust_to_limits(theta, theta_min, theta_max):
 
 def forward_kinematics(theta1, theta2):
     x = offset_x + l1 * np.cos(theta1) + l2 * np.cos(theta1 + theta2)
-    y = offset_y + l1 * np.sin(theta1) + l2 * np.sin(theta1 + theta2)
+    y = offset_y + l1 * np.sin(theta1) + l2 * np.sin(theta1 + theta2) - offset2
     return x, y
 
 
