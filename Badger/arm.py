@@ -35,8 +35,8 @@ def forward_kinematics(theta1, theta2):
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_theta2):
     
-    print ("Initital theta1 = " + str(initial_theta1))
-    print ("Initital theta2 = " + str(initial_theta2))
+    print ("Initial theta1 = " + str(initial_theta1))
+    print ("Initial theta2 = " + str(initial_theta2))
     
     def calculate_cost(theta1, theta2, initial_theta1, initial_theta2):
         return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
@@ -67,10 +67,10 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(160)
     theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(160)
     
-    #theta1_1 = adjust_to_limits(theta1_1, theta1_min, theta1_max)
-    #theta2_1 = adjust_to_limits(theta2_1, theta2_min, theta2_max)
-    #theta1_2 = adjust_to_limits(theta1_2, theta1_min, theta1_max)
-    #theta2_2 = adjust_to_limits(theta2_2, theta2_min, theta2_max)
+    theta1_1 = adjust_to_limits(theta1_1, theta1_min, theta1_max)
+    theta2_1 = adjust_to_limits(theta2_1, theta2_min, theta2_max)
+    theta1_2 = adjust_to_limits(theta1_2, theta1_min, theta1_max)
+    theta2_2 = adjust_to_limits(theta2_2, theta2_min, theta2_max)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
