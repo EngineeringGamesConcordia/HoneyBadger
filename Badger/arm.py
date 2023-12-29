@@ -28,7 +28,7 @@ def adjust_to_limits(theta, theta_min, theta_max):
 
 def forward_kinematics(theta1, theta2):
     x = offset_x + l1 * np.cos(theta1) + l2 * np.cos(theta1 + theta2)
-    y = offset_y + l1 * np.sin(theta1) + l2 * np.sin(theta1 + theta2) - offset2
+    y = offset_y + l1 * np.sin(theta1) + l2 * np.sin(theta1 + theta2)
     return x, y
 
 
