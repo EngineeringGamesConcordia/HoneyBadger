@@ -290,9 +290,6 @@ class BadgerController(Controller):
             if(self.lastValueOpenClaw >0):  
                 print("Open Beep")
                 self.arm.open_claw(self.lastValueOpenClaw)
-
-                #do the same for the close
-            
             if(self.lastValueCloseClaw >0):
                 print("Close Beep")
                 self.arm.close_claw(self.lastValueCloseClaw)
