@@ -81,7 +81,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
         cost = calculate_cost(sol[0], sol[1],initial_theta1, initial_theta2)
 
-        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 200.0:
+        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 250.0:
             min_cost = cost
             optimal_solution = sol
 
@@ -92,7 +92,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         print("Theta1: {:.2f}, Theta2: {:.2f}".format(optimal_solution[0], optimal_solution[1]))
     else:
         print("No optimal solution found within joint angle limits.")
-        optimal_solution = (initial_theta1, initial_theta2)  # Set optimal solution to current angles to prevent damage
+        optimal_solution = (np.deg2rad(initial_theta1), np.deg2rad(initial_theta2))  # Set optimal solution to current angles to prevent damage
 
     return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
 
