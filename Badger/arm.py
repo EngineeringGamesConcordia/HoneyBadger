@@ -40,7 +40,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     print ("Initital theta2 = " + str(initial_theta2))
     
     def calculate_cost(theta1, theta2):
-        return np.sqrt((theta1 - self.initial_theta1)**2 + (theta2 - initial_theta2)**2)
+        return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
         #return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
         
     theta = np.arctan2(y_target, x_target)
