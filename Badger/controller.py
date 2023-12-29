@@ -48,16 +48,7 @@ class BadgerController(Controller):
         self.lastValueWristUp = 0
         self.lastValueWristLeft = 0
         self.lastValueWristRight = 0
-        
-        self.lastValueBaseDown = 0
-        self.lastValueBaseUp = 0
-        self.lastValueBaseLeft = 0
-        self.lastValueBaseRight = 0
-        
-        self.lastValueElbowDown = 0
-        self.lastValueElbowUp = 0
-        self.lastValueElbowLeft = 0
-        self.lastValueElbowRight = 0     
+           
         self.gas =0
         
         self.dPadL = False
