@@ -100,6 +100,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
 
 class Arm:
     global moveVal
+    global initial_theta1
+    global initial_theta2
     
     def __init__(self, base_stepper, kit, angles):
         global moveVal
