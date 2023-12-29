@@ -112,7 +112,7 @@ class BadgerController(Controller):
     # Drive front
     def on_up_arrow_press(self):
         if(self.state == False):
-            self.drive.move_front()
+            self.drive.move_front(self.gas)
             print("moved front")
         
     #Stop X
@@ -124,20 +124,20 @@ class BadgerController(Controller):
     # Drive back
     def on_down_arrow_press(self):
         if(self.state == False):
-            self.drive.move_back()
+            self.drive.move_back(self.gas)
             print("moved back")
         
     # Drive left
     def on_left_arrow_press(self):
         if(self.state == False):
-            self.drive.move_left()
+            self.drive.move_left(self.gas)
             print("moved left")
         
 
     # Drive right
     def on_right_arrow_press(self):
         if(self.state == False):
-            self.drive.move_right()
+            self.drive.move_right(self.gas)
             print("moved right")
     #Stopped Y
     def on_left_right_arrow_release(self):
