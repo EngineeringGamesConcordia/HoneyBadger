@@ -40,8 +40,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     print ("Initital theta2 = " + str(initial_theta2))
     
     def calculate_cost(theta1, theta2):
-        #return np.sqrt((theta1 - self.initial_theta1)**2 + (theta2 - initial_theta2)**2)
-        return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
+        return np.sqrt((theta1 - self.initial_theta1)**2 + (theta2 - initial_theta2)**2)
+        #return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
         
     theta = np.arctan2(y_target, x_target)
     x_adjusted = (x_target - (offset2 * np.cos(theta)) - offset_x)
@@ -82,7 +82,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
         cost = calculate_cost(sol[0], sol[1])
 
-        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 400:
+        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 3.0:
             min_cost = cost
             optimal_solution = sol
 
