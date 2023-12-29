@@ -253,51 +253,45 @@ class BadgerController(Controller):
     ------------------------------TICK SYSTEM ------------------------------
     '''   
     def checker(self):      
-        #Arms
+
+        if(self.state==True):
+            if(self.lastValueArmY > self.clawDeadZone):
+                self.arm.y_pos(self.lastValueArmY)  
+                
+            if(self.lastValueArmNegY < -self.deadzone):
+                self.arm.y_neg(self.lastValueArmNegY)             
+
+            if(self.lastValueArmX >self.clawDeadZone): 
+                self.arm.x_pos(self.lastValueArmX)
+            
+            if(self.lastValueArmNegX < -self.deadzone):
+                self.arm.x_neg(self.lastValueArmNegX)   
+        #Claw
+            if(self.lastValueOpenClaw >self.clawDeadZone):  
+                self.arm.open_claw(self.lastValueOpenClaw)
+            else:  
+                self.lastValueOpenClaw = 0
+                #do the same for the close
+            
+            if(self.lastValueCloseClaw >self.clawDeadZone):    
+                self.arm.close_claw(self.lastValueCloseClaw)
+            else:
+                self.lastValueCloseClaw=0
+
+        else:
             #Cervo 0 (Base)
-        if(self.lastValueArmY >0 and self.state == True):
-            self.arm.y_pos(self.lastValueArmY)  
-        elif(self.state == False):
             #Cervo 0 Turn Left
             if(self.lastValueArmY> self.clawDeadZone):
                 self.arm.serv0_turn_left()
-                
-
-        if(self.lastValueArmNegY < -self.deadzone and self.state == True):
-            self.arm.y_neg(self.lastValueArmNegY)  
-        elif(self.state == False):          
-            #Cervo 0 Turn Right
+            #Cervo 0 Turn Right    
             if(self.lastValueArmNegY <-self.clawDeadZone):
-                self.arm.serv0_turn_right()
-                
-
-        if(self.lastValueArmX >0 and self.state == True): 
-            self.arm.x_pos(self.lastValueArmX)
-        elif(self.state == False):           
+                self.arm.serv0_turn_right()           
             #Cervo 1 Turn Right
             if(self.lastValueArmX >self.clawDeadZone):
                 self.arm.serv1_turn_right()   
-                
-
-        if(self.lastValueArmNegX < -self.deadzone and self.state == True):
-            self.arm.x_neg(self.lastValueArmNegX)       
-        elif(self.state == False):           
             #Cervo 1 Turn Left
             if(self.lastValueArmX <-self.clawDeadZone):
                 self.arm.serv1_turn_left() 
-                
-
-        #Claw
-        if(self.lastValueOpenClaw >self.clawDeadZone and self.state ==True):  
-            self.arm.open_claw(self.lastValueOpenClaw)
-        else:  
-            self.lastValueOpenClaw = 0
-            #do the same for the close
-            
-        if(self.lastValueCloseClaw >self.clawDeadZone and self.state ==True):    
-            self.arm.close_claw(self.lastValueCloseClaw)
-        else:
-            self.lastValueCloseClaw=0
          
          #Wrists   
         if(self.lastValueWristDown >self.wristdeadzone):
