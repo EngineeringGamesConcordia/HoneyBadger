@@ -36,6 +36,8 @@ def forward_kinematics(theta1, theta2):
 # ------------------------------ Get angles
 def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_theta2):
     
+    self.initial_theta1 = initial_theta1
+    self.initial_theta2 = initial_theta2
     print ("Initital theta1 = " + str(self.initial_theta1))
     print ("Initital theta2 = " + str(self.initial_theta2))
     
