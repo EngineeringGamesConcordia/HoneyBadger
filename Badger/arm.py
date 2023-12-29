@@ -16,8 +16,8 @@ moveVal = 0.1
 l1 = 22
 l2 = 21.16
 offset2 = 6
-offset_x=0
-offset_y=0
+offset_x= 0
+offset_y= 0
 px = 0
 py = 0
 
