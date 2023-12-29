@@ -57,8 +57,7 @@ def calculate_inverse_kinematic(x_target, y_target):
     
     if np.abs(D) > 1:
         print("No solution for given x, y.")
-        cost = 0
-        return initial_theta1, initial_theta2, cost
+        return initial_theta1, initial_theta2
     
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
     theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
@@ -98,7 +97,7 @@ def calculate_inverse_kinematic(x_target, y_target):
         print("No optimal solution found within joint angle limits.")
         optimal_solution = (initial_theta1, initial_theta2)  # Set optimal solution to current angles to prevent damage
 
-    return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1]), cost
+    return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
 
 
 class Arm:
@@ -165,12 +164,7 @@ class Arm:
         print("> arm22 x_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
-        theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        #while (cost > 1.5):
-        #    val_new = val * (KINEMATIC_SCALE_SLOW / cost)
-        #    val_new = val - val_new
-        #    self.px = self.px - val_new
-        #    theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
@@ -181,12 +175,7 @@ class Arm:
         print("> arm22 x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px - val;
-        theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        #while (cost > 5.0):
-        #    val_new = val * (KINEMATIC_SCALE_SLOW / cost)
-        #    val_new = val - val_new
-        #    self.px = self.px + val_new
-        #    theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
@@ -197,12 +186,7 @@ class Arm:
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
-        theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        #while (cost > 1.5):
-        #    val_new = val * (KINEMATIC_SCALE_SLOW / cost)
-        #    val_new = val - val_new
-        #    self.py = self.py + val_new
-        #    theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
@@ -213,12 +197,7 @@ class Arm:
         print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
-        theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
-        #while (cost > 1.5):
-        #    val_new = val * (KINEMATIC_SCALE_SLOW / cost)
-        #    val_new = val - val_new
-        #    self.py = self.py - val_new
-        #    theta_1, theta_2, cost = calculate_inverse_kinematic(self.px, self.py)
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
