@@ -106,6 +106,7 @@ class Arm:
     def __init__(self, base_stepper, kit, angles):
         global moveVal
         print("Init arm")
+        px, py = forward_kinematics(initial_theta1, initial_theta2)
         initial_theta1 = angles[0]
         initial_theta2 = angles[1]
         self.base_servo = angles[0]
@@ -124,8 +125,6 @@ class Arm:
         self.py = py
         self.moveVal = moveVal
         self.SLOW_MODE = False
-        
-        px, py = forward_kinematics(initial_theta1, initial_theta2)
 
     # ------------------------------ CLAW MOVEMENTS
     def open_claw(self, val):
