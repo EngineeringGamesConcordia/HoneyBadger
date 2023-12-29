@@ -287,6 +287,7 @@ class BadgerController(Controller):
             if(self.lastValueArmNegX < -self.deadzone):
                 self.arm.x_neg(self.lastValueArmNegX)   
         #Claw
+            print("i made it here")
             if(self.lastValueOpenClaw >0):  
                 print("Open Beep")
                 self.arm.open_claw(self.lastValueOpenClaw)
