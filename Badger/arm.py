@@ -1,4 +1,4 @@
-from numpy import *
+import numpy as np
 import tinyik
 from motors import stepperMotor
 import RPi.GPIO as GPIO
@@ -6,12 +6,12 @@ from time import sleep
 # reference: https://github.com/aakieu/3-dof-planar/blob/master/InverseKinematics.py
 
 CONTROLLER_SCALE = 2**15
-BIG_SERVO_SCALE = 1/(2**12)
-SMALL_SERVO_SCALE = 1/(2**14)
-CLAW_SCALE = 1/(2**12)
-KINEMATIC_SCALE = 2/(2**14)
+BIG_SERVO_SCALE = 1/(2**18)
+SMALL_SERVO_SCALE = 1/(2**18)
+CLAW_SCALE = 1/(2**18)
+KINEMATIC_SCALE = 2/(2**18)
 
-moveVal = 2
+moveVal = 0.1
 px = 22
 py = 22
 
@@ -19,13 +19,14 @@ py = 22
 def calculate_inverse_kinematic(px, py):
 
     #lengths of the arm are 22
-    arm = tinyik.Actuator(['z', [22., 0., 0.], 'z', [22., 0., 0.]])
+    arm = tinyik.Actuator(['z', [0., 22., 0.], 'z', [0., 22., 0.]])
 
-    ikangles = [theta_1, theta_2]
-    arm.ee = [px, py]
-    ikangles = round(rad2deg(arm.angles))
     
-    return theta_1, theta_2
+    arm.ee = [-px, -py, 0.]
+    theta_1ik = np.round(np.rad2deg(arm.angles[0]))
+    theta_2ik = np.round(np.rad2deg(arm.angles[1]))
+    
+    return theta_1ik, theta_2ik
 
 
 class Arm:
@@ -44,7 +45,8 @@ class Arm:
         self.wrist_ud_servo = angles[3]
         self.claw_servo = angles[4]
         self.kit = kit
-        self.kit.servo[0].angle = angles[0]
+        self.base_stepper = base_stepper
+        self.kit.servo[0].angle = angles[0] 
         self.kit.servo[1].angle = angles[1]
         self.kit.servo[2].angle = angles[2]
         self.kit.servo[3].angle = angles[3]
@@ -57,17 +59,32 @@ class Arm:
 
     # ------------------------------ CLAW MOVEMENTS
     def open_claw(self, val):
-        print("> arm claw open")
-        val = CLAW_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.claw_servo = self.claw_servo + val
         self.kit.servo[4].angle = self.claw_servo
 
     def close_claw(self, val):
-        print("> arm claw close")
-        val = -CLAW_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
-        self.claw_servo = self.claw_servo + val
+        val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
+        self.claw_servo = self.claw_servo - val
         self.kit.servo[4].angle = self.claw_servo
-
+    # ------------------------------ SERVO0 MOVEMENTS
+    def serv0_turn_left(self):
+        print("> servo0 rotating left")
+        self.base_servo = self.base_servo - self.moveVal
+        self.kit.servo[0].angle = self.base_servo
+    def serv0_turn_right(self):
+        print("> servo0 rotating right")
+        self.base_servo = self.base_servo + self.moveVal
+        self.kit.servo[0].angle = self.base_servo
+    # ------------------------------ SERVO1 MOVEMENTS
+    def serv1_turn_left(self):
+        print("> servo1 rotating left")
+        self.elbow_servo = self.elbow_servo - self.moveVal
+        self.kit.servo[1].angle = self.elbow_servo
+    def serv1_turn_right(self):
+        print("> servo1 rotating right")
+        self.elbow_servo = self.elbow_servo + self.moveVal
+        self.kit.servo[1].angle = self.elbow_servo   
     # ------------------------------ ROTATIONAL MOVEMENTS
     def turn_left(self):
         print("> wrist rotating left")
@@ -81,59 +98,69 @@ class Arm:
 
     # ------------------------------ ROTATIONAL MOVEMENTS
     def go_up(self):
-        print("> wrist rotating left")
+        print("> wrist up")
         self.wrist_ud_servo = self.wrist_ud_servo - self.moveVal
         self.kit.servo[3].angle = self.wrist_ud_servo
 
     def go_down(self):
-        print("> wrist rotating right")
+        print("> wrist down")
         self.wrist_ud_servo = self.wrist_ud_servo + self.moveVal
         self.kit.servo[3].angle = self.wrist_ud_servo
 
     # ------------------------------ Move x-pos
     def x_pos(self, val):
-        print("> arm x_pos")
-        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        print("> arm22 x_pos")
+        val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
-        theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
+        print ("px = " + str(self.px))
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
+        print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
     # ------------------------------ Move x-neg
     def x_neg(self, val):
-        print("> arm x_neg")
-        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
-        self.px = self.px + val;
-        theta_1, theta_2 = calculate_inverse_kinematic(self.px, 0)
+        print("> arm22 x_neg")
+        val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
+        self.px = self.px - val;
+        print ("px = " + str(self.px))
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
+        print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
     # ------------------------------ Move y-pos
     def y_pos(self, val):
-        print("> arm y_pos")
-        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
-        self.py = self.py + val;
-        theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
+        print("> arm22 y_pos")
+        val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
+        self.py = self.py - val;
+        print ("py = " + str(self.py))
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
+        print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
     # ------------------------------ Move y-neg
     def y_neg(self, val):
-        print("> arm y_neg")
-        val = KINEMATIC_SCALE * ((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3
+        print("> arm22 y_neg")
+        val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
-        theta_1, theta_2 = calculate_inverse_kinematic(0, self.py)
+        print ("py = " + str(self.py))
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py)
+        print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
-    # ------------------------------ STEPPER Set up
+    # ------------------------------ STEPPER Movements
 
-    # Insert stepper codes lol
-  
-    def stepper_cw(self):
+    def cw_stepper(self):
+        print("> stepper cw")
         self.base_stepper.cw()
-    def stepper_ccw(self):
+        
+    def ccw_stepper(self):
+        print("> stepper ccw")
         self.base_stepper.ccw()
+    
 """
     # ------------------------------ Move down
     def move_down(self):

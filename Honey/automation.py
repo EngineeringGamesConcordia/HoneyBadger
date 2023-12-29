@@ -1,6 +1,6 @@
 from arm import Arm
 from drive import Drive
-from Honey.Vacuum import Vacuum
+from relay import relay
 
 
 class Automation:

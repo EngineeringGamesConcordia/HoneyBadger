@@ -19,25 +19,26 @@ class Drive:
         self.r_track.stop()
 
     # ------------------------------ Drive front
-    def move_front(self):
+    def move_front(self,speed):
         print("> drive move front")
-        self.l_track.cw()
-        self.r_track.ccw()
+        self.l_track.ccw(speed)
+        self.r_track.ccw(speed)
 
     # ------------------------------ Drive back
-    def move_back(self):
+    def move_back(self,speed):
         print("> drive move back")
-        self.l_track.ccw()
-        self.r_track.cw()
+        self.l_track.cw(speed)
+        self.r_track.cw(speed)
 
     # ------------------------------ Drive left
-    def move_left(self):
+    def move_left(self,speed):
         print("> drive move left")
-        self.l_track.cw()
-        self.r_track.cw()
+        self.l_track.ccw(speed)
+        self.r_track.cw(speed)
 
     # ------------------------------ Drive right
-    def move_right(self):
+    def move_right(self,speed):
+        self.speed = speed
         print("> drive move right")
-        self.l_track.ccw()
-        self.r_track.ccw()
+        self.l_track.cw(speed)
+        self.r_track.ccw(speed)

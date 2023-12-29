@@ -1,8 +1,7 @@
 from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
-from throw import Throw
-from Honey.Vacuum import Vacuum
+from relay import Relay
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
