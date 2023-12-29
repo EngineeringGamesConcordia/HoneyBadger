@@ -290,17 +290,13 @@ class BadgerController(Controller):
             if(self.lastValueOpenClaw >0):  
                 print("Open Beep")
                 self.arm.open_claw(self.lastValueOpenClaw)
-            else:
-                print("Open Boop")
-                self.lastValueOpenClaw = 0
+
                 #do the same for the close
             
             if(self.lastValueCloseClaw >0):
                 print("Close Beep")
                 self.arm.close_claw(self.lastValueCloseClaw)
-            else:
-                print("Close Boop")
-                self.lastValueCloseClaw=0
+
          #Wrists   
         if(self.lastValueWristDown >self.wristdeadzone):
             self.arm.go_down()  
