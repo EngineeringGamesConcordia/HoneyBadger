@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 
-class dcMotor:
+class dcMotor:  #for bts7960
     def __init__(self, fpwm, bpwm):
         self.fpwm = fpwm
         self.bpwm = bpwm
