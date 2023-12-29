@@ -154,13 +154,15 @@ class BadgerController(Controller):
     # Arm x-pos
     def on_R3_right(self, value):
         self.lastValueArmX = value;
-        print("arm x-pos")
+        if(self.state):
+            print("arm x-pos")
         
        
     # Arm x-neg
     def on_R3_left(self, value):
         self.lastValueArmNegX = value;
-        print("arm x-neg")
+        if(self.state):
+            print("arm x-neg")
         
     def on_R3_x_at_rest(self):
         self.lastValueArmX = 0
@@ -169,12 +171,14 @@ class BadgerController(Controller):
     # Arm y-neg
     def on_R3_down(self, value):
         self.lastValueArmY = value;
-        print("arm y-neg")
+        if(self.state):
+            print("arm y-neg")
 
     # Arm y-pos
     def on_R3_up(self, value):
         self.lastValueArmNegY = value;
-        print("arm y-pos")
+        if(self.state):
+            print("arm y-pos")
         
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
@@ -255,6 +259,21 @@ class BadgerController(Controller):
     def checker(self):      
 
         if(self.state):
+            #Servo 0 (Base)
+            #Servo 0 Turn Left
+            if(self.lastValueArmY> self.clawDeadZone):
+                self.arm.serv0_turn_left()
+            #Servo 0 Turn Right    
+            if(self.lastValueArmNegY <-self.clawDeadZone):
+                self.arm.serv0_turn_right()           
+            #Servo 1 Turn Right
+            if(self.lastValueArmX >self.clawDeadZone):
+                self.arm.serv1_turn_right()   
+            #Servo 1 Turn Left
+            if(self.lastValueArmX <-self.clawDeadZone):
+                self.arm.serv1_turn_left() 
+
+        else:
             if(self.lastValueArmY > self.clawDeadZone):
                 self.arm.y_pos(self.lastValueArmY)  
                 
@@ -277,22 +296,6 @@ class BadgerController(Controller):
                 self.arm.close_claw(self.lastValueCloseClaw)
             else:
                 self.lastValueCloseClaw=0
-
-        else:
-            #Cervo 0 (Base)
-            #Cervo 0 Turn Left
-            if(self.lastValueArmY> self.clawDeadZone):
-                self.arm.serv0_turn_left()
-            #Cervo 0 Turn Right    
-            if(self.lastValueArmNegY <-self.clawDeadZone):
-                self.arm.serv0_turn_right()           
-            #Cervo 1 Turn Right
-            if(self.lastValueArmX >self.clawDeadZone):
-                self.arm.serv1_turn_right()   
-            #Cervo 1 Turn Left
-            if(self.lastValueArmX <-self.clawDeadZone):
-                self.arm.serv1_turn_left() 
-         
          #Wrists   
         if(self.lastValueWristDown >self.wristdeadzone):
             self.arm.go_down()  
