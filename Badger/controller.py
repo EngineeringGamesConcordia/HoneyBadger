@@ -101,7 +101,7 @@ class BadgerController(Controller):
         if(self.state == True):
             value= (value+2**15)
             self.lastValueOpenClaw = value
-            print("Open Value" + str(self.lastValueOpenlaw))
+            print("Open Value" + str(self.lastValueOpenClaw))
         
     def on_L2_release(self):
         if(self.state == True):
