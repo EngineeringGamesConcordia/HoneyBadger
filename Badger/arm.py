@@ -20,6 +20,8 @@ initial_theta1, initial_theta2 = 0, 0
 offset2 = 6
 offset_x=0
 offset_y=0
+px = 0
+py = 0
 
 def adjust_to_limits(theta, theta_min, theta_max):
     # Adjust the joint angle to stay within limits
@@ -99,13 +101,9 @@ def calculate_inverse_kinematic(x_target, y_target):
 
 
 class Arm:
-    global px
-    global py
     global moveVal
     
     def __init__(self, base_stepper, kit, angles):
-        global px
-        global py
         global moveVal
         print("Init arm")
         initial_theta1 = angles[0]
