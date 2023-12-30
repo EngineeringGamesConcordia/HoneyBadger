@@ -45,7 +45,7 @@ def ticks():#works
 
 
 try:
-    controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)HoneyController(arm1, drivesys, vacuum1, throw1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
+    controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 =  threading.Thread(target=ticks)
 
