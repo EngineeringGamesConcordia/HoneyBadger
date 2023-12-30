@@ -5,27 +5,27 @@ from drive import Drive
 from vacuum import Vacuum
 from automation import Automation
 from motors import dcMotor
-from motors import stepperMotor
 import time
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
-    share               start automatic control
-    options             start manual control
-    left joystick       drive (front, back, left, right)
-    right joystick      arm (x-pos, x-neg, y-pos, y-neg)
+    share               start manual control
+    options             start automatic control
+    left joystick       wrist (left,right,up,down)
+    right joystick      arm (x-pos, x-neg, y-pos, y-neg), IK
     square              start vacuum
     x                   stop vacuum
     L2                  open claw
     R2                  close claw
-    L1                  turn claw wrist left
-    R1                  turn claw wrist right
+    L1                  stepper servo left
+    R1                  stepper servo right
+    Arrows              Drive (front, back, left, right)
 '''
 
 class BadgerController(Controller):
     clawDeadZone = 10000
     deadzone = 2000
-    wristdeadzone = 32000
+    wristdeadzone = 31500
 
     def __init__(self, arm, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
@@ -183,19 +183,18 @@ class BadgerController(Controller):
         self.lastValueArmY = 0
         self.lastValueArmNegY = 0
     '''
-    ------------------------------ ARM SYSTEM - Stepper ------------------------------
+    ------------------------------ ARM SYSTEM - Stepper Servo ------------------------------
     '''
      
     # Turn Right
     def on_R1_press(self):
-        self.arm.serv5_turn_right()
+        self.arm.stepper_turn_right()
         print("Stepper Moving Right")
-        #insert stepper code for right
+        
     # Turn Left
     def on_L1_press(self):
-        self.arm.serv5_turn_left()   
+        self.arm.stepper_turn_left()   
         print("Stepper Moving Left")
-        #insert stepper code for left
     
     '''
     ------------------------------ VACUUM SYSTEM ------------------------------
@@ -311,5 +310,6 @@ class BadgerController(Controller):
                 
         if(self.lastValueWristRight > self.wristdeadzone):
             self.arm.turn_right()  
+            
     
         

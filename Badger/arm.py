@@ -1,5 +1,4 @@
 import numpy as np
-from motors import stepperMotor
 import RPi.GPIO as GPIO
 from time import sleep
 from adafruit_servokit import ServoKit
@@ -94,7 +93,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
 class Arm:
     global moveVal
     
-    def __init__(self, base_stepper, kit, angles):
+    def __init__(self kit, angles):
         global moveVal
         print("Init arm")
         self.initial_theta1 = angles[0]
@@ -105,13 +104,14 @@ class Arm:
         self.wrist_r_servo =  angles[2]
         self.wrist_ud_servo = angles[3]
         self.claw_servo = angles[4]
+        self.stepper_servo = angles[5]
         self.kit = kit
-        self.base_stepper = base_stepper
         self.kit.servo[0].angle = angles[0] 
         self.kit.servo[1].angle = angles[1]
         self.kit.servo[2].angle = angles[2]
         self.kit.servo[3].angle = angles[3]
         self.kit.servo[4].angle = angles[4]
+        self.kit.servo[5].angle = angles[5]
         self.px = px
         self.py = py
         self.moveVal = moveVal
@@ -128,6 +128,8 @@ class Arm:
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         print("claw closing - arm")
         self.claw_servo = self.claw_servo - val
+        if (self.claw_servo < 35)
+            self.clawservo = 35
         self.kit.servo[4].angle = self.claw_servo
     # ------------------------------ SERVO0 MOVEMENTS
     def serv0_turn_left(self):
@@ -162,22 +164,26 @@ class Arm:
     def go_up(self):
         print("> wrist up")
         self.wrist_ud_servo = self.wrist_ud_servo - self.moveVal
+        if (self.wrist_ud_servo > 155)
+            self.wrist_ud_servo = 155
         self.kit.servo[3].angle = self.wrist_ud_servo
 
     def go_down(self):
         print("> wrist down")
         self.wrist_ud_servo = self.wrist_ud_servo + self.moveVal
+        if (self.wrist_ud_servo < 5)
+            self.wrist_ud_servo = 5
         self.kit.servo[3].angle = self.wrist_ud_servo
     # ------------------------------ ROTATIONAL MOVEMENTS SERV05
-    def serv5_turn_right(self):
-        print("> step right")
-        #self.claw_servo = self.claw_servo - self.moveVal
-        #self.kit.servo[4].angle = self.claw_servo
+    def stepper_turn_right(self):
+        print("> stepper servo right")
+        self.stepper_servo = self.stepper_servo + self.moveVal
+        self.kit.servo[5].angle = self.stepper_servo
 
-    def serv_turn_left(self):
-        print("> claw left")
-        #self.claw_servo = self.clawservo + self.moveVal
-        #self.kit.servo[4].angle = self.claw_servo    
+    def stepper_turn_left(self):
+        print("> stepper servo left")
+        self.stepper_servo = self.stepper_servo - self.moveVal
+        self.kit.servo[5].angle = self.stepper_servo   
     # ------------------------------ Move x-pos
     def x_pos(self, val):
         print("> arm22 x_pos")
@@ -225,16 +231,6 @@ class Arm:
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-
-    # ------------------------------ STEPPER Movements
-
-    def cw_stepper(self):
-        print("> stepper cw")
-        self.base_stepper.cw()
-        
-    def ccw_stepper(self):
-        print("> stepper ccw")
-        self.base_stepper.ccw()
     
 """
     # ------------------------------ Move down
