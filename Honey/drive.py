@@ -25,7 +25,7 @@ class Drive:
         self.back_right_speed = ((self.x + self.y) + ((self.honey_geometry)*self.angular_rot))/self.wheel_radius
         print("Speeds fl: " + str(self.front_left_speed) +" bl: " + str(self.back_left_speed) +"fr: " + str(self.front_right_speed) +"br: " + str(self.back_right_speed))
     # ------------------------------ Drive front
-    def move_front(self,speedx,speedy):
+    def move_front(self,speedx):
         print("> drive move front")
         self.front_left.cw(speedx)
         self.front_right.ccw(speedx)
@@ -33,7 +33,7 @@ class Drive:
         self.back_right.ccw(speedx)
 
     # ------------------------------ Drive back
-    def move_back(self,speedx,speedy):
+    def move_back(self,speedy):
         print("> drive move back")
         self.front_left.ccw(speedy)
         self.front_right.cw(speedy)
@@ -41,20 +41,20 @@ class Drive:
         self.back_right.cw(speedy)
         
     # ------------------------------ Drive left
-    def move_left(self,speedx,speedy):
+    def move_left(self,speedx):
         print("> drive move left")
-        self.front_left.ccw(speedy)
+        self.front_left.ccw(speedx)
         self.front_right.ccw(speedx)
-        self.back_left.cw(speedy)
+        self.back_left.cw(speedx)
         self.back_right.cw(speedx)
 
     # ------------------------------ Drive right
-    def move_right(self,speedx,speedy):
+    def move_right(self,speedx):
         print("> drive move right")
         self.front_left.cw(speedx)
-        self.front_right.cw(speedy)
+        self.front_right.cw(speedx)
         self.back_left.ccw(speedx)
-        self.back_right.ccw(speedy)
+        self.back_right.ccw(speedx)
         
     def turn_left(self,speed):
         print("> drive move right")
