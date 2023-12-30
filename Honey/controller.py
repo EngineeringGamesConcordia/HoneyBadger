@@ -130,11 +130,11 @@ class HoneyController(Controller):
         
     # Arm y-neg
     def on_R3_down(self, value):
-        self.lastValueArmNegY = value;
+        self.lastValueArmY = value;
 
     # Arm y-pos
     def on_R3_up(self, value):
-        self.lastValueArmY = value;
+        self.lastValueArmNegY = value;
         
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
@@ -229,8 +229,8 @@ class HoneyController(Controller):
             print ("X_neg = " + str(self.lastValueDriveNegX))
             self.drive.move_left(-self.lastValueDriveNegX)
             
-        if(self.dPadL==False and self.dPadR==False):
-            self.drive.stop() 
+        if(self.dPadL==False and self.dPadR==False and self.lastValueDriveY = 0 and lastValueDriveNegY = 0 and self.lastValueDriveX = 0 and self.lastValueDriveNegX = 0):
+            self.drive.stop()
             
         if(self.dPadL):
             self.drive.turn_left()
