@@ -119,14 +119,10 @@ class HoneyController(Controller):
     # Arm x-pos
     def on_R3_right(self, value):
         self.lastValueArmX = value;
-        if(self.state):
-            print("arm x-pos")
         
     # Arm x-neg
     def on_R3_left(self, value):
         self.lastValueArmNegX = value;
-        if(self.state):
-            print("arm x-neg")
         
     def on_R3_x_at_rest(self):
         self.lastValueArmX = 0
@@ -135,14 +131,10 @@ class HoneyController(Controller):
     # Arm y-neg
     def on_R3_down(self, value):
         self.lastValueArmNegY = value;
-        if(self.state):
-            print("arm y-neg")
 
     # Arm y-pos
     def on_R3_up(self, value):
         self.lastValueArmY = value;
-        if(self.state):
-            print("arm y-pos")
         
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
