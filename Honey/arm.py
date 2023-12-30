@@ -174,7 +174,7 @@ class Arm:
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
-    # ------------------------------ STEPPER Movements
+    # ------------------------------ STEPPER Servo Movements
 
     def cw_stepper(self):
         print("> stepper cw")

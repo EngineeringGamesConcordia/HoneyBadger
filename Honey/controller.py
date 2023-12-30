@@ -13,8 +13,8 @@ from relay import Relay
     square              start vacuum
     x                   stop vacuum
     triangle            stop throw
-    R1                  stepper cw
-    L1                  stepper ccw
+    R1                  stepper servo cw
+    L1                  stepper servo ccw
     
 '''
 
@@ -22,7 +22,7 @@ class HoneyController(Controller):
 
     manualDeadZone = 10000
     armdeadzone = 2000
-    drivedeadzone = 1000
+    drivedeadzone = 3000
     
     def __init__(self, arm, drivesys, relay, automation, **kwargs):
         self.arm = arm
