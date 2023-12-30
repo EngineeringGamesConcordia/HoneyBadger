@@ -1,5 +1,4 @@
 import numpy as np
-import tinyik
 from motors import stepperMotor
 import RPi.GPIO as GPIO
 from time import sleep
