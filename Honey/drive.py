@@ -30,8 +30,8 @@ class Drive:
         print("> drive move front")
         self.front_left.cw(self.speed)
         self.front_right.ccw(self.speed)
-        self.back_left.ccw(self.speed)
-        self.back_right.cw(self.speed)
+        self.back_left.cw(self.speed)
+        self.back_right.ccw(self.speed)
 
     # ------------------------------ Drive back
     def move_back(self,speed):
@@ -39,8 +39,8 @@ class Drive:
         print("> drive move back")
         self.front_left.ccw(self.speed)
         self.front_right.cw(self.speed)
-        self.back_left.cw(self.speed)
-        self.back_right.ccw(self.speed)
+        self.back_left.ccw(self.speed)
+        self.back_right.cw(self.speed)
         
     # ------------------------------ Drive left
     def move_left(self,speed):
@@ -48,8 +48,8 @@ class Drive:
         print("> drive move left")
         self.front_left.ccw(self.speed)
         self.front_right.ccw(self.speed)
-        self.back_left.ccw(self.speed)
-        self.back_right.ccw(self.speed)
+        self.back_left.cw(self.speed)
+        self.back_right.cw(self.speed)
 
     # ------------------------------ Drive right
     def move_right(self,speed):
@@ -57,10 +57,10 @@ class Drive:
         print("> drive move right")
         self.front_left.cw(self.speed)
         self.front_right.cw(self.speed)
-        self.back_left.cw(self.speed)
-        self.back_right.cw(self.speed)
+        self.back_left.ccw(self.speed)
+        self.back_right.ccw(self.speed)
         
-    def turn_left(self):
+    def turn_right(self):
         self.speed = 1
         print("> drive turn left")
         self.front_left.cw(self.speed)
@@ -68,7 +68,7 @@ class Drive:
         self.back_left.cw(self.speed)
         self.back_right.cw(self.speed)
         
-    def turn_right(self):
+    def turn_left(self):
         self.speed = 1
         print("> drive turn right")
         self.front_left.ccw(self.speed)
