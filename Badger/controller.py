@@ -37,10 +37,10 @@ class BadgerController(Controller):
         self.lastValueArmNegX = 0
         self.lastValueArmY = 0
         self.lastValueArmNegY =0
-        self.lastValueDriveX = 0
-        self.lastValueDriveNegX =0
-        self.lastValueDriveY = 0
-        self.lastValueDriveNegY=0
+#        self.lastValueDriveX = 0
+#        self.lastValueDriveNegX =0
+#        self.lastValueDriveY = 0
+#        self.lastValueDriveNegY=0
         self.lastValueOpenClaw = 0
         self.lastValueCloseClaw = 0
         
@@ -48,6 +48,9 @@ class BadgerController(Controller):
         self.lastValueWristUp = 0
         self.lastValueWristLeft = 0
         self.lastValueWristRight = 0
+        
+        self.lastValueStepperL1 = False
+        self.lastValueStepperR1 = False
            
         self.gas =0
         
@@ -188,13 +191,21 @@ class BadgerController(Controller):
      
     # Turn Right
     def on_R1_press(self):
-        self.arm.stepper_turn_right()
+        self.lastValueStepperR1 = True
         print("Stepper Moving Right")
+
+    def on_R1_release(self):
+        self.lastValueStepperR1 = False
+        print("STOP Stepper")
         
     # Turn Left
     def on_L1_press(self):
-        self.arm.stepper_turn_left()   
+        self.lastValueStepperL1 = True  
         print("Stepper Moving Left")
+        
+    def on_L1_release(self):
+        self.lastValueStepperL1 = False
+        print("STOP Stepper")
     
     '''
     ------------------------------ VACUUM SYSTEM ------------------------------
@@ -298,7 +309,7 @@ class BadgerController(Controller):
                 self.drive.move_left(self.gas)
             if(self.dPadR):
                 self.drive.move_right(self.gas)                    
-         #Wrists   
+        #Wrists   
         if(self.lastValueWristDown >self.wristdeadzone):
             self.arm.go_down()  
                 
@@ -310,3 +321,10 @@ class BadgerController(Controller):
                 
         if(self.lastValueWristRight > self.wristdeadzone):
             self.arm.turn_right()  
+            
+        #Stepper Servo
+        if(self.lastValueStepperL1):
+            self.arm.stepper_turn_left() 
+                
+        if(self.lastValueStepperR1):
+            self.arm.stepper_turn_right()  
