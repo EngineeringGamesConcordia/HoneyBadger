@@ -93,7 +93,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
 class Arm:
     global moveVal
     
-    def __init__(self.kit, angles):
+    def __init__(kit, angles):
         global moveVal
         print("Init arm")
         self.initial_theta1 = angles[0]
