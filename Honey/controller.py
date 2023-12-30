@@ -83,12 +83,12 @@ class HoneyController(Controller):
         self.lastValueDriveNegX = 0
         
     # Go backward
-    def on_L3_down(self, value):
+    def on_L3_up(self, value):
         self.lastValueDriveY = value;
         print("drive y-neg")
 
     # Go forward
-    def on_L3_up(self, value):
+    def on_L3_down(self, value):
         self.lastValueDriveNegY = value;
         print("drive y-pos")
         
@@ -217,7 +217,7 @@ class HoneyController(Controller):
             self.drive.move_back(self.lastValueDriveY)  
             
         if(self.lastValueDriveNegY < -self.drivedeadzone):
-            print ("Y_neg = " + str(self.lastValueDriveNegY))
+            print ("Y_neg = " + str(-self.lastValueDriveNegY))
             self.drive.move_front(self.lastValueDriveNegY)             
 
         if(self.lastValueDriveX >self.drivedeadzone): 
@@ -226,7 +226,7 @@ class HoneyController(Controller):
             
         if(self.lastValueDriveNegX < -self.drivedeadzone):
             print ("X_neg = " + str(self.lastValueDriveNegX))
-            self.drive.move_left(self.lastValueDriveNegX)
+            self.drive.move_left(-self.lastValueDriveNegX)
             
         if(self.dPadL==False and self.dPadR==False):
             self.drive.stop() 
