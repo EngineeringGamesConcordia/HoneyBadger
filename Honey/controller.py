@@ -22,7 +22,7 @@ class HoneyController(Controller):
 
     manualDeadZone = 10000
     armdeadzone = 2000
-    drivedeadzone = 2000
+    drivedeadzone = 1000
     
     def __init__(self, arm, drivesys, relay, automation, **kwargs):
         self.arm = arm
