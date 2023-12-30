@@ -2,7 +2,7 @@ from motors import dcMotor
 from math import ceil
 
 class Drive:
-    def __int__(self, front_left, front_right, back_left, back_right):
+    def __init__(self, front_left, front_right, back_left, back_right):
         print("Init drive")
         self.front_left = front_left
         self.front_right = front_right
