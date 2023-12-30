@@ -151,10 +151,10 @@ class Arm:
         self.kit.servo[1].angle = theta_2
 
     # ------------------------------ Move y-pos
-    def y_neg(self, val):
+    def y_pos(self, val):
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.py = self.py + val;
+        self.py = self.py - val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -163,10 +163,10 @@ class Arm:
         self.kit.servo[1].angle = theta_2
 
     # ------------------------------ Move y-neg
-    def y_pos(self, val):
+    def y_neg(self, val):
         print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.py = self.py - val;
+        self.py = self.py + val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))

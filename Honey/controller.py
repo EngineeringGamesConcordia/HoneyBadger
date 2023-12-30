@@ -129,11 +129,11 @@ class HoneyController(Controller):
         self.lastValueArmNegX = 0
         
     # Arm y-neg
-    def on_R3_up(self, value):
+    def on_R3_down(self, value):
         self.lastValueArmY = value;
 
     # Arm y-pos
-    def on_R3_down(self, value):
+    def on_R3_up(self, value):
         self.lastValueArmNegY = value;
         
     def on_R3_y_at_rest(self):
@@ -200,17 +200,17 @@ class HoneyController(Controller):
                 self.arm.serv1_turn_left()        
         else:
             #Arm
-            if(self.lastValueArmY < -self.armdeadzone):
-                self.arm.y_pos(-self.lastValueArmY)  
+            if(self.lastValueArmY > self.armdeadzone):
+                self.arm.y_pos(self.lastValueArmY)  
                 
-            if(self.lastValueArmNegY > self.armdeadzone):
+            if(self.lastValueArmNegY < -self.armdeadzone):
                 self.arm.y_neg(self.lastValueArmNegY)             
 
             if(self.lastValueArmX >self.armdeadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.armdeadzone):
-                self.arm.x_neg(-self.lastValueArmNegX) 
+                self.arm.x_neg(self.lastValueArmNegX) 
                 
         #Driving    
         if(self.lastValueDriveY > self.drivedeadzone):
