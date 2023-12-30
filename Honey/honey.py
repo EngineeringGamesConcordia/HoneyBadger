@@ -54,11 +54,14 @@ def ticks2():#works
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
-    t2 =  threading.Thread(target=ticks)
+    t2 = threading.Thread(target=ticks)
+    t3 = threading.Thread(target=ticks2)
 
     t1.start() 
     t2.start()
+    t3.start()
     t1.join()
     t2.join()
+    t3.join
 except KeyboardInterrupt:
     GPIO.cleanup()
