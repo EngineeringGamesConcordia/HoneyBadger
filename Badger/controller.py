@@ -5,27 +5,27 @@ from drive import Drive
 from vacuum import Vacuum
 from automation import Automation
 from motors import dcMotor
-from motors import stepperMotor
 import time
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
-    share               start automatic control
-    options             start manual control
-    left joystick       drive (front, back, left, right)
-    right joystick      arm (x-pos, x-neg, y-pos, y-neg)
+    share               start manual control
+    options             start automatic control
+    left joystick       wrist (left,right,up,down)
+    right joystick      arm (x-pos, x-neg, y-pos, y-neg), IK
     square              start vacuum
     x                   stop vacuum
     L2                  open claw
     R2                  close claw
-    L1                  turn claw wrist left
-    R1                  turn claw wrist right
+    L1                  stepper servo left
+    R1                  stepper servo right
+    Arrows              Drive (front, back, left, right)
 '''
 
 class BadgerController(Controller):
     clawDeadZone = 10000
     deadzone = 2000
-    wristdeadzone = 32000
+    wristdeadzone = 31500
 
     def __init__(self, arm, drive, vacuum, wrist, automation, **kwargs):
         self.arm = arm
@@ -48,16 +48,7 @@ class BadgerController(Controller):
         self.lastValueWristUp = 0
         self.lastValueWristLeft = 0
         self.lastValueWristRight = 0
-        
-        self.lastValueBaseDown = 0
-        self.lastValueBaseUp = 0
-        self.lastValueBaseLeft = 0
-        self.lastValueBaseRight = 0
-        
-        self.lastValueElbowDown = 0
-        self.lastValueElbowUp = 0
-        self.lastValueElbowLeft = 0
-        self.lastValueElbowRight = 0     
+           
         self.gas =0
         
         self.dPadL = False
@@ -192,19 +183,18 @@ class BadgerController(Controller):
         self.lastValueArmY = 0
         self.lastValueArmNegY = 0
     '''
-    ------------------------------ ARM SYSTEM - Stepper ------------------------------
+    ------------------------------ ARM SYSTEM - Stepper Servo ------------------------------
     '''
-
+     
     # Turn Right
     def on_R1_press(self):
-        self.arm.cw_stepper()
+        self.arm.stepper_turn_right()
         print("Stepper Moving Right")
-        #insert stepper code for right
+        
     # Turn Left
     def on_L1_press(self):
-        self.arm.ccw_stepper()
+        self.arm.stepper_turn_left()   
         print("Stepper Moving Left")
-        #insert stepper code for left
     
     '''
     ------------------------------ VACUUM SYSTEM ------------------------------
@@ -267,7 +257,6 @@ class BadgerController(Controller):
     def checker(self):      
 
         if(self.state):
-            #Servo 0 (Base)
             #Servo 0 Turn Left
             if(self.lastValueArmY> self.clawDeadZone):
                 self.arm.serv0_turn_left()
@@ -279,8 +268,7 @@ class BadgerController(Controller):
                 self.arm.serv1_turn_right()   
             #Servo 1 Turn Left
             if(self.lastValueArmNegX <-self.clawDeadZone):
-                self.arm.serv1_turn_left() 
-            
+                self.arm.serv1_turn_left()                
             #Claw
             if(self.lastValueOpenClaw >0):  
                 self.arm.open_claw(self.lastValueOpenClaw)
@@ -288,13 +276,13 @@ class BadgerController(Controller):
                 self.arm.close_claw(self.lastValueCloseClaw)
         else:
             #Arm
-            if(self.lastValueArmY > self.clawDeadZone):
+            if(self.lastValueArmY > self.deadzone):
                 self.arm.y_pos(self.lastValueArmY)  
                 
             if(self.lastValueArmNegY < -self.deadzone):
-                self.arm.y_neg(self.lastValueArmNegY)             
-
-            if(self.lastValueArmX >self.clawDeadZone): 
+                self.arm.y_neg(self.lastValueArmNegY)   
+                
+            if(self.lastValueArmX >self.deadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.deadzone):
