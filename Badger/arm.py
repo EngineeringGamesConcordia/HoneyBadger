@@ -128,7 +128,7 @@ class Arm:
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         print("claw closing - arm")
         self.claw_servo = self.claw_servo - val
-        if (self.claw_servo < 35)
+        if (self.claw_servo < 35):
             self.clawservo = 35
         self.kit.servo[4].angle = self.claw_servo
     # ------------------------------ SERVO0 MOVEMENTS
@@ -164,14 +164,14 @@ class Arm:
     def go_up(self):
         print("> wrist up")
         self.wrist_ud_servo = self.wrist_ud_servo - self.moveVal
-        if (self.wrist_ud_servo > 155)
+        if (self.wrist_ud_servo > 155):
             self.wrist_ud_servo = 155
         self.kit.servo[3].angle = self.wrist_ud_servo
 
     def go_down(self):
         print("> wrist down")
         self.wrist_ud_servo = self.wrist_ud_servo + self.moveVal
-        if (self.wrist_ud_servo < 5)
+        if (self.wrist_ud_servo < 5):
             self.wrist_ud_servo = 5
         self.kit.servo[3].angle = self.wrist_ud_servo
     # ------------------------------ ROTATIONAL MOVEMENTS SERV05
