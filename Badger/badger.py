@@ -23,6 +23,10 @@ def threadFunction(controller):
     print("Spawning controller thread")
     controller.listen()  # set on_disconnect=restart for final usage
 
+def automation_begin(automation): 
+    print("Starting automatic script)
+    automation.start(arm)
+
 GPIO.setmode(GPIO.BCM)
 
 #TODO test and fix parameters
@@ -34,7 +38,7 @@ vacuum1 = Vacuum(22)
 left_track = dcMotor(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction
 right_track = dcMotor(13, 19)
 drivesys = Drive(left_track, right_track)
-automation1 = Automation()
+automation1 = Automation(arm1, drivesys)
 #send the value from the contrller to the arm
 def ticks():#works
     while(True):
@@ -47,7 +51,8 @@ def ticks():#works
 try:
     controller = BadgerController(arm1, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
-    t2 =  threading.Thread(target=ticks)
+    t2 = threading.Thread(target=ticks)
+#    t3 = threading.Thread(target=automation_begin, args(automation, ))
 
     t1.start() 
     t2.start()
