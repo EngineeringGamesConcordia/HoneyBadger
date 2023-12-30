@@ -213,11 +213,11 @@ class HoneyController(Controller):
                 self.arm.x_neg(self.lastValueArmNegX) 
                 
         #Driving    
-        if(self.lastValueDriveY < -self.drivedeadzone):
+        if(self.lastValueDriveY > self.drivedeadzone):
             print ("Y = " + str(self.lastValueDriveY))
             self.drive.move_back(-self.lastValueDriveY)  
             
-        if(self.lastValueDriveNegY > self.drivedeadzone):
+        if(self.lastValueDriveNegY < -self.drivedeadzone):
             print ("Y_neg = " + str(self.lastValueDriveNegY))
             self.drive.move_front(self.lastValueDriveNegY)             
 
