@@ -236,12 +236,12 @@ class HoneyController(Controller):
         if(self.lastValueDriveNegX < -self.drivedeadzone):
             self.drive.x_neg(self.lastValueDriveNegX)
             
-        if(self.dPadL==False and self.dPadR==False):
-            self.drive.turn_stop() 
-            
-        if(self.dPadL):
-            self.drive.turn_left(self.gas)
-            
-        if(self.dPadR):
-            self.drive.turn_right(self.gas)  
+#        if(self.dPadL==False and self.dPadR==False):
+#            self.drive.turn_stop() 
+#            
+#        if(self.dPadL):
+#            self.drive.turn_left(self.gas)
+#            
+#        if(self.dPadR):
+#            self.drive.turn_right(self.gas)  
 
