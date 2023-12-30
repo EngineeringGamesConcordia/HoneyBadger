@@ -229,7 +229,7 @@ class HoneyController(Controller):
             print ("X_neg = " + str(self.lastValueDriveNegX))
             self.drive.move_left(-self.lastValueDriveNegX)
             
-        if(self.dPadL==False and self.dPadR==False and self.lastValueDriveY == 0 and lastValueDriveNegY == 0 and self.lastValueDriveX == 0 and self.lastValueDriveNegX == 0):
+        if(self.dPadL==False and self.dPadR==False and self.lastValueDriveY == 0 and self.lastValueDriveNegY == 0 and self.lastValueDriveX == 0 and self.lastValueDriveNegX == 0):
             self.drive.stop()
             
         if(self.dPadL):
