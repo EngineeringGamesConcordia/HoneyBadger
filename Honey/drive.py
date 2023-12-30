@@ -1,57 +1,42 @@
 from motors import dcMotor
-
-FRONT_LEFT_IN1 = 0
-FRONT_LEFT_IN2 = 0
-FRONT_LEFT_PWM = 0
-
-FRONT_RIGHT_IN1 = 0
-FRONT_RIGHT_IN2 = 0
-FRONT_RIGHT_PWM = 0
-
-BACK_LEFT_IN1 = 0
-BACK_LEFT_IN2 = 0
-BACK_LEFT_PWM = 0
-
-BACK_RIGHT_IN1 = 0
-BACK_RIGHT_IN2 = 0
-BACK_RIGHT_PWM = 0
+from math import ceil
 
 class Drive:
-    def __int__(self):
+    def __int__(self, front_left, front_right, back_left, back_right):
         print("Init drive")
-        self.front_left = dcMotor(FRONT_LEFT_IN1, FRONT_LEFT_IN2, FRONT_LEFT_PWM)
-        self.front_right = dcMotor(FRONT_RIGHT_IN1, FRONT_RIGHT_IN2, FRONT_RIGHT_PWM)
-        self.back_left = dcMotor(BACK_LEFT_IN1, BACK_LEFT_IN2, BACK_LEFT_PWM)
-        self.back_right = dcMotor(BACK_RIGHT_IN1, BACK_RIGHT_IN2, BACK_RIGHT_PWM)
+        self.front_left = front_left
+        self.front_right = front_right
+        self.back_left = back_left
+        self.back_right = back_right
 
     # ------------------------------ Drive front
     def move_front(self,speedx,speedy):
         print("> drive move front")
-        self.front_left.forward()
-        self.front_right.forward()
-        self.back_left.forward()
-        self.back_right.forward()
+        self.front_left.cw()
+        self.front_right.cw()
+        self.back_left.cw()
+        self.back_right.cw()
 
     # ------------------------------ Drive back
     def move_back(self,speedx,speedy):
         print("> drive move back")
-        self.front_left.backward()
-        self.front_right.backward()
-        self.back_left.backward()
-        self.back_right.backward()
-
+        self.front_left.ccw()
+        self.front_right.ccw()
+        self.back_left.ccw()
+        self.back_right.ccw()
+        
     # ------------------------------ Drive left
     def move_left(self,speedx,speedy):
         print("> drive move left")
-        self.front_left.backward()
-        self.front_right.forward()
-        self.back_left.backward()
-        self.back_right.forward()
+        self.front_left.ccw()
+        self.front_right.cw()
+        self.back_left.ccw()
+        self.back_right.cw()
 
     # ------------------------------ Drive right
     def move_right(self,speedx,speedy):
         print("> drive move right")
-        self.front_left.forward()
-        self.front_right.backward()
-        self.back_left.forward()
-        self.back_right.backward()
+        self.front_left.cw()
+        self.front_right.ccw()
+        self.back_left.cw()
+        self.back_right.ccw()
