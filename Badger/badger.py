@@ -23,7 +23,7 @@ def threadFunction(controller):
     controller.listen()  # set on_disconnect=restart for final usage
 
 def automation_begin(automation): 
-    print("Starting automatic script)
+    print("Starting automatic script")
     automation.start(arm)
 
 GPIO.setmode(GPIO.BCM)
