@@ -24,7 +24,7 @@ class HoneyController(Controller):
     armdeadzone = 2000
     drivedeadzone = 2000
     
-    def __init__(self, arm, drivesys, relay, automation, interface, ds4drv):
+    def __init__(self, arm, drivesys, relay, automation, **kwargs):
         self.arm = arm
         self.drive = drive
         self.relay = relay
