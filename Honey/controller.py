@@ -210,7 +210,9 @@ class HoneyController(Controller):
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.armdeadzone):
-                self.arm.x_neg(self.lastValueArmNegX)   
+                self.arm.x_neg(self.lastValueArmNegX) 
+                
+    def checker2(self):                 
         #Driving    
         if(self.lastValueDriveY < -self.drivedeadzone):
             print ("Y = " + str(self.lastValueDriveY))

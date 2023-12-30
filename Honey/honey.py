@@ -42,6 +42,13 @@ def ticks():#works
         floatingTime = float(times)
         if(math.floor(floatingTime*1000)%10==0):
             controller.checker()
+            
+def ticks2():#works
+    while(True):
+        times = time.time()
+        floatingTime = float(times)
+        if(math.floor(floatingTime*1000)%10==0):
+            controller.checker2()
 
 
 try:
