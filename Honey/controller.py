@@ -225,16 +225,16 @@ class HoneyController(Controller):
                 self.arm.x_neg(self.lastValueArmNegX)   
         #Driving    
         if(self.lastValueDriveY > self.drivedeadzone):
-            self.drive.move_front(self.lastValueDriveY)  
+            self.drive.move_back(self.lastValueDriveY)  
             
         if(self.lastValueDriveNegY < -self.drivedeadzone):
-            self.drive.move_back(self.lastValueDriveNegY)             
+            self.drive.move_front(self.lastValueDriveNegY)             
 
         if(self.lastValueDriveX >self.drivedeadzone): 
-            self.drive.move_left(self.lastValueDriveX)
+            self.drive.move_right(self.lastValueDriveX)
             
         if(self.lastValueDriveNegX < -self.drivedeadzone):
-            self.drive.move_right(self.lastValueDriveNegX)
+            self.drive.move_left(self.lastValueDriveNegX)
             
         if(self.dPadL==False and self.dPadR==False):
             self.drive.stop() 
