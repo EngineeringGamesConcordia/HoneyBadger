@@ -1,6 +1,6 @@
 from arm import Arm
 from drive import Drive
-from relay import relay
+from relay import Relay
 
 
 class Automation:
