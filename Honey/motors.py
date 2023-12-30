@@ -1,99 +1,54 @@
 import RPi.GPIO as GPIO
 from time import sleep
 
+class dcMotor: #for Ln298
+    def __init__(self, IN1,IN2,PWM):
+        self.pwm = PWM
+        self.en1 = IN1
+        self.en2 = IN2
+        GPIO.setup(self.pwm, GPIO.OUT)
+        GPIO.setup(self.en1, GPIO.OUT)
+        GPIO.setup(self.en2, GPIO.OUT)
+        self.pwm_speed = GPIO.PWM(self.pwm, 1000)  # 1000 Hz frequency
+        self.pwm_speed.start(0)  # Start with 0% duty cycle
 
-class dcMotor:
-    GPIO.setmode(GPIO.BOARD)
+    def cw(self, duty_cycle):
+        GPIO.output(self.en1, GPIO.LOW)
+        GPIO.output(self.en2, GPIO.HIGH)
+        self.pwm_speed.ChangeDutyCycle(abs(duty_cycle* 100)) # from 0 to 1
 
-    def __init__(self, in1, in2, pwmPin):
-        self.in1 = in1
-        self.in2 = in2
-        self.pwmPin = pwmPin
-        GPIO.setup(self.in1, GPIO.OUT)
-        GPIO.setup(self.in2, GPIO.OUT)
-        GPIO.setup(self.pwmPin, GPIO.OUT)
-
-    def forward(self):
-        GPIO.output(self.in1, GPIO.HIGH)
-        sleep(5)
-        GPIO.output(self.in2, GPIO.LOW)
-        sleep(1)
-        GPIO.cleanup()
-
-    def backward(self):
-        GPIO.output(self.in1, GPIO.LOW)
-        sleep(5)
-        GPIO.output(self.in2, GPIO.HIGH)
-        sleep(1)
-        GPIO.cleanup()
+    def ccw(self, duty_cycle):
+        GPIO.output(self.en1, GPIO.HIGH)
+        GPIO.output(self.en2, GPIO.LOW)
+        self.pwm_speed.ChangeDutyCycle(abs(duty_cycle* 100)) 
 
     def stop(self):
-        GPIO.output(self.in1, GPIO.LOW)
-        GPIO.output(self.in2, GPIO.LOW)
-        GPIO.cleanup()
+        GPIO.output(self.en1, GPIO.LOW)
+        GPIO.output(self.en2, GPIO.LOW)
+        self.pwm_speed.ChangeDutyCycle(0)
 
-
-class servoMotor:
-    GPIO.setmode(GPIO.BCM)
-
-    def __init__(self, pin):
-        self.pin = pin
-        GPIO.setup(self.pin, GPIO.OUT)
-
-    # angle (int): the angle in degrees the motor should turn. between 0 an 360
-    def set_angle(self, angle):
-        duty = angle / 18 + 2
-        GPIO.output(self.pin, True)
-        pwm = GPIO.PWM(self.pin, 100)
-        pwm.start(0)
-        pwm.ChangeDutyCycle(duty)
-        sleep(1)
-        GPIO.output(self.pin, False)
-        pwm.ChangeDutyCycle(0)  # set duty back to 0 -> not continuously sending inputs to servo
-
-
+        #code below to get rid of
 class stepperMotor:
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setwarnings(False)
-
-    def __init__(self, pin1, pin2, pin3, pin4):
-        self.pin1 = pin1
-        self.pin2 = pin2
-        self.pin3 = pin3
-        self.pin4 = pin4
-        GPIO.setup(self.pin1, GPIO.OUT)
-        GPIO.setup(self.pin2, GPIO.OUT)
-        GPIO.setup(self.pin3, GPIO.OUT)
-        GPIO.setup(self.pin4, GPIO.OUT)
-
-    # direction (str): the direction the motor should turn. 'clockwise' and 'anticlockwise'
-    # angle (int): the angle in degrees the motor should turn. between 0 an 360
-    def turn_stepper_motor(self, direction, angle):
-        # Define motor sequence
-        seq = [[1, 0, 0, 1],
-               [1, 0, 0, 0],
-               [1, 1, 0, 0],
-               [0, 1, 0, 0],
-               [0, 1, 1, 0],
-               [0, 0, 1, 0],
-               [0, 0, 1, 1],
-               [0, 0, 0, 1]]
-
-        # Calculate steps required for given angle
-        steps_per_rev = 512
-        steps = int((angle / 360) * steps_per_rev)
-
-        # Set direction of motor
-        if direction == 'clockwise':
-            seq = seq[::-1]
-
-        # Turn motor
-        for i in range(steps):
-            for halfstep in range(8):
-                GPIO.output(self.pin1, seq[halfstep][0])
-                GPIO.output(self.pin2, seq[halfstep][1])
-                GPIO.output(self.pin3, seq[halfstep][2])
-                GPIO.output(self.pin4, seq[halfstep][3])
-                sleep(1)
-
-        GPIO.cleanup()
+    def __init__(self, dir, step, speed): #should be 19, 26,.0108
+        self.dir = dir
+        self.step = step
+        self.delay = speed #.0208 #speed
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.dir, GPIO.OUT)
+        GPIO.setup(self.step, GPIO.OUT)
+    def cw(self):
+        #could have a small for loop which will make it do a few movement
+        GPIO.output(self.dir, GPIO.HIGH)
+        GPIO.output(self.step, GPIO.HIGH)
+        sleep(self.delay)
+        GPIO.output(self.step, GPIO.LOW)
+        sleep(self.delay)
+        
+    def ccw(self):
+        GPIO.output(self.dir, GPIO.LOW)
+        GPIO.output(self.step, GPIO.HIGH)
+        sleep(self.delay)
+        GPIO.output(self.step, GPIO.LOW)
+        sleep(self.delay)
+    #no need for stop function has works by step
+        

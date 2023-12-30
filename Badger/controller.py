@@ -268,7 +268,7 @@ class BadgerController(Controller):
                 self.arm.serv1_turn_right()   
             #Servo 1 Turn Left
             if(self.lastValueArmNegX <-self.clawDeadZone):
-                self.arm.serv1_turn_left()        
+                self.arm.serv1_turn_left()                
             #Claw
             if(self.lastValueOpenClaw >0):  
                 self.arm.open_claw(self.lastValueOpenClaw)
@@ -280,8 +280,8 @@ class BadgerController(Controller):
                 self.arm.y_pos(self.lastValueArmY)  
                 
             if(self.lastValueArmNegY < -self.deadzone):
-                self.arm.y_neg(self.lastValueArmNegY)             
-
+                self.arm.y_neg(self.lastValueArmNegY)   
+                
             if(self.lastValueArmX >self.deadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
@@ -310,6 +310,3 @@ class BadgerController(Controller):
                 
         if(self.lastValueWristRight > self.wristdeadzone):
             self.arm.turn_right()  
-            
-    
-        

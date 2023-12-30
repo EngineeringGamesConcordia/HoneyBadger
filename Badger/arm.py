@@ -116,6 +116,7 @@ class Arm:
         self.py = py
         self.moveVal = moveVal
         self.SLOW_MODE = False
+        self.base_stepper = base_stepper
 
     # ------------------------------ CLAW MOVEMENTS
     def open_claw(self, val):
