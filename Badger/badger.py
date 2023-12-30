@@ -34,7 +34,7 @@ vacuum1 = Vacuum(22)
 left_track = dcMotor(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction
 right_track = dcMotor(13, 19)
 drivesys = Drive(left_track, right_track)
-automation1 = Automation()
+automation1 = Automation(arm1, drivesys)
 #send the value from the contrller to the arm
 def ticks():#works
     while(True):
