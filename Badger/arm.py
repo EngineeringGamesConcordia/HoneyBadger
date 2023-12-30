@@ -116,13 +116,14 @@ class Arm:
         self.py = py
         self.moveVal = moveVal
         self.SLOW_MODE = False
-        self.base_stepper = base_stepper
 
     # ------------------------------ CLAW MOVEMENTS
     def open_claw(self, val):
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         print("claw opening - arm")
         self.claw_servo = self.claw_servo + val
+        if (self.claw_servo > 175):
+            self.clawservo = 175
         self.kit.servo[4].angle = self.claw_servo
 
     def close_claw(self, val):
@@ -136,54 +137,70 @@ class Arm:
     def serv0_turn_left(self):
         print("> servo0 rotating left")
         self.base_servo = self.base_servo - self.moveVal
+        if (self.base_servo < 10):
+            self.base_servo = 10
         self.kit.servo[0].angle = self.base_servo
     def serv0_turn_right(self):
         print("> servo0 rotating right")
         self.base_servo = self.base_servo + self.moveVal
+        if (self.base_servo > 160):
+            self.base_servo = 160
         self.kit.servo[0].angle = self.base_servo
     # ------------------------------ SERVO1 MOVEMENTS
     def serv1_turn_left(self):
         print("> servo1 rotating left")
         self.elbow_servo = self.elbow_servo - self.moveVal
+        if (self.elbow_servo < 10):
+            self.elbow_servo = 10
         self.kit.servo[1].angle = self.elbow_servo
     def serv1_turn_right(self):
         print("> servo1 rotating right")
         self.elbow_servo = self.elbow_servo + self.moveVal
+        if (self.elbow_servo > 160):
+            self.elbow_servo = 160
         self.kit.servo[1].angle = self.elbow_servo   
     # ------------------------------ ROTATIONAL MOVEMENTS SERV02
     def turn_left(self): 
         print("> wrist rotating left")
         self.wrist_r_servo = self.wrist_r_servo - self.moveVal
+        if (self.wrist_r_servo < 5):
+            self.wrist_r_servo = 5
         self.kit.servo[2].angle = self.wrist_r_servo
 
     def turn_right(self):
         print("> wrist rotating right")
         self.wrist_r_servo = self.wrist_r_servo + self.moveVal
+        if (self.wrist_r_servo > 175):
+            self.wrist_r_servo = 175
         self.kit.servo[2].angle = self.wrist_r_servo
 
     # ------------------------------ ROTATIONAL MOVEMENTS SERV03
     def go_up(self):
         print("> wrist up")
         self.wrist_ud_servo = self.wrist_ud_servo - self.moveVal
-        if (self.wrist_ud_servo > 155):
-            self.wrist_ud_servo = 155
+        if (self.wrist_ud_servo < 5):
+            self.wrist_ud_servo = 5
         self.kit.servo[3].angle = self.wrist_ud_servo
 
     def go_down(self):
         print("> wrist down")
         self.wrist_ud_servo = self.wrist_ud_servo + self.moveVal
-        if (self.wrist_ud_servo < 5):
-            self.wrist_ud_servo = 5
+        if (self.wrist_ud_servo > 155):
+            self.wrist_ud_servo = 155
         self.kit.servo[3].angle = self.wrist_ud_servo
     # ------------------------------ ROTATIONAL MOVEMENTS SERV05
     def stepper_turn_right(self):
         print("> stepper servo right")
         self.stepper_servo = self.stepper_servo + self.moveVal
+        if (self.stepper_servo > 178):
+            self.stepper_servo = 178
         self.kit.servo[5].angle = self.stepper_servo
 
     def stepper_turn_left(self):
         print("> stepper servo left")
         self.stepper_servo = self.stepper_servo - self.moveVal
+        if (self.stepper_servo < 2):
+            self.stepper_servo = 2
         self.kit.servo[5].angle = self.stepper_servo   
     # ------------------------------ Move x-pos
     def x_pos(self, val):
@@ -232,21 +249,3 @@ class Arm:
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
-    
-"""
-    # ------------------------------ Move down
-    def move_down(self):
-        print("> arm height floor")
-        theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, 0)  # need to find (x, y) coordinates
-        self.base_servo.angle = theta_1
-        self.elbow_servo.angle = theta_2
-        self.wrist_ud_servo.angle = theta_3
-
-    # ------------------------------ Move up
-    def move_up(self):
-        print("> arm height 1")
-        theta_1, theta_2, theta_3 = calculate_inverse_kinematic(0, 0)  # need to find (x, y) coordinates
-        self.base_servo.angle = theta_1
-        self.elbow_servo.angle = theta_2
-        self.wrist_ud_servo.angle = theta_3
-"""
