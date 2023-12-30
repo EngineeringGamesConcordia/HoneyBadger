@@ -26,7 +26,7 @@ class HoneyController(Controller):
     
     def __init__(self, arm, drivesys, relay, automation, **kwargs):
         self.arm = arm
-        self.drive = drive
+        self.drive = drivesys
         self.relay = relay
         self.automation = automation
         
