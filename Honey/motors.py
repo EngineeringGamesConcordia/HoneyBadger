@@ -1,4 +1,4 @@
-import RPi.GPIO as sGPIO
+import RPi.GPIO as GPIO
 from time import sleep
 
 class dcMotor: #for Ln298
