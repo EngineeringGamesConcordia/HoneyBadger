@@ -8,14 +8,22 @@ class Drive:
         self.front_right = front_right
         self.back_left = back_left
         self.back_right = back_right
-    
-    def convert(self,speedx,speedy):
-        self.speedx = (speedx/2**15) # scaling them to 0-1
-        self.speedy = (speedy/2**15)
+        self.front_left_speed = 0
+        self.front_right_speed = 0
+        self.back_left_speed = 0
+        self.back_right_speed = 0
+        self.angular_rot =0
         self.wheel_radius = 0.04 #80mm wheel
         self.honey_geometry = (0.255+0.23) #25.5cm lenght and 23cm wide
-        self.front_left_speed = 0
-
+    
+    def convert(self,speedx,speedy):
+        self.x = (speedx/2**15) # scaling them to 0-1
+        self.y = (speedy/2**15)
+        self.front_left_speed = ((self.x - self.y) - ((self.honey_geometry)*self.angular_rot))/self.wheel_radius
+        self.front_right_speed = ((self.x + self.y) + ((self.honey_geometry)*self.angular_rot))/self.wheel_radius
+        self.back_left_speed = ((self.x - self.y) - ((self.honey_geometry)*self.angular_rot))/self.wheel_radius
+        self.back_right_speed = ((self.x + self.y) + ((self.honey_geometry)*self.angular_rot))/self.wheel_radius
+        print("Speeds fl: " + str(self.front_left_speed) +" bl: " + str(self.back_left_speed) +"fr: " + str(self.front_right_speed) +"br: " + str(self.back_right_speed))
     # ------------------------------ Drive front
     def move_front(self,speedx,speedy):
         print("> drive move front")
