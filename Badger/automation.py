@@ -24,7 +24,7 @@ class Automation:
         t_end = time() + 0.5 
         while time() > t_end:
             arm.serv1_turn_left() #serv1_turn_right()
-            sleep(0.001
+            sleep(0.001)
 
         #Servo0 (base) down an amount
         t_end = time() + 0.5 
