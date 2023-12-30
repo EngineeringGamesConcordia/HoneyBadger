@@ -15,12 +15,12 @@ class dcMotor: #for Ln298
     def cw(self, duty_cycle):
         GPIO.output(self.en1, GPIO.LOW)
         GPIO.output(self.en2, GPIO.HIGH)
-        self.pwm_speed.ChangeDutyCycle(duty_cycle* 100) # from 0 to 1
+        self.pwm_speed.ChangeDutyCycle(abs(duty_cycle* 100)) # from 0 to 1
 
     def ccw(self, duty_cycle):
         GPIO.output(self.en1, GPIO.HIGH)
         GPIO.output(self.en2, GPIO.LOW)
-        self.pwm_speed.ChangeDutyCycle(duty_cycle* 100) 
+        self.pwm_speed.ChangeDutyCycle(abs(duty_cycle* 100)) 
 
     def stop(self):
         GPIO.output(self.en1, GPIO.LOW)
