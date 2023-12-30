@@ -60,24 +60,24 @@ class Drive:
         self.back_left.ccw(self.speed)
         self.back_right.ccw(self.speed)
         
-    def turn_left(self,speed):
-        self.speed = (speed/2**15)
-        print("> drive move right")
+    def turn_left(self):
+        self.speed = 1
+        print("> drive turn left")
         self.front_left.cw(self.speed)
         self.front_right.cw(self.speed)
         self.back_left.cw(self.speed)
         self.back_right.cw(self.speed)
         
-    def turn_right(self,speed):
-        self.speed = (speed/2**15)
-        print("> drive move right")
+    def turn_right(self):
+        self.speed = 1
+        print("> drive turn right")
         self.front_left.ccw(self.speed)
         self.front_right.ccw(self.speed)
         self.back_left.ccw(self.speed)
         self.back_right.ccw(self.speed)
         
     def stop(self):
-        print("> drive move right")
+        print("> drive move stop")
         self.front_left.stop()
         self.front_right.stop()
         self.back_left.stop()

@@ -240,8 +240,8 @@ class HoneyController(Controller):
             self.drive.stop() 
             
         if(self.dPadL):
-            self.drive.turn_left(self.gas)
+            self.drive.turn_left()
             
         if(self.dPadR):
-            self.drive.turn_right(self.gas)  
+            self.drive.turn_right()  
 
