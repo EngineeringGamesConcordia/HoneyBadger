@@ -93,7 +93,7 @@ class Arm:
     def __init__(self, base_stepper, kit, angles):
         global moveVal
         print("Init arm")
-        self.initial_theta1 = angles[0] - 10
+        self.initial_theta1 = angles[0] - 5
         self.initial_theta2 = angles[1]
         px, py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.base_servo = angles[0]
