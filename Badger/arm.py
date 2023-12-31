@@ -99,7 +99,9 @@ class Arm:
         self.initial_theta1 = angles[0]
         self.initial_theta2 = angles[1]
         px, py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
+        theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("Here are the initital positions: " + str(px) + "    " + str(py))
+        print ("Here are the initital angles: " + str(theta1_1) + "    " + str(theta1_2))
         self.base_servo = angles[0]
         self.elbow_servo = angles[1]
         self.wrist_r_servo =  angles[2]
@@ -107,8 +109,8 @@ class Arm:
         self.claw_servo = angles[4]
         self.stepper_servo = angles[5]
         self.kit = kit
-        self.kit.servo[0].angle = angles[0] 
-        self.kit.servo[1].angle = angles[1]
+        self.kit.servo[0].angle = theta1_1 
+        self.kit.servo[1].angle = theta1_2
         self.kit.servo[2].angle = angles[2]
         self.kit.servo[3].angle = angles[3]
         self.kit.servo[4].angle = angles[4]
@@ -131,8 +133,8 @@ class Arm:
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         print("claw closing - arm")
         self.claw_servo = self.claw_servo - val
-        if (self.claw_servo < 35):
-            self.clawservo = 35
+        if (self.claw_servo < 65):
+            self.clawservo = 65
         self.kit.servo[4].angle = self.claw_servo
     # ------------------------------ SERVO0 MOVEMENTS
     def serv0_turn_left(self):
@@ -207,7 +209,7 @@ class Arm:
     def x_pos(self, val):
         print("> arm22 x_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.px = self.px + val;
+        self.px = self.px - val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -219,7 +221,7 @@ class Arm:
     def x_neg(self, val):
         print("> arm22 x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.px = self.px - val;
+        self.px = self.px + val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
