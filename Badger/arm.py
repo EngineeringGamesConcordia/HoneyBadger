@@ -132,8 +132,8 @@ class Arm:
     def close_claw(self, val):
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.claw_servo = self.claw_servo - val
-        if (self.claw_servo < 35):
-            self.claw_servo = 35
+        if (self.claw_servo < 33):
+            self.claw_servo = 33
         print("claw closing - arm" + str(self.claw_servo))
         self.kit.servo[4].angle = self.claw_servo
     # ------------------------------ SERVO0 MOVEMENTS
@@ -194,14 +194,14 @@ class Arm:
     # ------------------------------ ROTATIONAL MOVEMENTS SERV05
     def stepper_turn_right(self):
         print("> stepper servo right")
-        self.stepper_servo = self.stepper_servo + self.moveVal
+        self.stepper_servo = self.stepper_servo - self.moveVal
         if (self.stepper_servo > 178):
             self.stepper_servo = 178
         self.kit.servo[5].angle = self.stepper_servo
 
     def stepper_turn_left(self):
         print("> stepper servo left")
-        self.stepper_servo = self.stepper_servo - self.moveVal
+        self.stepper_servo = self.stepper_servo + self.moveVal
         if (self.stepper_servo < 2):
             self.stepper_servo = 2
         self.kit.servo[5].angle = self.stepper_servo   
@@ -214,6 +214,8 @@ class Arm:
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
+        self.base_servo = theta_1
+        self.elbow_servo = theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -226,6 +228,8 @@ class Arm:
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
+        self.base_servo = theta_1
+        self.elbow_servo = theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -238,6 +242,8 @@ class Arm:
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
+        self.base_servo = theta_1
+        self.elbow_servo = theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
 
@@ -250,5 +256,7 @@ class Arm:
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
+        self.base_servo = theta_1
+        self.elbow_servo = theta_2
         self.kit.servo[0].angle = theta_1
         self.kit.servo[1].angle = theta_2
