@@ -41,8 +41,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         #return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
         
     theta = np.arctan2(y_target, x_target)
-    x_adjusted = (x_target - offset_x)
-    y_adjusted = (y_target - offset2 - offset_y)
+    x_adjusted = (x_target - (offset2 * np.cos(theta)) - offset_x)
+    y_adjusted = (y_target - (offset2 * np.sin(theta)) - offset_y)
     
     if (y_adjusted < 0.0):
         y_adjusted = 0
@@ -60,6 +60,16 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     theta1_1 = theta - np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
     theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
+    # Calibration factors
+    calibration_factor_theta1 = -10  # Adjust as needed
+    calibration_factor_theta2 = -10  # Adjust as needed
+
+    # Apply calibration factors
+    theta1_1 += calibration_factor_theta1
+    theta1_2 += calibration_factor_theta1
+    theta2_1 += calibration_factor_theta2
+    theta2_2 += calibration_factor_theta2
+    
     # Define joint angle limits
     # Define joint angle limits in radians
     theta1_min, theta1_max = np.deg2rad(15), np.deg2rad(160)
@@ -74,7 +84,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
         cost = calculate_cost(sol[0], sol[1],initial_theta1, initial_theta2)
 
-        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 250.0:
+        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 200.0:
             min_cost = cost
             optimal_solution = sol
 
