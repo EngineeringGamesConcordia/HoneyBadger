@@ -11,8 +11,8 @@ KINEMATIC_SCALE = 3.25/(2**20)
 
 moveVal = 0.1
 l1 = 20.5
-l2 = 21.5
-offset2 = 1
+l2 = 24.0
+offset2 = -0.5
 offset_x= 0
 offset_y= 0
 px = 0
