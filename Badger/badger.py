@@ -33,8 +33,8 @@ kit = ServoKit(channels=16)
 angles = [50,50,40,80,90,90]
 arm1 = Arm(kit, angles)
 vacuum1 = Vacuum(22)
-left_track = dcMotor(6, 5) #rpwm = forward mioght have to swap it the pin if going oposite direction
-right_track = dcMotor(13, 19)
+left_track = dcMotor(5, 6) #rpwm = forward mioght have to swap it the pin if going oposite direction
+right_track = dcMotor(19, 13)
 drivesys = Drive(left_track, right_track)
 automation1 = Automation(arm1, drivesys)
 #send the value from the contrller to the arm
