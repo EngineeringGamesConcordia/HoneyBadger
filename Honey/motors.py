@@ -26,29 +26,3 @@ class dcMotor: #for Ln298
         GPIO.output(self.en1, GPIO.LOW)
         GPIO.output(self.en2, GPIO.LOW)
         self.pwm_speed.ChangeDutyCycle(0)
-
-        #code below to get rid of
-class stepperMotor:
-    def __init__(self, dir, step, speed): #should be 19, 26,.0108
-        self.dir = dir
-        self.step = step
-        self.delay = speed #.0208 #speed
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.dir, GPIO.OUT)
-        GPIO.setup(self.step, GPIO.OUT)
-    def cw(self):
-        #could have a small for loop which will make it do a few movement
-        GPIO.output(self.dir, GPIO.HIGH)
-        GPIO.output(self.step, GPIO.HIGH)
-        sleep(self.delay)
-        GPIO.output(self.step, GPIO.LOW)
-        sleep(self.delay)
-        
-    def ccw(self):
-        GPIO.output(self.dir, GPIO.LOW)
-        GPIO.output(self.step, GPIO.HIGH)
-        sleep(self.delay)
-        GPIO.output(self.step, GPIO.LOW)
-        sleep(self.delay)
-    #no need for stop function has works by step
-        

@@ -2,6 +2,9 @@ from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
 from relay import Relay
+from automation import Automation
+from motors import dcMotor
+import time
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
@@ -38,6 +41,9 @@ class HoneyController(Controller):
         self.lastValueDriveNegX =0
         self.lastValueDriveY = 0
         self.lastValueDriveNegY=0
+        
+        self.lastValueStepperL1 = False
+        self.lastValueStepperR1 = False
         
         self.dPadL = False
         self.dPadR = False
@@ -129,11 +135,11 @@ class HoneyController(Controller):
         self.lastValueArmNegX = 0
         
     # Arm y-neg
-    def on_R3_up(self, value):
+    def on_R3_down(self, value):
         self.lastValueArmY = value;
 
     # Arm y-pos
-    def on_R3_down(self, value):
+    def on_R3_up(self, value):
         self.lastValueArmNegY = value;
         
     def on_R3_y_at_rest(self):
@@ -146,13 +152,21 @@ class HoneyController(Controller):
      
     # Turn Right
     def on_R1_press(self):
-        self.arm.cw_stepper
+        self.lastValueStepperR1 = True
         print("Stepper Moving Right")
 
+    def on_R1_release(self):
+        self.lastValueStepperR1 = False
+        print("STOP Stepper")
+        
     # Turn Left
     def on_L1_press(self):
-        self.arm.ccw_stepper 
+        self.lastValueStepperL1 = True  
         print("Stepper Moving Left")
+        
+    def on_L1_release(self):
+        self.lastValueStepperL1 = False
+        print("STOP Stepper")
 
     '''
     ------------------------------ VACUUM SYSTEM ------------------------------
@@ -200,17 +214,17 @@ class HoneyController(Controller):
                 self.arm.serv1_turn_left()        
         else:
             #Arm
-            if(self.lastValueArmY < -self.armdeadzone):
-                self.arm.y_pos(-self.lastValueArmY)  
+            if(self.lastValueArmY > self.armdeadzone):
+                self.arm.y_pos(self.lastValueArmY)  
                 
-            if(self.lastValueArmNegY > self.armdeadzone):
+            if(self.lastValueArmNegY < -self.armdeadzone):
                 self.arm.y_neg(self.lastValueArmNegY)             
 
             if(self.lastValueArmX >self.armdeadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.armdeadzone):
-                self.arm.x_neg(-self.lastValueArmNegX) 
+                self.arm.x_neg(self.lastValueArmNegX) 
                 
         #Driving    
         if(self.lastValueDriveY > self.drivedeadzone):
@@ -236,5 +250,12 @@ class HoneyController(Controller):
             self.drive.turn_left()
             
         if(self.dPadR):
-            self.drive.turn_right()  
+            self.drive.turn_right() 
+            
+        #Stepper Servo
+        if(self.lastValueStepperL1):
+            self.arm.stepper_turn_left() 
+                
+        if(self.lastValueStepperR1):
+            self.arm.stepper_turn_right()  
 
