@@ -41,7 +41,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         #return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
         
     theta = np.arctan2(y_target, x_target)
-    x_adjusted = (x_target - (offset2 * np.cos(theta)) - offset_x)
+    x_adjusted = -(x_target - (offset2 * np.cos(theta)) - offset_x)
     y_adjusted = (y_target - (offset2 * np.sin(theta)) - offset_y)
     
     if (y_adjusted < 0.0):
