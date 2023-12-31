@@ -152,12 +152,14 @@ class Arm:
         self.base_servo = self.base_servo - self.moveVal
         if (self.base_servo < 10):
             self.base_servo = 10
+        initial_theta1 = self.base_servo
         self.kit.servo[0].angle = self.base_servo
     def serv0_turn_right(self):
         print("> servo0 rotating right")
         self.base_servo = self.base_servo + self.moveVal
         if (self.base_servo > 160):
             self.base_servo = 160
+        initial_theta1 = self.base_servo
         self.kit.servo[0].angle = self.base_servo
     # ------------------------------ SERVO1 MOVEMENTS
     def serv1_turn_left(self):
@@ -165,12 +167,14 @@ class Arm:
         self.elbow_servo = self.elbow_servo - self.moveVal
         if (self.elbow_servo < 10):
             self.elbow_servo = 10
+        initial_theta2 = self.elbow_servo
         self.kit.servo[1].angle = self.elbow_servo
     def serv1_turn_right(self):
         print("> servo1 rotating right")
         self.elbow_servo = self.elbow_servo + self.moveVal
         if (self.elbow_servo > 160):
             self.elbow_servo = 160
+        initial_theta2 = self.elbow_servo
         self.kit.servo[1].angle = self.elbow_servo   
     # ------------------------------ ROTATIONAL MOVEMENTS SERV02
     def turn_left(self): 
