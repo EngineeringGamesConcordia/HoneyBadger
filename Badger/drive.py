@@ -37,7 +37,6 @@ class Drive:
 
     # ------------------------------ Drive right
     def move_right(self,speed):
-        self.speed = speed
         print("> drive move right")
         self.l_track.cw(speed)
         self.r_track.ccw(speed)
