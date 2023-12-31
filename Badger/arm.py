@@ -41,7 +41,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         #return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
         
     theta = np.arctan2(y_target, x_target)
-    x_adjusted = -(x_target - (offset2 * np.cos(theta)) - offset_x)
+    x_adjusted = (x_target - (offset2 * np.cos(theta)) - offset_x)
     y_adjusted = (y_target - (offset2 * np.sin(theta)) - offset_y)
     
     if (y_adjusted < 0.0):
@@ -209,7 +209,7 @@ class Arm:
     def x_pos(self, val):
         print("> arm22 x_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.px = self.px + val;
+        self.px = self.px - val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -223,7 +223,7 @@ class Arm:
     def x_neg(self, val):
         print("> arm22 x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.px = self.px - val;
+        self.px = self.px + val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
