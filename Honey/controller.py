@@ -204,13 +204,13 @@ class HoneyController(Controller):
                 self.arm.y_pos(self.lastValueArmY)  
                 
             if(self.lastValueArmNegY < -self.armdeadzone):
-                self.arm.y_neg(self.lastValueArmNegY)             
+                self.arm.y_neg(-self.lastValueArmNegY)             
 
             if(self.lastValueArmX >self.armdeadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.armdeadzone):
-                self.arm.x_neg(self.lastValueArmNegX) 
+                self.arm.x_neg(-self.lastValueArmNegX) 
                 
         #Driving    
         if(self.lastValueDriveY > self.drivedeadzone):

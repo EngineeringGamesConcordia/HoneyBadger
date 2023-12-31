@@ -61,6 +61,11 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     # Define joint angle limits in radians
     theta1_min, theta1_max = np.deg2rad(15), np.deg2rad(150)
     theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(170)
+    
+#    theta1_1 = adjust_to_limits(theta1_1, theta1_min, theta1_max)
+#    theta2_1 = adjust_to_limits(theta2_1, theta2_min, theta2_max)
+#    theta1_2 = adjust_to_limits(theta1_2, theta1_min, theta1_max)
+#    theta2_2 = adjust_to_limits(theta2_2, theta2_min, theta2_max)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
@@ -155,7 +160,7 @@ class Arm:
     def y_pos(self, val):
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.py = self.py - val;
+        self.py = self.py + val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -167,7 +172,7 @@ class Arm:
     def y_neg(self, val):
         print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.py = self.py + val;
+        self.py = self.py - val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
