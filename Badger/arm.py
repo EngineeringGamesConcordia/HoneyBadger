@@ -103,7 +103,7 @@ class Arm:
         self.py = py
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("Here are the initital positions: " + str(px) + "    " + str(py))
-        print ("Here are the initital angles: " + str(theta11) + "    " + str(theta_2))
+        print ("Here are the initital angles: " + str(theta_1) + "    " + str(theta_2))
         self.base_servo = angles[0]
         self.elbow_servo = angles[1]
         self.wrist_r_servo =  angles[2]
