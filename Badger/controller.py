@@ -171,13 +171,13 @@ class BadgerController(Controller):
         self.lastValueArmNegX = 0
         
     # Arm y-neg
-    def on_R3_down(self, value):
+    def on_R3_up(self, value):
         self.lastValueArmY = value;
         if(self.state):
             print("arm y-neg")
 
     # Arm y-pos
-    def on_R3_up(self, value):
+    def on_R3_down(self, value):
         self.lastValueArmNegY = value;
         if(self.state):
             print("arm y-pos")
@@ -291,13 +291,13 @@ class BadgerController(Controller):
                 self.arm.y_pos(self.lastValueArmY)  
                 
             if(self.lastValueArmNegY < -self.deadzone):
-                self.arm.y_neg(self.lastValueArmNegY)   
+                self.arm.y_neg(-self.lastValueArmNegY)   
                 
             if(self.lastValueArmX >self.deadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.deadzone):
-                self.arm.x_neg(self.lastValueArmNegX)   
+                self.arm.x_neg(-self.lastValueArmNegX)   
             #Driving    
             if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
                 self.drive.move_stop()                
