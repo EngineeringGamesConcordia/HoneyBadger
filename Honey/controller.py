@@ -200,11 +200,11 @@ class HoneyController(Controller):
                 self.arm.serv1_turn_left()        
         else:
             #Arm
-            if(self.lastValueArmY > self.armdeadzone):
-                self.arm.y_pos(self.lastValueArmY)  
+            if(self.lastValueArmY < -self.armdeadzone):
+                self.arm.y_pos(-self.lastValueArmY)  
                 
-            if(self.lastValueArmNegY < -self.armdeadzone):
-                self.arm.y_neg(-self.lastValueArmNegY)             
+            if(self.lastValueArmNegY > self.armdeadzone):
+                self.arm.y_neg(self.lastValueArmNegY)             
 
             if(self.lastValueArmX >self.armdeadzone): 
                 self.arm.x_pos(self.lastValueArmX)
