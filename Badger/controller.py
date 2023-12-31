@@ -291,13 +291,13 @@ class BadgerController(Controller):
                 self.arm.y_pos(self.lastValueArmY)  
                 
             if(self.lastValueArmNegY < -self.deadzone):
-                self.arm.y_neg(abs(self.lastValueArmNegY))   
+                self.arm.y_neg(self.lastValueArmNegY)   
                 
             if(self.lastValueArmX >self.deadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.deadzone):
-                self.arm.x_neg(abs(self.lastValueArmNegX))   
+                self.arm.x_neg(self.lastValueArmNegX)   
             #Driving    
             if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
                 self.drive.move_stop()                
