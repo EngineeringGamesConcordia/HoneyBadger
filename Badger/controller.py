@@ -156,7 +156,6 @@ class BadgerController(Controller):
     # Arm x-pos
     def on_R3_right(self, value):
         self.lastValueArmX = value;
-        
        
     # Arm x-neg
     def on_R3_left(self, value):
