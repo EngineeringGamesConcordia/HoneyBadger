@@ -98,6 +98,8 @@ class Arm:
         print("Init arm")
         self.initial_theta1 = angles[0]
         self.initial_theta2 = angles[1]
+        self.px = px
+        self.py = py
         px, py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("Here are the initital positions: " + str(px) + "    " + str(py))
@@ -115,8 +117,6 @@ class Arm:
         self.kit.servo[3].angle = angles[3]
         self.kit.servo[4].angle = angles[4]
         self.kit.servo[5].angle = angles[5]
-        self.px = px
-        self.py = py
         self.moveVal = moveVal
         self.SLOW_MODE = False
 
