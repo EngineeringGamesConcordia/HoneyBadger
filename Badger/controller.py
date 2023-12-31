@@ -171,13 +171,13 @@ class BadgerController(Controller):
         self.lastValueArmNegX = 0
         
     # Arm y-neg
-    def on_R3_up(self, value):
+    def on_R3_down(self, value):
         self.lastValueArmY = value;
         if(self.state):
             print("arm y-neg")
 
     # Arm y-pos
-    def on_R3_down(self, value):
+    def on_R3_up(self, value):
         self.lastValueArmNegY = value;
         if(self.state):
             print("arm y-pos")
