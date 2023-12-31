@@ -7,8 +7,8 @@ class dcMotor:  #for bts7960
         self.bpwm = bpwm
         GPIO.setup(self.fpwm, GPIO.OUT)
         GPIO.setup(self.bpwm, GPIO.OUT)
-        self.pwm_forward = GPIO.PWM(self.fpwm, 1000)  # 1000 Hz frequency
-        self.pwm_backward = GPIO.PWM(self.bpwm, 1000)
+        self.pwm_forward = GPIO.PWM(self.fpwm, 100)  # 1000 Hz frequency
+        self.pwm_backward = GPIO.PWM(self.bpwm, 100)
         self.pwm_forward.start(0)  # Start with 0% duty cycle
         self.pwm_backward.start(0)
 

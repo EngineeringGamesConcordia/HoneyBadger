@@ -81,7 +81,7 @@ class BadgerController(Controller):
       # GAS GAS GAS && CLOSE
     def on_R2_press(self, value):
         if(self.state == False):
-            value= (value+2**15)/(2*(2**15))
+            value= (value+2**15)/(2**16))
             self.gas = value
             print("Gas Value" + str(self.gas))
         else:
