@@ -13,7 +13,7 @@ KINEMATIC_SCALE = 2.5/(2**20)
 moveVal = 0.1
 l1 = 22
 l2 = 21.16
-offset2 = 0
+offset2 = 6
 offset_x= 0
 offset_y= 0
 px = 0
@@ -41,8 +41,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         #return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
         
     theta = np.arctan2(y_target, x_target)
-    x_adjusted = (x_target - (offset2 * np.cos(theta)) - offset_x)
-    y_adjusted = (y_target - (offset2 * np.sin(theta)) - offset_y)
+    x_adjusted = x_target
+    y_adjusted = y_target - offset2
     
     if (y_adjusted < 0.0):
         y_adjusted = 0
@@ -63,7 +63,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     # Define joint angle limits
     # Define joint angle limits in radians
     theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(160)
-    theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(160)
+    theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(165)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
