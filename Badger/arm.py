@@ -39,10 +39,10 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     def calculate_cost(theta1, theta2, initial_theta1, initial_theta2):
         return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
         #return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
-        
-    theta = np.arctan2(y_target, x_target)
-    x_adjusted = x_target
-    y_adjusted = y_target - offset2
+    
+    theta1 = np.deg2rad(initial_theta1)
+    x_adjusted = x_target - l1 * np.cos(theta1)
+    y_adjusted = y_target - l1 * np.sin(theta1) - offset2
     
     if (y_adjusted < 0.0):
         y_adjusted = 0
@@ -55,10 +55,10 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         return initial_theta1, initial_theta2
     
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
-    theta2_2 = np.arctan2(np.sqrt(1 - D**2), D)
+    theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
     
-    theta1_1 = theta + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
-    theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
+    theta1_1 = theta1 + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
+    theta1_2 = theta1 + np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
     # Define joint angle limits
     # Define joint angle limits in radians
