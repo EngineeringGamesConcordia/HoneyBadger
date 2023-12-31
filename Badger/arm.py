@@ -40,54 +40,82 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         return np.sqrt((theta1 - initial_theta1)**2 + (theta2 - initial_theta2)**2)
         #return np.abs(theta1 - initial_theta1) + np.abs(theta2 - initial_theta2)
     
-    theta1 = np.deg2rad(initial_theta1)
-    x_adjusted = x_target - l1 * np.cos(theta1)
-    y_adjusted = y_target - l1 * np.sin(theta1) - offset2
-    
-    if (y_adjusted < 0.0):
+    theta = np.arctan2(y_target, x_target)
+    x_adjusted = x_target - (offset2 * np.cos(theta)) - offset_x
+    y_adjusted = y_target - (offset2 * np.sin(theta)) - offset_y
+
+    if y_adjusted < 0.0:
         y_adjusted = 0
-    
+
     D = (x_adjusted**2 + y_adjusted**2 - l1**2 - l2**2) / (2 * l1 * l2)
-    
-    
+
     if np.abs(D) > 1:
         print("No solution for given x, y.")
         return initial_theta1, initial_theta2
-    
+
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
     theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
-    
-    theta1_1 = theta1 + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
-    theta1_2 = theta1 + np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
-    
-    # Define joint angle limits
-    # Define joint angle limits in radians
-    theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(160)
-    theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(165)
 
-    solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
-    
+    # Calculate the angle of the second joint relative to the horizontal plane
+    theta2_horizontal_1 = theta - theta2_1
+    theta2_horizontal_2 = theta - theta2_2
+
+    # Convert joint angles to servo angles based on their fixed positions
+    servo_theta1_1 = np.rad2deg(theta)
+    servo_theta1_2 = np.rad2deg(theta)
+    servo_theta2_relative_1 = np.rad2deg(theta2_horizontal_1)  # Angle relative to the 1st arm
+    servo_theta2_relative_2 = np.rad2deg(theta2_horizontal_2)  # Angle relative to the 1st arm
+
+    # Define joint angle limits in servo angles
+    servo_theta1_min, servo_theta1_max = 10, 160  # Adjust these limits based on your servo setup
+    servo_theta2_relative_min, servo_theta2_relative_max = 10, 165  # Adjust these limits based on your servo setup
+
+    # Check joint angle limits and choose optimal solution
+    solutions = (
+        (servo_theta1_1, servo_theta2_relative_1),
+        (servo_theta1_2, servo_theta2_relative_2),
+    )
+
     optimal_solution = None
     min_cost = float('inf')
 
     for sol in solutions:
-        theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
-        cost = calculate_cost(sol[0], sol[1],initial_theta1, initial_theta2)
+        servo_theta1, servo_theta2_relative = sol
+        cost = calculate_cost(
+            np.deg2rad(servo_theta1),
+            np.deg2rad(servo_theta2_relative),
+            initial_theta1,
+            initial_theta2,
+        )
 
-        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 250.0:
+        if (
+            servo_theta1_min <= servo_theta1 <= servo_theta1_max
+            and servo_theta2_relative_min <= servo_theta2_relative <= servo_theta2_relative_max
+            and cost < min_cost
+            and cost <= 250.0
+        ):
             min_cost = cost
             optimal_solution = sol
 
-        print("Theta1: {:.2f}, Theta2: {:.2f}, Cost: {:.2f}".format(theta1, theta2, cost))
+        print(
+            "ServoTheta1: {:.2f}, ServoTheta2_relative: {:.2f}, Cost: {:.2f}".format(
+                servo_theta1, servo_theta2_relative, cost
+            )
+        )
 
     if optimal_solution:
         print("\nOptimal Solution:")
-        print("Theta1: {:.2f}, Theta2: {:.2f}".format(optimal_solution[0], optimal_solution[1]))
+        print(
+            "ServoTheta1: {:.2f}, ServoTheta2_relative: {:.2f}".format(
+                optimal_solution[0], optimal_solution[1]
+            )
+        )
     else:
         print("No optimal solution found within joint angle limits.")
-        optimal_solution = (np.deg2rad(initial_theta1), np.deg2rad(initial_theta2))  # Set optimal solution to current angles to prevent damage
-
-    return np.rad2deg(optimal_solution[0]), np.rad2deg(optimal_solution[1])
+        optimal_solution = (
+            np.deg2rad(initial_theta1),
+            np.deg2rad(initial_theta2),
+        )
 
 
 class Arm:
