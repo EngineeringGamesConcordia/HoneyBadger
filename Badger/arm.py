@@ -126,15 +126,15 @@ class Arm:
         print("claw opening - arm")
         self.claw_servo = self.claw_servo + val
         if (self.claw_servo > 175):
-            self.clawservo = 175
+            self.claw_servo = 175
         self.kit.servo[4].angle = self.claw_servo
 
     def close_claw(self, val):
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        print("claw closing - arm")
         self.claw_servo = self.claw_servo - val
-        if (self.claw_servo < 65):
-            self.clawservo = 65
+        if (self.claw_servo < 35):
+            self.claw_servo = 35
+        print("claw closing - arm" + str(self.claw_servo))
         self.kit.servo[4].angle = self.claw_servo
     # ------------------------------ SERVO0 MOVEMENTS
     def serv0_turn_left(self):
