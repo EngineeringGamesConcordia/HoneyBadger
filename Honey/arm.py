@@ -11,8 +11,8 @@ KINEMATIC_SCALE = 3.25/(2**20)
 
 moveVal = 0.1
 l1 = 20.5
-l2 = 21.5
-offset2 = 1
+l2 = 24.0
+offset2 = -0.5
 offset_x= 0
 offset_y= 0
 px = 0
@@ -59,8 +59,13 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     
     # Define joint angle limits
     # Define joint angle limits in radians
-    theta1_min, theta1_max = np.deg2rad(20), np.deg2rad(135)
+    theta1_min, theta1_max = np.deg2rad(15), np.deg2rad(150)
     theta2_min, theta2_max = np.deg2rad(10), np.deg2rad(170)
+    
+#    theta1_1 = adjust_to_limits(theta1_1, theta1_min, theta1_max)
+#    theta2_1 = adjust_to_limits(theta2_1, theta2_min, theta2_max)
+#    theta1_2 = adjust_to_limits(theta1_2, theta1_min, theta1_max)
+#    theta2_2 = adjust_to_limits(theta2_2, theta2_min, theta2_max)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
@@ -93,9 +98,10 @@ class Arm:
     def __init__(self, base_stepper, kit, angles):
         global moveVal
         print("Init arm")
-        self.initial_theta1 = angles[0] - 5
+        self.initial_theta1 = angles[0]
         self.initial_theta2 = angles[1]
         px, py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
+        print (str(px) + "   " + str(py))
         self.base_servo = angles[0]
         self.elbow_servo = angles[1]
         self.kit = kit
@@ -154,7 +160,7 @@ class Arm:
     def y_pos(self, val):
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.py = self.py + val;
+        self.py = self.py - val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -166,7 +172,7 @@ class Arm:
     def y_neg(self, val):
         print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
-        self.py = self.py - val;
+        self.py = self.py + val;
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
