@@ -25,7 +25,7 @@ def threadFunction(controller):
 GPIO.setmode(GPIO.BCM)
 
 kit = ServoKit(channels=16)
-angles = [80,80, 90]
+angles = [90, 80, 80]
 arm1 = Arm(kit, angles)
 relay1 = Relay(23, 24)
 front_left = dcMotor(22, 27, 17) #en1, en2, pwm

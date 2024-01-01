@@ -53,8 +53,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
     theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
     
-    theta1_1 = theta - np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
-    theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
+    theta1_1 = theta + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
+    theta1_2 = theta = np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
     # Calibration factors
     calibration_factor_theta1 = np.deg2rad(-10)  # Adjust as needed
@@ -102,8 +102,8 @@ class Arm:
     def __init__(self, kit, angles):
         global moveVal
         print("Init arm")
-        self.initial_theta1 = angles[0]
-        self.initial_theta2 = angles[1]
+        self.initial_theta1 = angles[1]
+        self.initial_theta2 = angles[2]
         px, py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.px = px
         self.py = py
@@ -112,10 +112,11 @@ class Arm:
         print ("Here are the initital angles: " + str(theta_1) + "    " + str(theta_2))
         self.base_servo = theta_1
         self.elbow_servo = theta_2
-        self.stepper_servo = angles[2]
+        self.stepper_servo = angles[0]
+        self.kit.servo[0].angle = angles[0]
         self.kit = kit
-        self.kit.servo[0].angle = theta_1
-        self.kit.servo[1].angle = theta_2
+        self.kit.servo[1].angle = theta_1
+        self.kit.servo[2].angle = theta_2
         self.moveVal = moveVal
         self.SLOW_MODE = False
         
@@ -127,7 +128,7 @@ class Arm:
             self.base_servo = 10
         self.initial_theta1 = self.base_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
-        self.kit.servo[0].angle = self.base_servo
+        self.kit.servo[1].angle = self.base_servo
     def serv0_turn_right(self):
         print("> servo0 rotating right")
         self.base_servo = self.base_servo + self.moveVal
@@ -135,7 +136,7 @@ class Arm:
             self.base_servo = 150
         self.initial_theta1 = self.base_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
-        self.kit.servo[0].angle = self.base_servo
+        self.kit.servo[1].angle = self.base_servo
     # ------------------------------ SERVO1 MOVEMENTS, Manual
     def serv1_turn_left(self):
         print("> servo1 rotating left")
@@ -144,7 +145,7 @@ class Arm:
             self.elbow_servo = 5
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
-        self.kit.servo[1].angle = self.elbow_servo
+        self.kit.servo[2].angle = self.elbow_servo
     def serv1_turn_right(self):
         print("> servo1 rotating right")
         self.elbow_servo = self.elbow_servo + self.moveVal
@@ -152,7 +153,7 @@ class Arm:
             self.elbow_servo = 175
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
-        self.kit.servo[1].angle = self.elbow_servo      
+        self.kit.servo[2].angle = self.elbow_servo      
 
     # ------------------------------ Move x-pos
     def x_pos(self, val):
@@ -165,8 +166,8 @@ class Arm:
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
         self.base_servo = theta_1
         self.elbow_servo = theta_2
-        self.kit.servo[0].angle = theta_1
-        self.kit.servo[1].angle = theta_2
+        self.kit.servo[1].angle = theta_1
+        self.kit.servo[2].angle = theta_2
 
     # ------------------------------ Move x-neg
     def x_neg(self, val):
@@ -179,8 +180,8 @@ class Arm:
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
         self.base_servo = theta_1
         self.elbow_servo = theta_2
-        self.kit.servo[0].angle = theta_1
-        self.kit.servo[1].angle = theta_2
+        self.kit.servo[1].angle = theta_1
+        self.kit.servo[2].angle = theta_2
 
     # ------------------------------ Move y-pos
     def y_pos(self, val):
@@ -193,8 +194,8 @@ class Arm:
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
         self.base_servo = theta_1
         self.elbow_servo = theta_2
-        self.kit.servo[0].angle = theta_1
-        self.kit.servo[1].angle = theta_2
+        self.kit.servo[1].angle = theta_1
+        self.kit.servo[2].angle = theta_2
 
     # ------------------------------ Move y-neg
     def y_neg(self, val):
@@ -207,8 +208,8 @@ class Arm:
         self.initial_theta1, self.initial_theta2 = theta_1, theta_2
         self.base_servo = theta_1
         self.elbow_servo = theta_2
-        self.kit.servo[0].angle = theta_1
-        self.kit.servo[1].angle = theta_2
+        self.kit.servo[1].angle = theta_1
+        self.kit.servo[2].angle = theta_2
 
     # ------------------------------ STEPPER Servo Movements
     
@@ -217,12 +218,12 @@ class Arm:
         self.stepper_servo = self.stepper_servo - self.moveVal
         if (self.stepper_servo > 178):
             self.stepper_servo = 178
-        self.kit.servo[2].angle = self.stepper_servo
+        self.kit.servo[0].angle = self.stepper_servo
 
     def stepper_turn_left(self):
         print("> stepper servo left")
         self.stepper_servo = self.stepper_servo + self.moveVal
         if (self.stepper_servo < 2):
             self.stepper_servo = 2
-        self.kit.servo[2].angle = self.stepper_servo 
+        self.kit.servo[0].angle = self.stepper_servo 
 
