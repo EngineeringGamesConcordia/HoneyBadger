@@ -213,15 +213,15 @@ class Arm:
     def stepper_turn_right(self):
         print("> stepper servo right")
         self.stepper_servo = self.stepper_servo - self.moveVal
-        if (self.stepper_servo > 178):
-            self.stepper_servo = 178
+        if (self.stepper_servo > 175):
+            self.stepper_servo = 175
         self.kit.servo[5].angle = self.stepper_servo
 
     def stepper_turn_left(self):
         print("> stepper servo left")
         self.stepper_servo = self.stepper_servo + self.moveVal
-        if (self.stepper_servo < 2):
-            self.stepper_servo = 2
+        if (self.stepper_servo < 5):
+            self.stepper_servo = 5
         self.kit.servo[5].angle = self.stepper_servo   
     # ------------------------------ Move x-pos
     def x_pos(self, val):
