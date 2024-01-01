@@ -113,8 +113,8 @@ class Arm:
         self.base_servo = theta_1
         self.elbow_servo = theta_2
         self.stepper_servo = angles[0]
-        self.kit.servo[0].angle = angles[0]
         self.kit = kit
+        self.kit.servo[0].angle = angles[0]
         self.kit.servo[1].angle = theta_1
         self.kit.servo[2].angle = theta_2
         self.moveVal = moveVal
