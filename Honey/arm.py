@@ -230,7 +230,7 @@ class Arm:
     def ballPosition(self):
         print(">Position Ball set")
         #60,20,90
-        self.base_servo = 20
+        self.base_servo = 60
         self.elbow_servo = 90
         self.initial_theta1 = self.base_servo
         self.initial_theta2 = self.elbow_servo
@@ -240,7 +240,7 @@ class Arm:
     def launchPosition(self):
         print("> Position Launch set")
         #90,100,60
-        self.base_servo = 80
+        self.base_servo = 40
         self.elbow_servo = 120
         self.initial_theta1 = self.base_servo
         self.initial_theta2 = self.elbow_servo
