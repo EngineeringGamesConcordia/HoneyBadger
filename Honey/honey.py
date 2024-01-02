@@ -46,8 +46,8 @@ def on_L3_press(self):
     self.l3Counter += 1
     print("L3Counter is at "+ str(self.l3Counter))
     if(self.l3Counter >1):
-    self.l3Cycle = not (self.l3Cycle);
-    print("Ball Pos is"+ str(self.l3Cycle))
+        self.l3Cycle = not (self.l3Cycle);
+        print("Ball Pos is"+ str(self.l3Cycle))
         if(self.l3Cycle):
             print("Ball Position")
             arm.defaultPosition()
