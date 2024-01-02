@@ -115,41 +115,35 @@ class BadgerController(Controller):
     '''
     # Drive front
     def on_up_arrow_press(self):
-        if(self.state == False):
-            self.dPadU = True
-            print("moved front")
+        self.dPadU = True
+        print("moved front")
         
     #Stop 
     def on_up_down_arrow_release(self):
-        if(self.state == False):
-            self.dPadU = False
-            self.dPadD = False
-            print("i stopped X")
+        self.dPadU = False
+        self.dPadD = False
+        print("i stopped X")
         
     # Drive back
     def on_down_arrow_press(self):
-        if(self.state == False):
-            self.dPadD = True
-            print("moved back")
+        self.dPadD = True
+        print("moved back")
         
     # Drive left
     def on_left_arrow_press(self):
-        if(self.state == False):
-            self.dPadL = True
-            print("moved left")
+        self.dPadL = True
+        print("moved left")
         
 
     # Drive right
     def on_right_arrow_press(self):
-        if(self.state == False):
-            self.dPadR = True
-            print("moved right")
+        self.dPadR = True
+        print("moved right")
     #Stopped 
     def on_left_right_arrow_release(self):
-        if(self.state == False):
-            self.dPadR = False
-            self.dPadL = False
-            print("i stopped Y")
+        self.dPadR = False
+        self.dPadL = False
+        print("i stopped Y")
     '''
     ------------------------------ ARM SYSTEM - x and y axis ------------------------------
     '''
@@ -275,7 +269,20 @@ class BadgerController(Controller):
             if(self.lastValueOpenClaw >0):  
                 self.arm.open_claw(self.lastValueOpenClaw)
             if(self.lastValueCloseClaw >0):
-                self.arm.close_claw(self.lastValueCloseClaw)
+                self.arm.close_claw(self.lastValueCloseClaw)  
+            #halfspeed driving    
+            if(self.dPadU):
+                self.gas = 0.5 * self.gas
+                self.drive.move_back(self.gas)
+            if(self.dPadD):
+                self.gas = 0.5 * self.gas
+                self.drive.move_front(self.gas)    
+            if(self.dPadL):
+                self.gas = 0.5 * self.gas
+                self.drive.move_left(self.gas)
+            if(self.dPadR):
+                self.gas = 0.5 * self.gas   
+                self.drive.move_right(self.gas)                 
         else:
             #Arm
             if(self.lastValueArmY > self.deadzone):
@@ -289,9 +296,7 @@ class BadgerController(Controller):
             
             if(self.lastValueArmNegX < -self.deadzone):
                 self.arm.x_neg(self.lastValueArmNegX)   
-            #Driving    
-            if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
-                self.drive.move_stop()                
+            #Driving            
             if(self.dPadU):
                 self.drive.move_back(self.gas)
             if(self.dPadD):
@@ -299,7 +304,9 @@ class BadgerController(Controller):
             if(self.dPadL):
                 self.drive.move_left(self.gas)
             if(self.dPadR):
-                self.drive.move_right(self.gas)                    
+                self.drive.move_right(self.gas) 
+        if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
+            self.drive.move_stop()                        
         #Wrists   
         if(self.lastValueWristDown >self.wristdeadzone):
             self.arm.go_down()  
