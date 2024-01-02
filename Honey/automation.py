@@ -1,6 +1,5 @@
 from arm import Arm
 from drive import Drive
-from vacuum import Vacuum
 from motors import dcMotor
 from time import sleep, time
 
