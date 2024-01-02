@@ -86,7 +86,9 @@ class HoneyController(Controller):
         value= (value+2**15)/(2**16)
         self.gas = value
         print("Gas Value" + str(self.gas))
-        
+        if(self.gas<0.4):
+            self.gas = self.gas +0.4
+            
     def on_R2_release(self):
       if(self.state == False):
         self.gas = 0
@@ -229,16 +231,16 @@ class HoneyController(Controller):
                 self.arm.serv1_turn_left()       
                
             if(self.dPadU):
-                self.gas = 0.5
+                self.gas = 0.75
                 self.drive.move_back(self.gas)
             if(self.dPadD):
-                self.gas = 0.5
+                self.gas = 0.75
                 self.drive.move_front(self.gas)    
             if(self.dPadL):
-                self.gas = 0.5
+                self.gas = 0.75
                 self.drive.move_left(self.gas)
             if(self.dPadR):
-                self.gas = 0.5  
+                self.gas = 0.75 
                 self.drive.move_right(self.gas)          
             
         else:
