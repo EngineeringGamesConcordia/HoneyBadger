@@ -48,6 +48,9 @@ class HoneyController(Controller):
         
         self.gas =0
         
+        self.l3Cycle = False
+        self.l3Counter = 0
+        
         self.dPadL = False
         self.dPadR = False
         self.dPadU = False
