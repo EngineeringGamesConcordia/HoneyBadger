@@ -163,18 +163,18 @@ class HoneyController(Controller):
             if(self.l3Cycle):
                 print("Ball Position")
                 self.arm.defaultPosition()
-                Thread.sleep(10)
+                time.sleep(10)
                 self.arm.stepper_servo = 60
                 self.arm.kit.servo[0].angle = self.arm.stepper_servo                
-                Thread.sleep(10)
+                time.sleep(10)
                 self.arm.ballPosition();
             else:
                 print("Launch Position")
                 self.arm.defaultPosition()
-                Thread.sleep(10)
+                time.sleep(10)
                 self.arm.stepper_servo  = 90
                 self.arm.kit.servo[0].angle = self.arm.stepper_servo
-                Thread.sleep(10)
+                time.sleep(10)
                 self.arm.launchPosition();
 
     
