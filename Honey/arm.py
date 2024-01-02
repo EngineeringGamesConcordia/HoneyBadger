@@ -226,4 +226,34 @@ class Arm:
         if (self.stepper_servo < 5):
             self.stepper_servo = 5
         self.kit.servo[0].angle = self.stepper_servo 
+    # ------------------------------ Set to Position
+    def ballPosition(self):
+        print(">Position Ball set")
+        #60,20,90
+        self.base_servo = 20
+        self.elbow_servo = 90
+        self.initial_theta1 = self.base_servo
+        self.initial_theta2 = self.elbow_servo
+        self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
+        self.kit.servo[1].angle = self.base_servo
+        self.kit.servo[2].angle = self.elbow_servo
+    def launchPosition(self):
+        print("> Position Launch set")
+        #90,100,60
+        self.base_servo = 100
+        self.elbow_servo = 60
+        self.initial_theta1 = self.base_servo
+        self.initial_theta2 = self.elbow_servo
+        self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
+        self.kit.servo[1].angle = self.base_servo
+        self.kit.servo[2].angle = self.elbow_servo
+    def defaultPosition(self):
+        #base position servo 0 leave as is, 100, 140
+        self.base_servo = 100
+        self.elbow_servo = 140
+        self.initial_theta1 = self.base_servo
+        self.initial_theta2 = self.elbow_servo
+        self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
+        self.kit.servo[1].angle = self.base_servo
+        self.kit.servo[2].angle = self.elbow_servo
 

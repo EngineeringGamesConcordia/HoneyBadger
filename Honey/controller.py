@@ -4,7 +4,7 @@ from drive import Drive
 from relay import Relay
 from automation import Automation
 from motors import dcMotor
-import time
+from time import time,sleep
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
@@ -51,7 +51,7 @@ class HoneyController(Controller):
         self.dPadR = False
         self.dPadU = False
         self.dPadD = False
-
+        self.l3Pressed = False
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive
         #on true: indivual joint control
@@ -151,7 +151,26 @@ class HoneyController(Controller):
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
         self.lastValueArmNegY = 0
-        
+    
+    def on_L3_pressed(self):
+        self.l3Pressed = not self.l3Pressed;
+        print("Ball Position is"+ str(self.l3Pressed))
+        if(self.l3Pressed):
+            print("Ball Position")
+            self.arm.stepper_servo = 60
+            self.arm.kit.servo[0].angle = self.arm.stepper_servo
+            sleep(0.1)
+            self.arm.defaultPosition()
+            sleep(0.1)
+            self.arm.ballPosition();
+        else:
+            print("Launch Position")
+            self.arm.stepper_servo  = 90
+            self.arm.kit.servo[0].angle = self.arm.stepper_servo
+            sleep(0.1)
+            self.arm.defaultPosition()
+            sleep(0.1)
+            self.arm.launchPosition();
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
     '''
