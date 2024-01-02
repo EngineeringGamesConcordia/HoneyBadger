@@ -298,26 +298,23 @@ class SetPositionController(Controller):
         Controller.__init__(self, **kwargs)
         
     def on_L3_press(self):
-        self.l3Counter += 1
-        print("L3Counter is at "+ str(self.l3Counter))
-        if(self.l3Counter >1):
-            self.l3Cycle = not (self.l3Cycle);
-            print("Ball Pos is"+ str(self.l3Cycle))
-            if(self.l3Cycle):
-                print("Ball Position")
-                self.arm.defaultPosition()
-                sleep(1)
-                self.arm.stepper_servo = 50
-                self.arm.kit.servo[0].angle = self.arm.stepper_servo                  
-                sleep(1)
-                self.arm.ballPosition();
-            else:
-                print("Launch Position")
-                self.arm.defaultPosition()
-                sleep(1)
-                self.arm.stepper_servo  = 120
-                self.arm.kit.servo[0].angle = self.arm.stepper_servo
-                sleep(1)
-                self.arm.launchPosition();
+        self.l3Cycle = not (self.l3Cycle);
+        print("Ball Pos is"+ str(self.l3Cycle))
+        if(self.l3Cycle):
+            print("Ball Position")
+            self.arm.defaultPosition()
+            sleep(1)
+            self.arm.stepper_servo = 50
+            self.arm.kit.servo[0].angle = self.arm.stepper_servo                  
+            sleep(1)
+            self.arm.ballPosition();
+        else:
+            print("Launch Position")
+            self.arm.defaultPosition()
+            sleep(1)
+            self.arm.stepper_servo  = 120
+            self.arm.kit.servo[0].angle = self.arm.stepper_servo
+            sleep(1)
+            self.arm.launchPosition();
                     
 
