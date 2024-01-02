@@ -224,7 +224,7 @@ class HoneyController(Controller):
             #Servo 1 Turn Left
             if(self.lastValueArmNegX <-self.manualDeadZone):
                 self.arm.serv1_turn_left()       
-                
+            '''   
             if(self.dPadU):
                 self.gas = 0.5
                 self.drive.move_back(self.gas)
@@ -237,6 +237,7 @@ class HoneyController(Controller):
             if(self.dPadR):
                 self.gas = 0.5  
                 self.drive.move_right(self.gas)          
+            '''
         else:
             #Arm
             if(self.lastValueArmY > self.armdeadzone):
