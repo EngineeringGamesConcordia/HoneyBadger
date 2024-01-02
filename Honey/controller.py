@@ -154,7 +154,7 @@ class HoneyController(Controller):
         print("L3Counter is at "+ str(self.l3Counter))
         if(self.l3Counter >1):
             self.l3Pressed = True
-            self.l3Pressed = not self.l3Pressed;
+            self.Cycle = not self.l3Cycle;
 
         
     def on_L3_released(self):
@@ -269,8 +269,7 @@ class HoneyController(Controller):
         if(self.lastValueStepperR1):
             self.arm.stepper_turn_right()  
             
-    def honeyChecker(self):
-        print("Hey Im checking")
+    '''def honeyChecker(self):
         if(self.l3Pressed and self.l3Cycle):
             print("Ball Position")
             self.arm.stepper_servo = 60
@@ -287,5 +286,5 @@ class HoneyController(Controller):
             self.arm.defaultPosition()
             sleep(0.1)
             self.arm.launchPosition();
-            
+  '''          
 
