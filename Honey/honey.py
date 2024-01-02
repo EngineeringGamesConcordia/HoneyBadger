@@ -7,7 +7,7 @@ import math
 from time import sleep
 from adafruit_servokit import ServoKit
 
-from controller import HoneyController
+from controller import HoneyController, SetPositionController
 from arm import Arm
 from drive import Drive
 from relay import Relay
@@ -43,7 +43,7 @@ def ticks():#works
             controller.checker()
 def SetPositionController():#works
     while(True):
-        controller.SetPositionController()
+        SetPositionController.listen()
          
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
