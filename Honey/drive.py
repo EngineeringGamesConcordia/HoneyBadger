@@ -31,18 +31,18 @@ class Drive:
     def move_left(self,speed):
         self.speed = speed
         print("> drive move left")
-        self.front_left.ccw(self.speed)
+        self.front_left.cw(self.speed)
         self.front_right.cw(self.speed)
-        self.back_left.ccw(self.speed)
+        self.back_left.cw(self.speed)
         self.back_right.cw(self.speed)
 
     # ------------------------------ Drive right
     def move_right(self,speed):
         self.speed = speed
         print("> drive move right")
-        self.front_left.cw(self.speed)
+        self.front_left.ccw(self.speed)
         self.front_right.ccw(self.speed)
-        self.back_left.cw(self.speed)
+        self.back_left.ccw(self.speed)
         self.back_right.ccw(self.speed)
         
     def move_stop(self):
