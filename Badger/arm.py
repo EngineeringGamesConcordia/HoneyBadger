@@ -150,16 +150,16 @@ class Arm:
     def serv0_turn_left(self):
         print("> servo0 rotating left")
         self.base_servo = self.base_servo - self.moveVal
-        if (self.base_servo < 10):
-            self.base_servo = 10
+        if (self.base_servo < 5):
+            self.base_servo = 5
         self.initial_theta1 = self.base_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[0].angle = self.base_servo
     def serv0_turn_right(self):
         print("> servo0 rotating right")
         self.base_servo = self.base_servo + self.moveVal
-        if (self.base_servo > 160):
-            self.base_servo = 160
+        if (self.base_servo > 170):
+            self.base_servo = 170
         self.initial_theta1 = self.base_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[0].angle = self.base_servo
@@ -213,15 +213,15 @@ class Arm:
     def stepper_turn_right(self):
         print("> stepper servo right")
         self.stepper_servo = self.stepper_servo - self.moveVal
-        if (self.stepper_servo > 175):
-            self.stepper_servo = 175
+        if (self.stepper_servo < 5):
+            self.stepper_servo = 5
         self.kit.servo[5].angle = self.stepper_servo
 
     def stepper_turn_left(self):
         print("> stepper servo left")
         self.stepper_servo = self.stepper_servo + self.moveVal
-        if (self.stepper_servo < 5):
-            self.stepper_servo = 5
+        if (self.stepper_servo > 175):
+            self.stepper_servo = 175
         self.kit.servo[5].angle = self.stepper_servo   
     # ------------------------------ Move x-pos
     def x_pos(self, val):
