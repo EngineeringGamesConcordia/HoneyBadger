@@ -72,8 +72,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     
     # Define joint angle limits
     # Define joint angle limits in radians
-    theta1_min, theta1_max = np.deg2rad(2), np.deg2rad(178)
-    theta2_min, theta2_max = np.deg2rad(2), np.deg2rad(178)
+    theta1_min, theta1_max = np.deg2rad(2), np.deg2rad(163)
+    theta2_min, theta2_max = np.deg2rad(5), np.deg2rad(156)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
@@ -158,8 +158,8 @@ class Arm:
     def serv0_turn_right(self):
         print("> servo0 rotating right")
         self.base_servo = self.base_servo + self.moveVal
-        if (self.base_servo > 165):
-            self.base_servo = 165
+        if (self.base_servo > 163):
+            self.base_servo = 163
         self.initial_theta1 = self.base_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[0].angle = self.base_servo
@@ -175,8 +175,8 @@ class Arm:
     def serv1_turn_right(self):
         print("> servo1 rotating right")
         self.elbow_servo = self.elbow_servo + self.moveVal
-        if (self.elbow_servo > 158):
-            self.elbow_servo = 158
+        if (self.elbow_servo > 156):
+            self.elbow_servo = 156
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[1].angle = self.elbow_servo   
