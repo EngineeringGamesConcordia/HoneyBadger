@@ -293,7 +293,7 @@ class BadgerController(Controller):
             if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
                 self.drive.move_stop()                
             if(self.dPadU):
-                self.drive.move_backself.gas)
+                self.drive.move_back(self.gas)
             if(self.dPadD):
                 self.drive.move_front(self.gas)    
             if(self.dPadL):
