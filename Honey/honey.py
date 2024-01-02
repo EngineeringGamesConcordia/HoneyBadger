@@ -42,7 +42,7 @@ def ticks():#works
         if(math.floor(floatingTime*2000)%10==0):
             controller.checker()
 
-def on_L3_press(self):
+def on_L3_press(HoneyController):
     self.l3Counter += 1
     print("L3Counter is at "+ str(self.l3Counter))
     if(self.l3Counter >1):
