@@ -151,7 +151,7 @@ class HoneyController(Controller):
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
         self.lastValueArmNegY = 0
-<<<<<<< HEAD
+#<<<<<<< HEAD
     
     def on_L3_press(self):
         self.l3Counter += 1
@@ -175,8 +175,8 @@ class HoneyController(Controller):
                 self.arm.kit.servo[0].angle = self.arm.stepper_servo
                 sleep(10)
                 self.arm.launchPosition();
-=======
->>>>>>> 872ed2b17a840046fed6ae19689e1847a6f21bda
+#=======
+#>>>>>>> 872ed2b17a840046fed6ae19689e1847a6f21bda
 
     
         
