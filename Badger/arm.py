@@ -8,7 +8,7 @@ CONTROLLER_SCALE = 2**15
 BIG_SERVO_SCALE = 1/(2**18)
 SMALL_SERVO_SCALE = 1/(2**18)
 CLAW_SCALE = 1/(2**18)
-KINEMATIC_SCALE = 2.5/(2**20)
+KINEMATIC_SCALE = 2/(2**20)
 
 moveVal = 0.1
 l1 = 22
@@ -84,7 +84,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         theta1, theta2 = np.rad2deg(sol[0]), np.rad2deg(sol[1])
         cost = calculate_cost(sol[0], sol[1],initial_theta1, initial_theta2)
 
-        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 200.0:
+        if (theta1_min <= sol[0] <= theta1_max) and (theta2_min <= sol[1] <= theta2_max) and cost < min_cost and cost <= 250.0:
             min_cost = cost
             optimal_solution = sol
 
@@ -228,6 +228,8 @@ class Arm:
         print("> arm22 x_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px - val;
+        if (self.px < -40)
+            self.px = -40
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -242,6 +244,8 @@ class Arm:
         print("> arm22 x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
+        if (self.px > 1)
+            self.px = 1
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -256,6 +260,8 @@ class Arm:
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
+        if (self.py < 0)
+            self.py = 0
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -270,6 +276,8 @@ class Arm:
         print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
+        if (self.py > 40)
+            self.py = 40
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
