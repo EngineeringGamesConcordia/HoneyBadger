@@ -262,7 +262,9 @@ class HoneyController(Controller):
                 
         if(self.lastValueStepperR1):
             self.arm.stepper_turn_right()  
+            
     def honeyChecker(self):
+        print("Hey Im checking")
         if(self.l3Pressed and self.l3Cycle):
             print("Ball Position")
             self.arm.stepper_servo = 60
