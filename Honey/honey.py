@@ -43,7 +43,7 @@ def ticks():#works
             controller.checker()
 def SetPositionController():#works
     while(True):
-        SetPositionController.listen()
+        SetPositionController.checkL3()
          
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
