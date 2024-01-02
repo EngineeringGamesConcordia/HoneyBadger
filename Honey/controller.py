@@ -82,44 +82,47 @@ class HoneyController(Controller):
     ------------------------------ DRIVE SYSTEM ------------------------------
     '''
     def on_R2_press(self, value):
+      if(self.state==False)  :
         value= (value+2**15)/(2**16)
         self.gas = value
         print("Gas Value" + str(self.gas))
         
     def on_R2_release(self):
+      if(self.state == False):
         self.gas = 0
     
     # Drive front
     def on_up_arrow_press(self):
-            self.dPadU = True
-            print("moved front")
+        self.dPadU = True
+        print("moved front")
         
     #Stop 
     def on_up_down_arrow_release(self):
-            self.dPadU = False
-            self.dPadD = False
-            print("i stopped X")
+        self.dPadU = False
+        self.dPadD = False
+        print("i stopped X")
         
     # Drive back
     def on_down_arrow_press(self):
-            self.dPadD = True
-            print("moved back")
+        self.dPadD = True
+        print("moved back")
         
     # Drive left
     def on_left_arrow_press(self):
-            self.dPadL = True
-            print("moved left")
+        self.dPadL = True
+        print("moved left")
         
 
     # Drive right
     def on_right_arrow_press(self):
-            self.dPadR = True
-            print("moved right")
+        self.dPadR = True
+        print("moved right")
+        
     #Stopped 
     def on_left_right_arrow_release(self):
-            self.dPadR = False
-            self.dPadL = False
-            print("i stopped Y")
+        self.dPadR = False
+        self.dPadL = False
+        print("i stopped Y")
 
 
     '''
@@ -224,7 +227,7 @@ class HoneyController(Controller):
             #Servo 1 Turn Left
             if(self.lastValueArmNegX <-self.manualDeadZone):
                 self.arm.serv1_turn_left()       
-            '''   
+               
             if(self.dPadU):
                 self.gas = 0.5
                 self.drive.move_back(self.gas)
@@ -237,7 +240,7 @@ class HoneyController(Controller):
             if(self.dPadR):
                 self.gas = 0.5  
                 self.drive.move_right(self.gas)          
-            '''
+            
         else:
             #Arm
             if(self.lastValueArmY > self.armdeadzone):
