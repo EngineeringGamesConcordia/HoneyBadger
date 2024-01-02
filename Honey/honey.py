@@ -33,7 +33,7 @@ front_right = dcMotor(13, 6, 25)
 back_left = dcMotor(7, 1, 8)
 back_right = dcMotor(20, 21, 16)
 drivesys = Drive(front_left, front_right, back_left, back_right)
-automation1 = Automation()
+#automation1 = Automation()
 
 def ticks():#works
     while(True):
