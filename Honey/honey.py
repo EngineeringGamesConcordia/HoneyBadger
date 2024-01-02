@@ -34,6 +34,7 @@ back_left = dcMotor(7, 1, 8)
 back_right = dcMotor(20, 21, 16)
 drivesys = Drive(front_left, front_right, back_left, back_right)
 automation1 = Automation()
+SetPositionController1 = SetPositionController()
 
 def ticks():#works
     while(True):
@@ -41,15 +42,15 @@ def ticks():#works
         floatingTime = float(times)
         if(math.floor(floatingTime*2000)%10==0):
             controller.checker()
-def SetPositionController():#works
+def CheckPositionController():#works
     while(True):
-        SetPositionController.checkL3()
+        SetPositionController1.checkL3()
          
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
-    t3 = threading.Thread(target=SetPositionController)
+    t3 = threading.Thread(target=CheckPositionController)
 
     t1.start() 
     t2.start()
