@@ -312,7 +312,7 @@ class SetPositionController(Controller):
             print("Launch Position")
             self.arm.defaultPosition()
             sleep(1)
-            self.arm.stepper_servo  = 115
+            self.arm.stepper_servo  = 125
             self.arm.kit.servo[0].angle = self.arm.stepper_servo
             sleep(1)
             self.arm.launchPosition();
