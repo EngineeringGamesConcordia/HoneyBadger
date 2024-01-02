@@ -57,7 +57,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
     # Calibration factors
-    calibration_factor_theta1 = np.deg2rad(25)  # Adjust as needed
+    calibration_factor_theta1 = np.deg2rad(10)  # Adjust as needed
     calibration_factor_theta2 = np.deg2rad(-25)  # Adjust as needed
 
     # Apply calibration factors
