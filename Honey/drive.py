@@ -45,7 +45,7 @@ class Drive:
         self.back_left.ccw(self.speed)
         self.back_right.ccw(self.speed)
         
-    def stop(self):
+    def move_stop(self):
         self.front_left.stop()
         self.front_right.stop()
         self.back_left.stop()
