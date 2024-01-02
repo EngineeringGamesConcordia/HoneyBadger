@@ -44,9 +44,9 @@ def ticks():#works
             
 def honeyTicks():
     while(True):
-        times = time.time()
-        floatingTime = float(times)
-        if(math.floor(floatingTime*1000)%10==0):
+        times_honey = time.time()
+        floatingTimeHoney = float(times_honey)
+        if(math.floor(floatingTimeHoney*1000)%10==0):
             controller.honeyChecker()
 
 try:
