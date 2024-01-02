@@ -46,6 +46,7 @@ l3Counter = 0
 l3Cycle = False
 
 def on_L3_press(interface="/dev/input/js0", connecting_using_ds4drv=False):
+    global l3Counter
     l3Counter += 1
     print("L3Counter is at "+ str(l3Counter))
     if(l3Counter >1):
