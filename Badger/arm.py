@@ -158,8 +158,8 @@ class Arm:
     def serv0_turn_right(self):
         print("> servo0 rotating right")
         self.base_servo = self.base_servo + self.moveVal
-        if (self.base_servo > 172):
-            self.base_servo = 172
+        if (self.base_servo > 170):
+            self.base_servo = 170
         self.initial_theta1 = self.base_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[0].angle = self.base_servo
@@ -175,8 +175,8 @@ class Arm:
     def serv1_turn_right(self):
         print("> servo1 rotating right")
         self.elbow_servo = self.elbow_servo + self.moveVal
-        if (self.elbow_servo > 165):
-            self.elbow_servo = 165
+        if (self.elbow_servo > 160):
+            self.elbow_servo = 160
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[1].angle = self.elbow_servo   
