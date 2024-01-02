@@ -1,3 +1,4 @@
+from threading import Thread
 from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
@@ -162,18 +163,18 @@ class HoneyController(Controller):
             if(self.l3Cycle):
                 print("Ball Position")
                 self.arm.defaultPosition()
-                sleep(10)
+                Thread.sleep(10)
                 self.arm.stepper_servo = 60
                 self.arm.kit.servo[0].angle = self.arm.stepper_servo                
-                sleep(10)
+                Thread.sleep(10)
                 self.arm.ballPosition();
             else:
                 print("Launch Position")
                 self.arm.defaultPosition()
-                sleep(10)
+                Thread.sleep(10)
                 self.arm.stepper_servo  = 90
                 self.arm.kit.servo[0].angle = self.arm.stepper_servo
-                sleep(10)
+                Thread.sleep(10)
                 self.arm.launchPosition();
 
     
