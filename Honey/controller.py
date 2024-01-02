@@ -271,7 +271,7 @@ class SetPositionController():
         self.arm = arm
         self.l3Cycle = False
         self.l3Counter =0
-    def checkL3():
+    def checkL3(self):
         def on_L3_press(self):
             self.l3Counter += 1
             print("L3Counter is at "+ str(self.l3Counter))
