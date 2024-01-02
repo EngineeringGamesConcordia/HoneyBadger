@@ -298,13 +298,13 @@ class BadgerController(Controller):
                 self.arm.x_neg(self.lastValueArmNegX)   
             #Driving            
             if(self.dPadU):
-                self.drive.move_back(self.gas)
+                self.drive.move_front(self.gas)
             if(self.dPadD):
-                self.drive.move_front(self.gas)    
+                self.drive.move_back(self.gas)    
             if(self.dPadL):
-                self.drive.move_left(self.gas)
+                self.drive.move_right(self.gas)
             if(self.dPadR):
-                self.drive.move_right(self.gas) 
+                self.drive.move_left(self.gas) 
         if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
             self.drive.move_stop()                        
         #Wrists   
