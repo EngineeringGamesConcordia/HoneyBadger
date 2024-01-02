@@ -150,10 +150,10 @@ class HoneyController(Controller):
         self.lastValueArmNegY = 0
     
     def on_L3_pressed(self):
-        self.l3Counter = self.l3Counter +1
+        self.l3Pressed = True
+        self.l3Counter += 1
         print("L3Counter is at "+ str(self.l3Counter))
         if(self.l3Counter >1):
-            self.l3Pressed = True
             self.Cycle = not self.l3Cycle;
 
         
