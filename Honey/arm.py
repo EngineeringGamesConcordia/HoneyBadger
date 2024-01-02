@@ -249,8 +249,8 @@ class Arm:
         self.kit.servo[2].angle = self.elbow_servo
     def defaultPosition(self):
         #base position servo 0 leave as is, 100, 140
-        self.base_servo = 100
-        self.elbow_servo = 140
+        self.base_servo = 70
+        self.elbow_servo = 150
         self.initial_theta1 = self.base_servo
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
