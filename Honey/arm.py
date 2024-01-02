@@ -6,7 +6,7 @@ from adafruit_servokit import ServoKit
 kit = ServoKit(channels=16)
 CONTROLLER_SCALE = 2**15
 SMALL_SERVO_SCALE = 1/(2**18)
-KINEMATIC_SCALE = 3.25/(2**20)
+KINEMATIC_SCALE = 2/(2**20)
 
 moveVal = 0.1
 l1 = 20.5
@@ -53,8 +53,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
     theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
     
-    theta1_1 = theta - np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
-    theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
+    theta1_1 = theta + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
+    theta1_2 = theta + np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
     # Calibration factors
     calibration_factor_theta1 = np.deg2rad(25)  # Adjust as needed
@@ -160,6 +160,8 @@ class Arm:
         print("> arm22 x_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px - val;
+        if (self.px < -500):
+            self.px = -500
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -174,6 +176,8 @@ class Arm:
         print("> arm22 x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
+        if (self.px > 500):
+            self.px = 500
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -188,6 +192,8 @@ class Arm:
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
+        if (self.px < -500):
+            self.px = -500
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -202,6 +208,8 @@ class Arm:
         print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
+        if (self.px > 500):
+            self.px = 500
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -216,14 +224,14 @@ class Arm:
     def stepper_turn_right(self):
         print("> stepper servo right")
         self.stepper_servo = self.stepper_servo - self.moveVal
-        if (self.stepper_servo < 5):
-            self.stepper_servo = 5
+        if (self.stepper_servo < 2):
+            self.stepper_servo = 2
         self.kit.servo[0].angle = self.stepper_servo
 
     def stepper_turn_left(self):
         print("> stepper servo left")
         self.stepper_servo = self.stepper_servo + self.moveVal
-        if (self.stepper_servo > 175):
-            self.stepper_servo = 175
+        if (self.stepper_servo > 178):
+            self.stepper_servo = 178
         self.kit.servo[0].angle = self.stepper_servo 
 
