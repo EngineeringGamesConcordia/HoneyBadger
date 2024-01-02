@@ -34,7 +34,7 @@ back_left = dcMotor(7, 1, 8)
 back_right = dcMotor(20, 21, 16)
 drivesys = Drive(front_left, front_right, back_left, back_right)
 automation1 = Automation()
-SetPositionController1 = SetPositionController()
+SetPositionController1 = SetPositionController(arm1)
 
 def ticks():#works
     while(True):
