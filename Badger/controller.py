@@ -115,7 +115,7 @@ class BadgerController(Controller):
     '''
     # Drive front
     def on_up_arrow_press(self):
-        self.dPadU = True
+        self.dPadD = True
         print("moved front")
         
     #Stop 
@@ -126,18 +126,18 @@ class BadgerController(Controller):
         
     # Drive back
     def on_down_arrow_press(self):
-        self.dPadD = True
+        self.dPadU = True
         print("moved back")
         
     # Drive left
     def on_left_arrow_press(self):
-        self.dPadL = True
+        self.dPadR = True
         print("moved left")
         
 
     # Drive right
     def on_right_arrow_press(self):
-        self.dPadR = True
+        self.dPadL = True
         print("moved right")
     #Stopped 
     def on_left_right_arrow_release(self):
@@ -302,9 +302,9 @@ class BadgerController(Controller):
             if(self.dPadD):
                 self.drive.move_back(self.gas)    
             if(self.dPadL):
-                self.drive.move_right(self.gas)
+                self.drive.move_left(self.gas)
             if(self.dPadR):
-                self.drive.move_left(self.gas) 
+                self.drive.move_right(self.gas) 
         if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
             self.drive.move_stop()                        
         #Wrists   
