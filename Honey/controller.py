@@ -52,9 +52,7 @@ class HoneyController(Controller):
         self.dPadR = False
         self.dPadU = False
         self.dPadD = False
-        
-        self.l3Cycle = False
-        self.l3Counter =0
+       
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive
         #on true: indivual joint control
@@ -266,5 +264,35 @@ class HoneyController(Controller):
                 
         if(self.lastValueStepperR1):
             self.arm.stepper_turn_right()  
+            
+class SetPositionController():
+    
+    def __init__(self, arm):
+        self.arm = arm
+        self.l3Cycle = False
+        self.l3Counter =0
+
+    def on_L3_press(self):
+        self.l3Counter += 1
+        print("L3Counter is at "+ str(self.l3Counter))
+        if(self.l3Counter >1):
+            self.l3Cycle = not (self.l3Cycle);
+            print("Ball Pos is"+ str(self.l3Cycle))
+            if(self.l3Cycle):
+                print("Ball Position")
+                arm.defaultPosition()
+                sleep(10)
+                arm.stepper_servo = 60
+                arm.kit.servo[0].angle = arm.stepper_servo                  
+                sleep(10)
+                arm.ballPosition();
+            else:
+                print("Launch Position")
+                arm.defaultPosition()
+                sleep(10)
+                arm.stepper_servo  = 90
+                arm.kit.servo[0].angle = arm.stepper_servo
+                sleep(10)
+                arm.launchPosition();
                     
 

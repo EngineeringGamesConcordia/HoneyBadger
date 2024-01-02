@@ -41,34 +41,10 @@ def ticks():#works
         floatingTime = float(times)
         if(math.floor(floatingTime*2000)%10==0):
             controller.checker()
+def ticks():#works
+    while(True):
+        controller.SetPositionController()
          
-l3Counter = 0
-l3Cycle = False
-
-def on_L3_press(interface="/dev/input/js0", connecting_using_ds4drv=False):
-    global l3Counter
-    l3Counter += 1
-    print("L3Counter is at "+ str(l3Counter))
-    if(l3Counter >1):
-        l3Cycle = not (l3Cycle);
-        print("Ball Pos is"+ str(l3Cycle))
-        if(l3Cycle):
-            print("Ball Position")
-            arm.defaultPosition()
-            sleep(10)
-            arm.stepper_servo = 60
-            arm.kit.servo[0].angle = arm.stepper_servo                  
-            sleep(10)
-            arm.ballPosition();
-        else:
-            print("Launch Position")
-            arm.defaultPosition()
-            sleep(10)
-            arm.stepper_servo  = 90
-            arm.kit.servo[0].angle = arm.stepper_servo
-            sleep(10)
-            arm.launchPosition();
-
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
