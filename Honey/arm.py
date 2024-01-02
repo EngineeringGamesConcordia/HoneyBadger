@@ -50,8 +50,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         print("No solution for given x, y.")
         return initial_theta1, initial_theta2
     
-    theta2_1 = -np.arctan2(np.sqrt(1 - D**2), D)
-    theta2_2 = np.arctan2(np.sqrt(1 - D**2), D)
+    theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
+    theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
     
     theta1_1 = theta + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
     theta1_2 = theta + np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
@@ -230,7 +230,7 @@ class Arm:
     def ballPosition(self):
         print(">Position Ball set")
         #60,20,90
-        self.base_servo = 60
+        self.base_servo = 20
         self.elbow_servo = 90
         self.initial_theta1 = self.base_servo
         self.initial_theta2 = self.elbow_servo
@@ -240,7 +240,7 @@ class Arm:
     def launchPosition(self):
         print("> Position Launch set")
         #90,100,60
-        self.base_servo = 80
+        self.base_servo = 70
         self.elbow_servo = 120
         self.initial_theta1 = self.base_servo
         self.initial_theta2 = self.elbow_servo
