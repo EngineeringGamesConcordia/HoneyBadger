@@ -44,7 +44,28 @@ def ticks():#works
 
 def setpositions():#works
     while(True):
-        controller.on_L3_press
+        def on_L3_press(self):
+            self.l3Counter += 1
+            print("L3Counter is at "+ str(self.l3Counter))
+            if(self.l3Counter >1):
+                self.l3Cycle = not (self.l3Cycle);
+                print("Ball Pos is"+ str(self.l3Cycle))
+                if(self.l3Cycle):
+                    print("Ball Position")
+                    arm.defaultPosition()
+                    sleep(10)
+                    arm.stepper_servo = 60
+                    arm.kit.servo[0].angle = arm.stepper_servo                  
+                    sleep(10)
+                    arm.ballPosition();
+                else:
+                    print("Launch Position")
+                    arm.defaultPosition()
+                    sleep(10)
+                    arm.stepper_servo  = 90
+                    arm.kit.servo[0].angle = arm.stepper_servo
+                    sleep(10)
+                    arm.launchPosition();
 
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)

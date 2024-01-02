@@ -153,33 +153,6 @@ class HoneyController(Controller):
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
         self.lastValueArmNegY = 0
-    
-    def on_L3_press(self):
-        self.l3Counter += 1
-        print("L3Counter is at "+ str(self.l3Counter))
-        if(self.l3Counter >1):
-            self.l3Cycle = not (self.l3Cycle);
-            print("Ball Pos is"+ str(self.l3Cycle))
-            if(self.l3Cycle):
-                print("Ball Position")
-                self.arm.defaultPosition()
-                listen()
-                sleep(10)
-                self.arm.stepper_servo = 60
-                self.arm.kit.servo[0].angle = self.arm.stepper_servo   
-                listen()                
-                sleep(10)
-                self.arm.ballPosition();
-            else:
-                print("Launch Position")
-                self.arm.defaultPosition()
-                listen()
-                sleep(10)
-                self.arm.stepper_servo  = 90
-                self.arm.kit.servo[0].angle = self.arm.stepper_servo
-                listen()
-                sleep(10)
-                self.arm.launchPosition();
 
     
         
