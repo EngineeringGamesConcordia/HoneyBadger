@@ -240,7 +240,7 @@ class Arm:
     def launchPosition(self):
         print("> Position Launch set")
         #90,100,60
-        self.base_servo = 40
+        self.base_servo = 120
         self.elbow_servo = 120
         self.initial_theta1 = self.base_servo
         self.initial_theta2 = self.elbow_servo
