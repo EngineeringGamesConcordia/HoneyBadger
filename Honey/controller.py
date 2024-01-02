@@ -157,7 +157,7 @@ class HoneyController(Controller):
         self.l3Counter += 1
         print("L3Counter is at "+ str(self.l3Counter))
         if(self.l3Counter >1):
-            self.Cycle = not self.l3Cycle;
+            self.Cycle = not (self.l3Cycle);
             if(self.l3Cycle):
                 print("Ball Position")
                 self.arm.stepper_servo = 60
