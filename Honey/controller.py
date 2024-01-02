@@ -163,6 +163,7 @@ class HoneyController(Controller):
 
         
     def on_L3_released(self):
+        print("I released cum")
         self.l3Pressed = False
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
