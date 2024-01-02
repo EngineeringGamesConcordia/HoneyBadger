@@ -52,7 +52,8 @@ class HoneyController(Controller):
         self.dPadU = False
         self.dPadD = False
         
-        self.l3Pressed = False
+        self.l3Cycle = False
+        self.l3Pressed= False
         self.l3Counter =0
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive
@@ -158,24 +159,12 @@ class HoneyController(Controller):
         self.l3Counter = self.l3Counter +1
         print("L3Counter is at "+ str(self.l3Counter))
         if(self.l3Counter >1):
+            self.l3Pressed = True
             self.l3Pressed = not self.l3Pressed;
-            print("Ball Position is"+ str(self.l3Pressed))
-            if(self.l3Pressed):
-                print("Ball Position")
-                self.arm.stepper_servo = 60
-                self.arm.kit.servo[0].angle = self.arm.stepper_servo
-                sleep(1)
-                self.arm.defaultPosition()
-                sleep(0.1)
-                self.arm.ballPosition();
-            else:
-                print("Launch Position")
-                self.arm.stepper_servo  = 90
-                self.arm.kit.servo[0].angle = self.arm.stepper_servo
-                sleep(0.1)
-                self.arm.defaultPosition()
-                sleep(0.1)
-                self.arm.launchPosition();
+
+        
+    def on_L3_released(self):
+        self.l3Pressed = False
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
     '''
@@ -228,7 +217,6 @@ class HoneyController(Controller):
     ------------------------------TICK SYSTEM ------------------------------
     '''   
     def checker(self):      
-
         if(self.state):
             #Servo 0 Turn Left
             if(self.lastValueArmY> self.manualDeadZone):
@@ -274,4 +262,22 @@ class HoneyController(Controller):
                 
         if(self.lastValueStepperR1):
             self.arm.stepper_turn_right()  
+    def honeyChecker(self):
+        if(self.l3Pressed and self.l3Cycle):
+            print("Ball Position")
+            self.arm.stepper_servo = 60
+            self.arm.kit.servo[0].angle = self.arm.stepper_servo
+            sleep(1)
+            self.arm.defaultPosition()
+            sleep(0.1)
+            self.arm.ballPosition();
+        elif(self.l3Pressed and not(self.l3Cycle)):
+            print("Launch Position")
+            self.arm.stepper_servo  = 90
+            self.arm.kit.servo[0].angle = self.arm.stepper_servo
+            sleep(0.1)
+            self.arm.defaultPosition()
+            sleep(0.1)
+            self.arm.launchPosition();
+            
 
