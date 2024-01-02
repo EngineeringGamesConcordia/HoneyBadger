@@ -43,12 +43,12 @@ def ticks():#works
             controller.checker()
 
 def on_L3_press(interface="/dev/input/js0", connecting_using_ds4drv=False):
-    l3Counter += 1
-    print("L3Counter is at "+ str(l3Counter))
-    if(l3Counter >1):
-        l3Cycle = not l3Cycle
-        print("Ball Pos is"+ str(l3Cycle))
-        if(l3Cycle):
+    self.l3Counter += 1
+    print("L3Counter is at "+ str(self.l3Counter))
+    if(self.l3Counter >1):
+        self.l3Cycle = not (self.l3Cycle);
+        print("Ball Pos is"+ str(self.l3Cycle))
+        if(self.l3Cycle):
             print("Ball Position")
             arm.defaultPosition()
             sleep(10)
