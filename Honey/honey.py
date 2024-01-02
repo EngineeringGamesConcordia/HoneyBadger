@@ -41,7 +41,7 @@ def ticks():#works
         floatingTime = float(times)
         if(math.floor(floatingTime*2000)%10==0):
             controller.checker()
-def ticks():#works
+def SetPositionController():#works
     while(True):
         controller.SetPositionController()
          
@@ -49,7 +49,7 @@ try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
-    t3 = threading.Thread(target=on_L3_press)
+    t3 = threading.Thread(target=SetPositionController)
 
     t1.start() 
     t2.start()
