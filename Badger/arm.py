@@ -228,7 +228,7 @@ class Arm:
         print("> arm22 x_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px - val;
-        if (self.px < -40)
+        if (self.px < -40):
             self.px = -40
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
@@ -244,7 +244,7 @@ class Arm:
         print("> arm22 x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
-        if (self.px > 1)
+        if (self.px > 1):
             self.px = 1
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
@@ -260,7 +260,7 @@ class Arm:
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
-        if (self.py < 0)
+        if (self.py < 0):
             self.py = 0
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
@@ -276,7 +276,7 @@ class Arm:
         print("> arm22 y_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py + val;
-        if (self.py > 40)
+        if (self.py > 40):
             self.py = 40
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
