@@ -282,19 +282,19 @@ class SetPositionController(Controller):
             print("Ball Pos is"+ str(self.l3Cycle))
             if(self.l3Cycle):
                 print("Ball Position")
-                arm.defaultPosition()
+                self.arm.defaultPosition()
                 sleep(10)
-                arm.stepper_servo = 60
-                arm.kit.servo[0].angle = arm.stepper_servo                  
+                self.arm.stepper_servo = 60
+                self.arm.kit.servo[0].angle = self.arm.stepper_servo                  
                 sleep(10)
-                arm.ballPosition();
+                self.arm.ballPosition();
             else:
                 print("Launch Position")
-                arm.defaultPosition()
+                self.arm.defaultPosition()
                 sleep(10)
-                arm.stepper_servo  = 90
-                arm.kit.servo[0].angle = arm.stepper_servo
+                self.arm.stepper_servo  = 90
+                self.arm.kit.servo[0].angle = self.arm.stepper_servo
                 sleep(10)
-                arm.launchPosition();
+                self.arm.launchPosition();
                     
 
