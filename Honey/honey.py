@@ -42,36 +42,34 @@ def ticks():#works
         if(math.floor(floatingTime*2000)%10==0):
             controller.checker()
 
-def setpositions():#works
-    while(True):
-        def on_L3_press(self):
-            self.l3Counter += 1
-            print("L3Counter is at "+ str(self.l3Counter))
-            if(self.l3Counter >1):
-                self.l3Cycle = not (self.l3Cycle);
-                print("Ball Pos is"+ str(self.l3Cycle))
-                if(self.l3Cycle):
-                    print("Ball Position")
-                    arm.defaultPosition()
-                    sleep(10)
-                    arm.stepper_servo = 60
-                    arm.kit.servo[0].angle = arm.stepper_servo                  
-                    sleep(10)
-                    arm.ballPosition();
-                else:
-                    print("Launch Position")
-                    arm.defaultPosition()
-                    sleep(10)
-                    arm.stepper_servo  = 90
-                    arm.kit.servo[0].angle = arm.stepper_servo
-                    sleep(10)
-                    arm.launchPosition();
+def on_L3_press(self):
+    self.l3Counter += 1
+    print("L3Counter is at "+ str(self.l3Counter))
+    if(self.l3Counter >1):
+    self.l3Cycle = not (self.l3Cycle);
+    print("Ball Pos is"+ str(self.l3Cycle))
+        if(self.l3Cycle):
+            print("Ball Position")
+            arm.defaultPosition()
+            sleep(10)
+            arm.stepper_servo = 60
+            arm.kit.servo[0].angle = arm.stepper_servo                  
+            sleep(10)
+            arm.ballPosition();
+        else:
+            print("Launch Position")
+            arm.defaultPosition()
+            sleep(10)
+            arm.stepper_servo  = 90
+            arm.kit.servo[0].angle = arm.stepper_servo
+            sleep(10)
+            arm.launchPosition();
 
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
-    t3 = threading.Thread(target=setpositions)
+    t3 = threading.Thread(target=on_L3_press)
 
     t1.start() 
     t2.start()
