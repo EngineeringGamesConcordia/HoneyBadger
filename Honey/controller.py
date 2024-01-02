@@ -10,7 +10,7 @@ import time
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
     share               start manual control
     options             start automation
-    left joystick       drive (front, back, left, right)
+    arrows              drive (front, back, left, right)
     right joystick      arm (x-pos, x-neg, y-pos, y-neg)
     circle              start throw
     square              start vacuum
@@ -18,14 +18,14 @@ import time
     triangle            stop throw
     R1                  stepper servo cw
     L1                  stepper servo ccw
-    
+    R2                  gas    
 '''
 
 class HoneyController(Controller):
 
     manualDeadZone = 10000
     armdeadzone = 2000
-    drivedeadzone = 3000
+#    drivedeadzone = 3000
     
     def __init__(self, arm, drivesys, relay, automation, **kwargs):
         self.arm = arm
@@ -37,16 +37,20 @@ class HoneyController(Controller):
         self.lastValueArmNegX = 0
         self.lastValueArmY = 0
         self.lastValueArmNegY =0
-        self.lastValueDriveX = 0
-        self.lastValueDriveNegX =0
-        self.lastValueDriveY = 0
-        self.lastValueDriveNegY=0
+#        self.lastValueDriveX = 0
+#        self.lastValueDriveNegX =0
+#        self.lastValueDriveY = 0
+#        self.lastValueDriveNegY=0
         
         self.lastValueStepperL1 = False
         self.lastValueStepperR1 = False
         
+        self.gas =0
+        
         self.dPadL = False
         self.dPadR = False
+        self.dPadU = False
+        self.dPadD = False
 
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive
@@ -65,6 +69,7 @@ class HoneyController(Controller):
     def on_share_press(self):
         self.state =not(self.state)        
         print("start manual control" + str(self.state))
+        self.gas =0
         self.lastValueArmX = 0
         self.lastValueArmNegX = 0
         self.lastValueArmY = 0
@@ -73,50 +78,51 @@ class HoneyController(Controller):
     '''
     ------------------------------ DRIVE SYSTEM ------------------------------
     '''
+    def on_R2_press(self, value):
+        value= (value+2**15)/(2**16)
+        self.gas = value
+        print("Gas Value" + str(self.gas))
+        
+    def on_R2_release(self):
+        self.gas = 0
     
-    # Go right
-    def on_L3_right(self, value):
-        self.lastValueDriveX = value;
-        print("drive x-pos")
+    # Drive front
+    def on_up_arrow_press(self):
+        if(self.state == False):
+            self.dPadU = True
+            print("moved front")
         
-    # Go left
-    def on_L3_left(self, value):
-        self.lastValueDriveNegX = value;
-        print("drive x-neg")
+    #Stop 
+    def on_up_down_arrow_release(self):
+        if(self.state == False):
+            self.dPadU = False
+            self.dPadD = False
+            print("i stopped X")
         
-    def on_L3_x_at_rest(self):
-        self.lastValueDriveX = 0
-        self.lastValueDriveNegX = 0
+    # Drive back
+    def on_down_arrow_press(self):
+        if(self.state == False):
+            self.dPadD = True
+            print("moved back")
         
-    # Go backward
-    def on_L3_down(self, value):
-        self.lastValueDriveY = value;
-        print("drive y-neg")
-
-    # Go forward
-    def on_L3_up(self, value):
-        self.lastValueDriveNegY = value;
-        print("drive y-pos")
-        
-    def on_L3_y_at_rest(self):
-        self.lastValueDriveY = 0
-        self.lastValueDriveNegY = 0
-        
-    # Turn left
+    # Drive left
     def on_left_arrow_press(self):
-        self.dPadL = True
-        print("moved left")
+        if(self.state == False):
+            self.dPadL = True
+            print("moved left")
         
-    # Turn right
+
+    # Drive right
     def on_right_arrow_press(self):
-        self.dPadR = True
-        print("moved right")
-            
+        if(self.state == False):
+            self.dPadR = True
+            print("moved right")
     #Stopped 
     def on_left_right_arrow_release(self):
-        self.dPadR = False
-        self.dPadL = False
-        print("i stopped Y")
+        if(self.state == False):
+            self.dPadR = False
+            self.dPadL = False
+            print("i stopped Y")
 
 
     '''
@@ -227,30 +233,16 @@ class HoneyController(Controller):
                 self.arm.x_neg(self.lastValueArmNegX) 
                 
         #Driving    
-        if(self.lastValueDriveY > self.drivedeadzone):
-            print ("Y = " + str(self.lastValueDriveY))
-            self.drive.move_back(-self.lastValueDriveY)  
-            
-        if(self.lastValueDriveNegY < -self.drivedeadzone):
-            print ("Y_neg = " + str(self.lastValueDriveNegY))
-            self.drive.move_front(self.lastValueDriveNegY)             
-
-        if(self.lastValueDriveX >self.drivedeadzone): 
-            print ("X = " + str(self.lastValueDriveX))
-            self.drive.move_right(self.lastValueDriveX)
-            
-        if(self.lastValueDriveNegX < -self.drivedeadzone):
-            print ("X_neg = " + str(self.lastValueDriveNegX))
-            self.drive.move_left(-self.lastValueDriveNegX)
-            
-        if(self.dPadL==False and self.dPadR==False and self.lastValueDriveY == 0 and self.lastValueDriveNegY == 0 and self.lastValueDriveX == 0 and self.lastValueDriveNegX == 0):
-            self.drive.stop()
-            
-        if(self.dPadL):
-            self.drive.turn_left()
-            
-        if(self.dPadR):
-            self.drive.turn_right() 
+            if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
+                self.drive.move_stop()                
+            if(self.dPadU):
+                self.drive.move_front(self.gas)
+            if(self.dPadD):
+                self.drive.move_back(self.gas)    
+            if(self.dPadL):
+                self.drive.move_left(self.gas)
+            if(self.dPadR):
+                self.drive.move_right(self.gas) 
             
         #Stepper Servo
         if(self.lastValueStepperL1):

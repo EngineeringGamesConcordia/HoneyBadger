@@ -25,6 +25,8 @@ def threadFunction(controller):
 GPIO.setmode(GPIO.BCM)
 
 kit = ServoKit(channels=16)
+servokit.servo[0].actuation_range = 270
+servokit.servo[2].actuation_range = 270
 angles = [90, 80, 80]
 arm1 = Arm(kit, angles)
 relay1 = Relay(23, 24)

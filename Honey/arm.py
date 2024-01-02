@@ -53,8 +53,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
     theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
     
-    theta1_1 = theta + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
-    theta1_2 = theta + np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
+    theta1_1 = theta - np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
+    theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
     # Calibration factors
     calibration_factor_theta1 = np.deg2rad(-10)  # Adjust as needed
@@ -69,7 +69,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     # Define joint angle limits
     # Define joint angle limits in radians
     theta1_min, theta1_max = np.deg2rad(10), np.deg2rad(150)
-    theta2_min, theta2_max = np.deg2rad(5), np.deg2rad(175)
+    theta2_min, theta2_max = np.deg2rad(5), np.deg2rad(260)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
@@ -149,8 +149,8 @@ class Arm:
     def serv1_turn_right(self):
         print("> servo1 rotating right")
         self.elbow_servo = self.elbow_servo + self.moveVal
-        if (self.elbow_servo > 175):
-            self.elbow_servo = 175
+        if (self.elbow_servo > 260):
+            self.elbow_servo = 260
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[2].angle = self.elbow_servo      
@@ -216,14 +216,14 @@ class Arm:
     def stepper_turn_right(self):
         print("> stepper servo right")
         self.stepper_servo = self.stepper_servo - self.moveVal
-        if (self.stepper_servo > 178):
-            self.stepper_servo = 178
+        if (self.stepper_servo > 265):
+            self.stepper_servo = 265
         self.kit.servo[0].angle = self.stepper_servo
 
     def stepper_turn_left(self):
         print("> stepper servo left")
         self.stepper_servo = self.stepper_servo + self.moveVal
-        if (self.stepper_servo < 2):
-            self.stepper_servo = 2
+        if (self.stepper_servo < 5):
+            self.stepper_servo = 5
         self.kit.servo[0].angle = self.stepper_servo 
 
