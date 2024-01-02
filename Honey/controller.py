@@ -52,9 +52,7 @@ class HoneyController(Controller):
         self.dPadR = False
         self.dPadU = False
         self.dPadD = False
-        
-        self.l3Cycle = False
-        self.l3Counter =0
+       
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive
         #on true: indivual joint control
@@ -153,6 +151,7 @@ class HoneyController(Controller):
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
         self.lastValueArmNegY = 0
+<<<<<<< HEAD
     
     def on_L3_press(self):
         self.l3Counter += 1
@@ -176,6 +175,8 @@ class HoneyController(Controller):
                 self.arm.kit.servo[0].angle = self.arm.stepper_servo
                 sleep(10)
                 self.arm.launchPosition();
+=======
+>>>>>>> 872ed2b17a840046fed6ae19689e1847a6f21bda
 
     
         
@@ -289,5 +290,37 @@ class HoneyController(Controller):
                 
         if(self.lastValueStepperR1):
             self.arm.stepper_turn_right()  
+            
+class SetPositionController(Controller):
+    
+    def __init__(self, arm, **kwargs):
+        self.arm = arm
+        self.l3Cycle = False
+        self.l3Counter =0
+        
+        Controller.__init__(self, **kwargs)
+        
+    def on_L3_press(self):
+        self.l3Counter += 1
+        print("L3Counter is at "+ str(self.l3Counter))
+        if(self.l3Counter >1):
+            self.l3Cycle = not (self.l3Cycle);
+            print("Ball Pos is"+ str(self.l3Cycle))
+            if(self.l3Cycle):
+                print("Ball Position")
+                self.arm.defaultPosition()
+                sleep(10)
+                self.arm.stepper_servo = 60
+                self.arm.kit.servo[0].angle = self.arm.stepper_servo                  
+                sleep(10)
+                self.arm.ballPosition();
+            else:
+                print("Launch Position")
+                self.arm.defaultPosition()
+                sleep(10)
+                self.arm.stepper_servo  = 90
+                self.arm.kit.servo[0].angle = self.arm.stepper_servo
+                sleep(10)
+                self.arm.launchPosition();
                     
 

@@ -7,7 +7,7 @@ import math
 from time import sleep
 from adafruit_servokit import ServoKit
 
-from controller import HoneyController
+from controller import HoneyController, SetPositionController
 from arm import Arm
 from drive import Drive
 from relay import Relay
@@ -41,12 +41,15 @@ def ticks():#works
         floatingTime = float(times)
         if(math.floor(floatingTime*2000)%10==0):
             controller.checker()
-
+def CheckPositionController():#works
+    SetPositionController1.listen()
+         
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
+    SetPositionController1 = SetPositionController(arm1,interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
-    t3 = threading.Thread(target=controller.on_L3_press)
+    t3 = threading.Thread(target=CheckPositionController)
 
     t1.start() 
     t2.start()
