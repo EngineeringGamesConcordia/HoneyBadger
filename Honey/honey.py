@@ -41,25 +41,18 @@ def ticks():#works
         floatingTime = float(times)
         if(math.floor(floatingTime*2000)%10==0):
             controller.checker()
-'''            
-def honeyTicks():
-    while(True):
-        times_honey = time.time()
-        floatingTimeHoney = float(times_honey)
-        if(math.floor(floatingTimeHoney*1000)%10==0):
-            controller.honeyChecker()
-'''
+
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
-    #t3 = threading.Thread(target=honeyTicks)
+    t3 = threading.Thread(target=controller.on_L3_press)
 
     t1.start() 
     t2.start()
-    #t3.start()
+    t3.start()
     t1.join()
     t2.join()
-    #t3.join()
+    t3.join()
 except KeyboardInterrupt:
     GPIO.cleanup()
