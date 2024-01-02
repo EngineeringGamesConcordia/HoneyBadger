@@ -172,10 +172,10 @@ class HoneyController(Controller):
             else:
                 print("Launch Position")
                 self.arm.defaultPosition()
-                sleep(10)
+                sleep(1)
                 self.arm.stepper_servo  = 120
                 self.arm.kit.servo[0].angle = self.arm.stepper_servo
-                sleep(10)
+                sleep(1)
                 self.arm.launchPosition();
 
     
