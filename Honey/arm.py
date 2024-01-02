@@ -53,8 +53,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
     theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
     
-    theta1_1 = theta + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
-    theta1_2 = theta + np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
+    theta1_1 = theta - np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1))
+    theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
     # Calibration factors
     calibration_factor_theta1 = np.deg2rad(25)  # Adjust as needed
@@ -216,14 +216,14 @@ class Arm:
     def stepper_turn_right(self):
         print("> stepper servo right")
         self.stepper_servo = self.stepper_servo - self.moveVal
-        if (self.stepper_servo > 175):
-            self.stepper_servo = 175
+        if (self.stepper_servo < 5):
+            self.stepper_servo = 5
         self.kit.servo[0].angle = self.stepper_servo
 
     def stepper_turn_left(self):
         print("> stepper servo left")
         self.stepper_servo = self.stepper_servo + self.moveVal
-        if (self.stepper_servo < 5):
-            self.stepper_servo = 5
+        if (self.stepper_servo > 175):
+            self.stepper_servo = 175
         self.kit.servo[0].angle = self.stepper_servo 
 
