@@ -265,7 +265,7 @@ class HoneyController(Controller):
         if(self.lastValueStepperR1):
             self.arm.stepper_turn_right()  
             
-class SetPositionController():
+class SetPositionController(Controller):
     
     def __init__(self, arm, **kwargs):
         self.arm = arm
