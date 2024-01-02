@@ -272,16 +272,16 @@ class BadgerController(Controller):
                 self.arm.close_claw(self.lastValueCloseClaw)  
             #halfspeed driving    
             if(self.dPadU):
-                self.gas = 0.5 * self.gas
+                self.gas = 0.5
                 self.drive.move_back(self.gas)
             if(self.dPadD):
-                self.gas = 0.5 * self.gas
+                self.gas = 0.5
                 self.drive.move_front(self.gas)    
             if(self.dPadL):
-                self.gas = 0.5 * self.gas
+                self.gas = 0.5
                 self.drive.move_left(self.gas)
             if(self.dPadR):
-                self.gas = 0.5 * self.gas   
+                self.gas = 0.5  
                 self.drive.move_right(self.gas)                 
         else:
             #Arm
