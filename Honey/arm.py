@@ -16,7 +16,6 @@ offset_x= 0
 offset_y= 0
 px = 0
 py = 0
-pi = 3.14
 
 def adjust_to_limits(theta, theta_min, theta_max):
     # Adjust the joint angle to stay within limits
@@ -52,15 +51,15 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
         print("No solution for given x, y.")
         return initial_theta1, initial_theta2
     
-    theta2_1 = np.arctan2(np.sqrt(1 - D**2), D)
-    theta2_2 = -np.arctan2(np.sqrt(1 - D**2), D)
+    theta2_1 = -np.arctan2(np.sqrt(1 - D**2), D)
+    theta2_2 = np.arctan2(np.sqrt(1 - D**2), D)
     
-    theta1_1 = pi - (theta - np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1)))
-    theta1_2 = pi - (theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2)))
+    theta1_1 = theta + np.arctan2(l2 * np.sin(theta2_1), l1 + l2 * np.cos(theta2_1)))
+    theta1_2 = theta + np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2)))
     
     # Calibration factors
-    calibration_factor_theta1 = np.deg2rad(-10)  # Adjust as needed
-    calibration_factor_theta2 = np.deg2rad(-25)  # Adjust as needed
+    calibration_factor_theta1 = np.deg2rad(10)  # Adjust as needed
+    calibration_factor_theta2 = np.deg2rad(-5)  # Adjust as needed
 
     # Apply calibration factors
     theta1_1 += calibration_factor_theta1
@@ -104,7 +103,7 @@ class Arm:
     def __init__(self, kit, angles):
         global moveVal
         print("Init arm")
-        self.initial_theta1 = 180-(angles[1])
+        self.initial_theta1 = angles[1]
         self.initial_theta2 = angles[2]
         px, py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.px = px
@@ -128,7 +127,7 @@ class Arm:
         self.base_servo = self.base_servo - self.moveVal
         if (self.base_servo < 10):
             self.base_servo = 10
-        self.initial_theta1 = 180-self.base_servo
+        self.initial_theta1 = self.base_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[1].angle = self.base_servo
     def serv0_turn_right(self):
@@ -136,7 +135,7 @@ class Arm:
         self.base_servo = self.base_servo + self.moveVal
         if (self.base_servo > 150):
             self.base_servo = 150
-        self.initial_theta1 = 180-self.base_servo
+        self.initial_theta1 = self.base_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[1].angle = self.base_servo
     # ------------------------------ SERVO1 MOVEMENTS, Manual
