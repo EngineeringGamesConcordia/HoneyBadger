@@ -41,13 +41,16 @@ def ticks():#works
         floatingTime = float(times)
         if(math.floor(floatingTime*1000)%10==0):
             controller.checker()
-
+def checkL3(controller):
+    controller.on_L3_pressed
+    controller.listen() 
+    
 
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
-    t3 = threading.Thread(target=controller.on_L3_pressed)
+    t3 = threading.Thread(target=checkL3,args=(controller,))
 
     t1.start() 
     t2.start()
