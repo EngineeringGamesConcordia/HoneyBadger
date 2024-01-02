@@ -241,7 +241,7 @@ class Arm:
         print("> Position Launch set")
         #90,100,60
         self.base_servo = 110
-        self.elbow_servo = 120
+        self.elbow_servo = 70
         self.initial_theta1 = self.base_servo
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
