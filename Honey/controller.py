@@ -51,7 +51,9 @@ class HoneyController(Controller):
         self.dPadR = False
         self.dPadU = False
         self.dPadD = False
+        
         self.l3Pressed = False
+        self.l3Counter =0
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive
         #on true: indivual joint control
@@ -153,24 +155,26 @@ class HoneyController(Controller):
         self.lastValueArmNegY = 0
     
     def on_L3_pressed(self):
-        self.l3Pressed = not self.l3Pressed;
-        print("Ball Position is"+ str(self.l3Pressed))
-        if(self.l3Pressed):
-            print("Ball Position")
-            self.arm.stepper_servo = 60
-            self.arm.kit.servo[0].angle = self.arm.stepper_servo
-            sleep(0.1)
-            self.arm.defaultPosition()
-            sleep(0.1)
-            self.arm.ballPosition();
-        else:
-            print("Launch Position")
-            self.arm.stepper_servo  = 90
-            self.arm.kit.servo[0].angle = self.arm.stepper_servo
-            sleep(0.1)
-            self.arm.defaultPosition()
-            sleep(0.1)
-            self.arm.launchPosition();
+        self.l3Counter = self.l3Counter +1
+        if(self.l3Counter >1):
+            self.l3Pressed = not self.l3Pressed;
+            print("Ball Position is"+ str(self.l3Pressed))
+            if(self.l3Pressed):
+                print("Ball Position")
+                self.arm.stepper_servo = 60
+                self.arm.kit.servo[0].angle = self.arm.stepper_servo
+                sleep(1)
+                self.arm.defaultPosition()
+                sleep(0.1)
+                self.arm.ballPosition();
+            else:
+                print("Launch Position")
+                self.arm.stepper_servo  = 90
+                self.arm.kit.servo[0].angle = self.arm.stepper_servo
+                sleep(0.1)
+                self.arm.defaultPosition()
+                sleep(0.1)
+                self.arm.launchPosition();
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
     '''
