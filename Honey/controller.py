@@ -1,13 +1,17 @@
+from threading import Thread
 from pyPS4Controller.controller import Controller
 from arm import Arm
 from drive import Drive
 from relay import Relay
+from automation import Automation
+from motors import dcMotor
+from time import time,sleep
 
 '''
 ------------------------------ CONTROLLER CHEAT SHEET ------------------------------
     share               start manual control
     options             start automation
-    left joystick       drive (front, back, left, right)
+    arrows              drive (front, back, left, right)
     right joystick      arm (x-pos, x-neg, y-pos, y-neg)
     circle              start throw
     square              start vacuum
@@ -15,14 +19,14 @@ from relay import Relay
     triangle            stop throw
     R1                  stepper servo cw
     L1                  stepper servo ccw
-    
+    R2                  gas    
 '''
 
 class HoneyController(Controller):
 
     manualDeadZone = 10000
     armdeadzone = 2000
-    drivedeadzone = 3000
+#    drivedeadzone = 3000
     
     def __init__(self, arm, drivesys, relay, automation, **kwargs):
         self.arm = arm
@@ -34,14 +38,21 @@ class HoneyController(Controller):
         self.lastValueArmNegX = 0
         self.lastValueArmY = 0
         self.lastValueArmNegY =0
-        self.lastValueDriveX = 0
-        self.lastValueDriveNegX =0
-        self.lastValueDriveY = 0
-        self.lastValueDriveNegY=0
+#        self.lastValueDriveX = 0
+#        self.lastValueDriveNegX =0
+#        self.lastValueDriveY = 0
+#        self.lastValueDriveNegY=0
+        
+        self.lastValueStepperL1 = False
+        self.lastValueStepperR1 = False
+        
+        self.gas =0
         
         self.dPadL = False
         self.dPadR = False
-
+        self.dPadU = False
+        self.dPadD = False
+       
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive
         #on true: indivual joint control
@@ -59,6 +70,7 @@ class HoneyController(Controller):
     def on_share_press(self):
         self.state =not(self.state)        
         print("start manual control" + str(self.state))
+        self.gas =0
         self.lastValueArmX = 0
         self.lastValueArmNegX = 0
         self.lastValueArmY = 0
@@ -67,45 +79,45 @@ class HoneyController(Controller):
     '''
     ------------------------------ DRIVE SYSTEM ------------------------------
     '''
+    def on_R2_press(self, value):
+      if(self.state==False)  :
+        value= (value+2**15)/(2**16)
+        self.gas = value
+        print("Gas Value" + str(self.gas))
+        if(self.gas<0.4):
+            self.gas = self.gas +0.4
+            
+    def on_R2_release(self):
+      if(self.state == False):
+        self.gas = 0
     
-    # Go right
-    def on_L3_right(self, value):
-        self.lastValueDriveX = value;
-        print("drive x-pos")
+    # Drive front
+    def on_up_arrow_press(self):
+        self.dPadU = True
+        print("moved front")
         
-    # Go left
-    def on_L3_left(self, value):
-        self.lastValueDriveNegX = value;
-        print("drive x-neg")
+    #Stop 
+    def on_up_down_arrow_release(self):
+        self.dPadU = False
+        self.dPadD = False
+        print("i stopped X")
         
-    def on_L3_x_at_rest(self):
-        self.lastValueDriveX = 0
-        self.lastValueDriveNegX = 0
+    # Drive back
+    def on_down_arrow_press(self):
+        self.dPadD = True
+        print("moved back")
         
-    # Go backward
-    def on_L3_down(self, value):
-        self.lastValueDriveY = value;
-        print("drive y-neg")
-
-    # Go forward
-    def on_L3_up(self, value):
-        self.lastValueDriveNegY = value;
-        print("drive y-pos")
-        
-    def on_L3_y_at_rest(self):
-        self.lastValueDriveY = 0
-        self.lastValueDriveNegY = 0
-        
-    # Turn left
+    # Drive left
     def on_left_arrow_press(self):
         self.dPadL = True
         print("moved left")
         
-    # Turn right
+
+    # Drive right
     def on_right_arrow_press(self):
         self.dPadR = True
         print("moved right")
-            
+        
     #Stopped 
     def on_left_right_arrow_release(self):
         self.dPadR = False
@@ -129,16 +141,17 @@ class HoneyController(Controller):
         self.lastValueArmNegX = 0
         
     # Arm y-neg
-    def on_R3_up(self, value):
+    def on_R3_down(self, value):
         self.lastValueArmY = value;
 
     # Arm y-pos
-    def on_R3_down(self, value):
+    def on_R3_up(self, value):
         self.lastValueArmNegY = value;
         
     def on_R3_y_at_rest(self):
         self.lastValueArmY = 0
         self.lastValueArmNegY = 0
+    
         
     '''
     ------------------------------ ARM SYSTEM - Stepper ------------------------------
@@ -146,13 +159,21 @@ class HoneyController(Controller):
      
     # Turn Right
     def on_R1_press(self):
-        self.arm.cw_stepper
+        self.lastValueStepperR1 = True
         print("Stepper Moving Right")
 
+    def on_R1_release(self):
+        self.lastValueStepperR1 = False
+        print("STOP Stepper")
+        
     # Turn Left
     def on_L1_press(self):
-        self.arm.ccw_stepper 
+        self.lastValueStepperL1 = True  
         print("Stepper Moving Left")
+        
+    def on_L1_release(self):
+        self.lastValueStepperL1 = False
+        print("STOP Stepper")
 
     '''
     ------------------------------ VACUUM SYSTEM ------------------------------
@@ -184,7 +205,6 @@ class HoneyController(Controller):
     ------------------------------TICK SYSTEM ------------------------------
     '''   
     def checker(self):      
-
         if(self.state):
             #Servo 0 Turn Left
             if(self.lastValueArmY> self.manualDeadZone):
@@ -197,44 +217,80 @@ class HoneyController(Controller):
                 self.arm.serv1_turn_right()   
             #Servo 1 Turn Left
             if(self.lastValueArmNegX <-self.manualDeadZone):
-                self.arm.serv1_turn_left()        
+                self.arm.serv1_turn_left()       
+               
+            if(self.dPadU):
+                self.gas = 0.75
+                self.drive.move_back(self.gas)
+            if(self.dPadD):
+                self.gas = 0.75
+                self.drive.move_front(self.gas)    
+            if(self.dPadL):
+                self.gas = 0.75
+                self.drive.move_left(self.gas)
+            if(self.dPadR):
+                self.gas = 0.75 
+                self.drive.move_right(self.gas)          
+            
         else:
             #Arm
-            if(self.lastValueArmY < -self.armdeadzone):
-                self.arm.y_pos(-self.lastValueArmY)  
+            if(self.lastValueArmY > self.armdeadzone):
+                self.arm.y_pos(self.lastValueArmY)  
                 
-            if(self.lastValueArmNegY > self.armdeadzone):
+            if(self.lastValueArmNegY < -self.armdeadzone):
                 self.arm.y_neg(self.lastValueArmNegY)             
 
             if(self.lastValueArmX >self.armdeadzone): 
                 self.arm.x_pos(self.lastValueArmX)
             
             if(self.lastValueArmNegX < -self.armdeadzone):
-                self.arm.x_neg(-self.lastValueArmNegX) 
+                self.arm.x_neg(self.lastValueArmNegX)                
+        #Driving                 
+            if(self.dPadU):
+                self.drive.move_front(self.gas)
+            if(self.dPadD):
+                self.drive.move_back(self.gas)    
+            if(self.dPadL):
+                self.drive.move_left(self.gas)
+            if(self.dPadR):
+                self.drive.move_right(self.gas) 
+               
+        if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
+           self.drive.move_stop()                        
+        #Stepper Servo
+        if(self.lastValueStepperL1):
+            self.arm.stepper_turn_left() 
                 
-        #Driving    
-        if(self.lastValueDriveY > self.drivedeadzone):
-            print ("Y = " + str(self.lastValueDriveY))
-            self.drive.move_back(-self.lastValueDriveY)  
+        if(self.lastValueStepperR1):
+            self.arm.stepper_turn_right()  
             
-        if(self.lastValueDriveNegY < -self.drivedeadzone):
-            print ("Y_neg = " + str(self.lastValueDriveNegY))
-            self.drive.move_front(self.lastValueDriveNegY)             
-
-        if(self.lastValueDriveX >self.drivedeadzone): 
-            print ("X = " + str(self.lastValueDriveX))
-            self.drive.move_right(self.lastValueDriveX)
-            
-        if(self.lastValueDriveNegX < -self.drivedeadzone):
-            print ("X_neg = " + str(self.lastValueDriveNegX))
-            self.drive.move_left(-self.lastValueDriveNegX)
-            
-        if(self.dPadL==False and self.dPadR==False and self.lastValueDriveY == 0 and self.lastValueDriveNegY == 0 and self.lastValueDriveX == 0 and self.lastValueDriveNegX == 0):
-            self.drive.stop()
-            
-        if(self.dPadL):
-            self.drive.turn_left()
-            
-        if(self.dPadR):
-            self.drive.turn_right()  
+class SetPositionController(Controller):
+    
+    def __init__(self, arm, **kwargs):
+        self.arm = arm
+        self.l3Cycle = False
+        self.l3Counter =0
+        
+        Controller.__init__(self, **kwargs)
+        
+    def on_L3_press(self):
+        self.l3Cycle = not (self.l3Cycle);
+        print("Ball Pos is"+ str(self.l3Cycle))
+        if(self.l3Cycle):
+            print("Ball Position")
+            self.arm.defaultPosition()
+            sleep(1)
+            self.arm.stepper_servo = 50
+            self.arm.kit.servo[0].angle = self.arm.stepper_servo                  
+            sleep(1)
+            self.arm.ballPosition();
+        else:
+            print("Launch Position")
+            self.arm.defaultPosition()
+            sleep(1)
+            self.arm.stepper_servo  = 125
+            self.arm.kit.servo[0].angle = self.arm.stepper_servo
+            sleep(1)
+            self.arm.launchPosition();
+                    
 

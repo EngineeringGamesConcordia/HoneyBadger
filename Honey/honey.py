@@ -7,7 +7,7 @@ import math
 from time import sleep
 from adafruit_servokit import ServoKit
 
-from controller import HoneyController
+from controller import HoneyController, SetPositionController
 from arm import Arm
 from drive import Drive
 from relay import Relay
@@ -25,9 +25,8 @@ def threadFunction(controller):
 GPIO.setmode(GPIO.BCM)
 
 kit = ServoKit(channels=16)
-angles = [80,80]
-base_stepper = stepperMotor(19,26,.0108)#dir, step, speed
-arm1 = Arm(base_stepper, kit, angles)
+angles = [90, 80, 80]
+arm1 = Arm(kit, angles)
 relay1 = Relay(23, 24)
 front_left = dcMotor(22, 27, 17) #en1, en2, pwm
 front_right = dcMotor(6, 13, 25)
@@ -40,18 +39,23 @@ def ticks():#works
     while(True):
         times = time.time()
         floatingTime = float(times)
-        if(math.floor(floatingTime*1000)%10==0):
+        if(math.floor(floatingTime*2000)%10==0):
             controller.checker()
-
-
+def CheckPositionController():#works
+    SetPositionController1.listen()
+         
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
+    SetPositionController1 = SetPositionController(arm1,interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
+    t3 = threading.Thread(target=CheckPositionController)
 
     t1.start() 
     t2.start()
+    t3.start()
     t1.join()
     t2.join()
+    t3.join()
 except KeyboardInterrupt:
     GPIO.cleanup()
