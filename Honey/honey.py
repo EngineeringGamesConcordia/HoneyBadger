@@ -33,7 +33,7 @@ front_right = dcMotor(13, 6, 25)
 back_left = dcMotor(7, 1, 8)
 back_right = dcMotor(20, 21, 16)
 drivesys = Drive(front_left, front_right, back_left, back_right)
-automation1 = Automation(arm1, drivesys)
+automation1 = Automation(arm1, drivesys,relay1)
 
 def ticks():#works
     while(True):
@@ -50,6 +50,7 @@ try:
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
     t3 = threading.Thread(target=CheckPositionController)
+    t4 = threading.Thread(target=automation1.start)
 
     t1.start() 
     t2.start()
