@@ -43,14 +43,16 @@ def ticks():#works
             controller.checker()
 def CheckPositionController():#works
     SetPositionController1.listen()
-         
+
+def StartAutomation(automation):
+    automation.start()
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     SetPositionController1 = SetPositionController(arm1,interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
     t3 = threading.Thread(target=CheckPositionController)
-    t4 = threading.Thread(target=automation1.start())
+    t4 = threading.Thread(target=StartAutomation,args=(automation1,))
 
     t1.start() 
     t2.start()
