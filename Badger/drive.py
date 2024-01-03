@@ -22,23 +22,23 @@ class Drive:
     def move_front(self,speed):
         print("> drive move front at" +str(speed))
         self.l_track.ccw(speed)
-        self.r_track.ccw(speed)
+        self.r_track.cw(speed)
 
     # ------------------------------ Drive back
     def move_back(self,speed):
         print("> drive move back at"+str(speed))
         self.l_track.cw(speed)
-        self.r_track.cw(speed)
+        self.r_track.ccw(speed)
 
     # ------------------------------ Drive left
     def move_left(self,speed):
         print("> drive move left at"+str(speed))
         self.l_track.ccw(speed)
-        self.r_track.cw(speed)
+        self.r_track.ccw(speed)
 
     # ------------------------------ Drive right
     def move_right(self,speed):
         self.speed = speed
         print("> drive move right at"+str(speed))
         self.l_track.cw(speed)
-        self.r_track.ccw(speed)
+        self.r_track.cw(speed)
