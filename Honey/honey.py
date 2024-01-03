@@ -50,7 +50,7 @@ try:
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
     t3 = threading.Thread(target=CheckPositionController)
-    t4 = threading.Thread(target=automation1.start)
+    t4 = threading.Thread(target=automation1.start())
 
     t1.start() 
     t2.start()
