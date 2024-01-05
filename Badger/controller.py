@@ -58,6 +58,7 @@ class BadgerController(Controller):
         self.dPadR = False
         self.dPadU = False
         self.dPadD = False
+        self.beep = True
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive and Gas
         #on true: indivual joint control, no drive, open close claw instead of gas
@@ -205,10 +206,14 @@ class BadgerController(Controller):
         self.vacuum.stop_vacuum()
 
     '''
-    ------------------------------ CLAW SYSTEM ------------------------------
+    ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
-
-
+    def on_options_press(self):
+        if(self.beep):
+            print("start automatic control")
+            self.automation.start()
+            self.beep= not self.beep           
+        
     '''
     ------------------------------ WRIST L+R SYSTEM ------------------------------TO BE FIXED
     '''
@@ -251,78 +256,78 @@ class BadgerController(Controller):
     ------------------------------TICK SYSTEM ------------------------------
     '''   
     def checker(self):      
-
-        if(self.state):
-            #Servo 0 Turn Left
-            if(self.lastValueArmY> self.clawDeadZone):
-                self.arm.serv0_turn_left()
-            #Servo 0 Turn Right    
-            if(self.lastValueArmNegY <-self.clawDeadZone):
-                self.arm.serv0_turn_right()           
-            #Servo 1 Turn Right
-            if(self.lastValueArmX >self.clawDeadZone):
-                self.arm.serv1_turn_right()   
-            #Servo 1 Turn Left
-            if(self.lastValueArmNegX <-self.clawDeadZone):
-                self.arm.serv1_turn_left()                
-            #Claw
-            if(self.lastValueOpenClaw >0):  
-                self.arm.open_claw(self.lastValueOpenClaw)
-            if(self.lastValueCloseClaw >0):
-                self.arm.close_claw(self.lastValueCloseClaw)  
-            #halfspeed driving    
-            if(self.dPadU):
-                self.gas = 0.5
-                self.drive.move_front(self.gas)
-            if(self.dPadD):
-                self.gas = 0.5
-                self.drive.move_back(self.gas)    
-            if(self.dPadL):
-                self.gas = 0.5
-                self.drive.move_left(self.gas)
-            if(self.dPadR):
-                self.gas = 0.5  
-                self.drive.move_right(self.gas)                 
-        else:
-            #Arm
-            if(self.lastValueArmY > self.deadzone):
-                self.arm.y_pos(self.lastValueArmY)  
+        if(not self.beep):  
+            if(self.state):
+                #Servo 0 Turn Left
+                if(self.lastValueArmY> self.clawDeadZone):
+                    self.arm.serv0_turn_left()
+                #Servo 0 Turn Right    
+                if(self.lastValueArmNegY <-self.clawDeadZone):
+                    self.arm.serv0_turn_right()           
+                #Servo 1 Turn Right
+                if(self.lastValueArmX >self.clawDeadZone):
+                    self.arm.serv1_turn_right()   
+                #Servo 1 Turn Left
+                if(self.lastValueArmNegX <-self.clawDeadZone):
+                    self.arm.serv1_turn_left()                
+                #Claw
+                if(self.lastValueOpenClaw >0):  
+                    self.arm.open_claw(self.lastValueOpenClaw)
+                if(self.lastValueCloseClaw >0):
+                    self.arm.close_claw(self.lastValueCloseClaw)  
+                #halfspeed driving    
+                if(self.dPadU):
+                    self.gas = 0.5
+                    self.drive.move_front(self.gas)
+                if(self.dPadD):
+                    self.gas = 0.5
+                    self.drive.move_back(self.gas)    
+                if(self.dPadL):
+                    self.gas = 0.5
+                    self.drive.move_left(self.gas)
+                if(self.dPadR):
+                    self.gas = 0.5  
+                    self.drive.move_right(self.gas)                 
+            else:
+                #Arm
+                if(self.lastValueArmY > self.deadzone):
+                    self.arm.y_pos(self.lastValueArmY)  
+                    
+                if(self.lastValueArmNegY < -self.deadzone):
+                    self.arm.y_neg(self.lastValueArmNegY)   
+                    
+                if(self.lastValueArmX >self.deadzone): 
+                    self.arm.x_pos(self.lastValueArmX)
                 
-            if(self.lastValueArmNegY < -self.deadzone):
-                self.arm.y_neg(self.lastValueArmNegY)   
+                if(self.lastValueArmNegX < -self.deadzone):
+                    self.arm.x_neg(self.lastValueArmNegX)   
+                #Driving            
+                if(self.dPadU):
+                    self.drive.move_front(self.gas)
+                if(self.dPadD):
+                    self.drive.move_back(self.gas)    
+                if(self.dPadL):
+                    self.drive.move_left(self.gas)
+                if(self.dPadR):
+                    self.drive.move_right(self.gas) 
+            if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
+                self.drive.move_stop()                        
+            #Wrists   
+            if(self.lastValueWristDown >self.wristdeadzone):
+                self.arm.go_down()  
+                    
+            if(self.lastValueWristUp < -self.wristdeadzone):
+                self.arm.go_up()  
                 
-            if(self.lastValueArmX >self.deadzone): 
-                self.arm.x_pos(self.lastValueArmX)
-            
-            if(self.lastValueArmNegX < -self.deadzone):
-                self.arm.x_neg(self.lastValueArmNegX)   
-            #Driving            
-            if(self.dPadU):
-                self.drive.move_front(self.gas)
-            if(self.dPadD):
-                self.drive.move_back(self.gas)    
-            if(self.dPadL):
-                self.drive.move_left(self.gas)
-            if(self.dPadR):
-                self.drive.move_right(self.gas) 
-        if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
-            self.drive.move_stop()                        
-        #Wrists   
-        if(self.lastValueWristDown >self.wristdeadzone):
-            self.arm.go_down()  
+            if(self.lastValueWristLeft < -self.wristdeadzone): 
+                self.arm.turn_left()
+                    
+            if(self.lastValueWristRight > self.wristdeadzone):
+                self.arm.turn_right()  
                 
-        if(self.lastValueWristUp < -self.wristdeadzone):
-            self.arm.go_up()  
-            
-        if(self.lastValueWristLeft < -self.wristdeadzone): 
-            self.arm.turn_left()
-                
-        if(self.lastValueWristRight > self.wristdeadzone):
-            self.arm.turn_right()  
-            
-        #Stepper Servo
-        if(self.lastValueStepperL1):
-            self.arm.stepper_turn_left() 
-                
-        if(self.lastValueStepperR1):
-            self.arm.stepper_turn_right()  
+            #Stepper Servo
+            if(self.lastValueStepperL1):
+                self.arm.stepper_turn_left() 
+                    
+            if(self.lastValueStepperR1):
+                self.arm.stepper_turn_right()  

@@ -50,14 +50,11 @@ try:
     controller = BadgerController(arm1, drivesys, vacuum1, arm1.wrist_r_servo, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
-#    t3 = threading.Thread(target=automation_begin, args(automation, ))
 
     t1.start() 
     t2.start()
-#    t3.start()
     t1.join()
     t2.join()
-#    t3.join()
 except KeyboardInterrupt:
     GPIO.cleanup()
     
