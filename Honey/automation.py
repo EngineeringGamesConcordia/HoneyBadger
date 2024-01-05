@@ -18,14 +18,14 @@ class Automation:
         print("Beginning driving")
 
         #Turn towards right
-        t_end = time() + 0.5
+        t_end = time() + 5
         while time() > t_end:
             self.drive.move_right(1)
         self.drive.move_stop()
         
 
         #drive forward for X
-        t_end = time() + 0.7
+        t_end = time() + 7
         while time() > t_end:
             self.drive.move_forward(1)
         self.drive.move_stop()      
