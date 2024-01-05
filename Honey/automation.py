@@ -20,14 +20,14 @@ class Automation:
         #Turn towards right
         t_end = time() + 0.5
         while time() > t_end:
-            self.drive.move_right()
+            self.drive.move_right(1)
         self.drive.move_stop()
         
 
         #drive forward for X
         t_end = time() + 0.7
         while time() > t_end:
-            self.drive.move_forward()
+            self.drive.move_forward(1)
         self.drive.move_stop()      
         
         #This is trying to launch 

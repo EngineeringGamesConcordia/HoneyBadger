@@ -61,6 +61,6 @@ try:
     t1.join()
     t2.join()
     t3.join()
-    t4.start()
+    t4.join()
 except KeyboardInterrupt:
     GPIO.cleanup()
