@@ -83,12 +83,11 @@ class HoneyController(Controller):
     ------------------------------ DRIVE SYSTEM ------------------------------
     '''
     def on_R2_press(self, value):
-      if(self.state==False)  :
-        value= (value+2**15)/(2**16)
-        self.gas = value
-        print("Gas Value" + str(self.gas))
+      value= (value+2**15)/(2**16)
+      self.gas = value
+      print("Gas Value" + str(self.gas))
         if(self.gas<0.4):
-            self.gas = self.gas +0.4
+           self.gas = self.gas +0.4
             
     def on_R2_release(self):
       if(self.state == False):
@@ -223,20 +222,7 @@ class HoneyController(Controller):
                     self.arm.serv1_turn_right()   
                 #Servo 1 Turn Left
                 if(self.lastValueArmNegX <-self.manualDeadZone):
-                    self.arm.serv1_turn_left()       
-                
-                if(self.dPadU):
-                    self.gas = 0.75
-                    self.drive.move_back(self.gas)
-                if(self.dPadD):
-                    self.gas = 0.75
-                    self.drive.move_front(self.gas)    
-                if(self.dPadL):
-                    self.gas = 0.75
-                    self.drive.move_left(self.gas)
-                if(self.dPadR):
-                    self.gas = 0.75 
-                    self.drive.move_right(self.gas)          
+                    self.arm.serv1_turn_left()             
                 
             else:
                 #Arm
@@ -251,6 +237,17 @@ class HoneyController(Controller):
                 
                 if(self.lastValueArmNegX < -self.armdeadzone):
                     self.arm.x_neg(self.lastValueArmNegX)                
+<<<<<<< HEAD
+        #Driving                 
+            if(self.dPadU):
+                self.drive.move_front(self.gas)
+            if(self.dPadD):
+                self.drive.move_back(self.gas)    
+            if(self.dPadL):
+                self.drive.move_left(self.gas)
+            if(self.dPadR):
+                self.drive.move_right(self.gas)                 
+=======
             #Driving                 
                 if(self.dPadU):
                     self.drive.move_front(self.gas)
@@ -261,6 +258,7 @@ class HoneyController(Controller):
                 if(self.dPadR):
                     self.drive.move_right(self.gas) 
                 
+>>>>>>> 307c16adfae297e6c41b1ac793db6d34e6275d5e
             if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
                 self.drive.move_stop()                        
             #Stepper Servo
