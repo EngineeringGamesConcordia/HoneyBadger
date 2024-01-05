@@ -19,16 +19,16 @@ class Automation:
 
         #Turn towards right
         t_end = time() + 5
-        while time() > t_end:
+        while time() < t_end:
             self.drive.move_right(1)
         self.drive.move_stop()
         
 
         #drive forward for X
         t_end = time() + 7
-        while time() > t_end:
+        while time() < t_end:
             self.drive.move_forward(1)
-        self.drive.move_stop()      
+        self.drive.move_stop()          
         
         #This is trying to launch 
         for x in range (5):
