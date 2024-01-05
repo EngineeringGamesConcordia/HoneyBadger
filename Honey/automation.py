@@ -35,12 +35,12 @@ class Automation:
             #run ball postion
             print("Auto Ball Position")
             self.arm.defaultPosition()
-            sleep(1)
+            sleep(3)
             self.arm.stepper_servo = 50
             self.arm.kit.servo[0].angle = self.arm.stepper_servo                  
-            sleep(1)
-            self.relay.start_vacuum();
-            self.arm.ballPosition();
+            sleep(3)
+            self.relay.start_vacuum()
+            self.arm.ballPosition()
             
         #sweep arm
             self.arm.stepper_servo = self.arm.stepper_servo +x*10
@@ -49,9 +49,9 @@ class Automation:
             
             print("Auto Launch Position")
             self.arm.defaultPosition()
-            sleep(1)
+            sleep(3)
             self.arm.stepper_servo  = 125
             self.arm.kit.servo[0].angle = self.arm.stepper_servo
-            sleep(1)
+            sleep(3)
             self.arm.launchPosition()
-            self.stop_vacuum();
+            self.relay.stop_vacuum()
