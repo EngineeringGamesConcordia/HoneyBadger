@@ -39,7 +39,7 @@ class Automation:
             self.arm.stepper_servo = 50
             self.arm.kit.servo[0].angle = self.arm.stepper_servo                  
             sleep(1)
-            self.relay.start_vaccum();
+            self.relay.start_vacuum();
             self.arm.ballPosition();
             
         #sweep arm
@@ -54,4 +54,4 @@ class Automation:
             self.arm.kit.servo[0].angle = self.arm.stepper_servo
             sleep(1)
             self.arm.launchPosition()
-            self.stop_vaccum();
+            self.stop_vacuum();
