@@ -25,7 +25,7 @@ class Automation:
         self.drive.move_stop()      
         
         #Turn towards right
-        t_end = time() + 0.72
+        t_end = time() + 0.75
         while time() < t_end:
             self.drive.move_right(0.75)
         self.drive.move_stop()
