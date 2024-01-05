@@ -188,6 +188,8 @@ class HoneyController(Controller):
 
     # Stop vacuum
     def on_x_press(self):
+        if(not(self.beep)):
+            self.beep = True
         print("stop vacuum")
         self.relay.stop_vacuum()
 
