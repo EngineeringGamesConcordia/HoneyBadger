@@ -47,7 +47,7 @@ class HoneyController(Controller):
         self.lastValueStepperR1 = False
         
         self.gas =0
-        
+        self.pressedOptions = 0
         self.dPadL = False
         self.dPadR = False
         self.dPadU = False
@@ -61,8 +61,11 @@ class HoneyController(Controller):
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
     def on_options_press(self):
-        print("start automatic control")
-        self.automation.start()
+        if(self.pressedOptions<1):
+            self.pressedOptions= self.pressedOptions+1
+            print("start automatic control")
+            self.automation.start()
+        
 
     '''
     ------------------------------ START MANUAL CONTROL ------------------------------
