@@ -52,15 +52,12 @@ try:
     t1 = threading.Thread(target=threadFunction, args=(controller,))
     t2 = threading.Thread(target=ticks)
     t3 = threading.Thread(target=CheckPositionController)
-    t4 = threading.Thread(target=StartAutomation,args=(automation1,))
 
     t1.start() 
     t2.start()
     t3.start()
-    t4.start()
     t1.join()
     t2.join()
     t3.join()
-    t4.join()
 except KeyboardInterrupt:
     GPIO.cleanup()
