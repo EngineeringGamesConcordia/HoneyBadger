@@ -18,7 +18,7 @@ class Automation:
         print("Beginning driving")
 
         #Turn towards right
-        t_end = time() + 5
+        t_end = time() + 0.5
         while time() < t_end:
             self.drive.move_right(1)
         self.drive.move_stop()
@@ -27,7 +27,7 @@ class Automation:
         #drive forward for X
         t_end = time() + 7
         while time() < t_end:
-            self.drive.move_forward(1)
+            self.drive.move_front(1)
         self.drive.move_stop()          
         
         #This is trying to launch 
@@ -55,3 +55,4 @@ class Automation:
             sleep(3)
             self.arm.launchPosition()
             self.relay.stop_vacuum()
+            
