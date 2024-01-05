@@ -62,7 +62,7 @@ class HoneyController(Controller):
     '''
     def on_options_press(self):
         print("start automatic control")
-        self.drive.start_automatic_control()
+        self.automation.start()
 
     '''
     ------------------------------ START MANUAL CONTROL ------------------------------
