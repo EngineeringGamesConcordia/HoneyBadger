@@ -254,7 +254,7 @@ class HoneyController(Controller):
                     self.drive.move_front(self.gas)
                 if(self.dPadD):
                     self.drive.move_back(self.gas)    
-                if(self.dPadL):
+                if(self.dPadL): 
                     self.drive.move_left(self.gas)
                 if(self.dPadR):
                     self.drive.move_right(self.gas) 

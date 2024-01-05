@@ -27,7 +27,7 @@ class Automation:
         #drive forward for X
         t_end = time() + 7
         while time() < t_end:
-            self.drive.move_fronty(1)
+            self.drive.move_front(1)
         self.drive.move_stop()      
         
         #This is trying to launch 
