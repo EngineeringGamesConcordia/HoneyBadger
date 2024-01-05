@@ -17,15 +17,22 @@ class Automation:
         print("> automation start")
         print("Beginning driving")
 
+        
+        #drive forward for X
+        t_end = time() + 2
+        while time() < t_end:
+            self.drive.move_front(1)
+        self.drive.move_stop()      
+        
         #Turn towards right
-        t_end = time() + 5
+        t_end = time() + 0.5
         while time() < t_end:
             self.drive.move_right(1)
         self.drive.move_stop()
         
 
         #drive forward for X
-        t_end = time() + 7
+        t_end = time() + 4
         while time() < t_end:
             self.drive.move_front(1)
         self.drive.move_stop()      
