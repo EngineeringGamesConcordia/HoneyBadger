@@ -44,7 +44,7 @@ def ticks():#works
 def CheckPositionController():#works
     SetPositionController1.listen()
 
-def StartAutomation(automation):
+def StartAutomation(automation,self):
     automation.start()
 try:
     controller = HoneyController(arm1, drivesys, relay1, automation1, interface="/dev/input/js0", connecting_using_ds4drv=False)
@@ -61,6 +61,6 @@ try:
     t1.join()
     t2.join()
     t3.join()
-    t4.start()
+    t4.join()
 except KeyboardInterrupt:
     GPIO.cleanup()

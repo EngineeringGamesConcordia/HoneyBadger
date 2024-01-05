@@ -9,25 +9,23 @@ class Automation:
         self.arm = arm
         self.drive = drive
         print("Init automation")
-        self.flipper = False
         self.relay = relay
 
     def start(self):       
-        self.flipper = False
         print("> automation start")
         print("Beginning driving")
 
         #Turn towards right
-        t_end = time() + 0.5
+        t_end = time() + 2
         while time() > t_end:
-            self.drive.move_right()
+            self.drive.move_right(1)
         self.drive.move_stop()
         
 
         #drive forward for X
-        t_end = time() + 0.7
+        t_end = time() + 2
         while time() > t_end:
-            self.drive.move_forward()
+            self.drive.move_forward(1)
         self.drive.move_stop()      
         
         #This is trying to launch 
@@ -35,11 +33,11 @@ class Automation:
             #run ball postion
             print("Auto Ball Position")
             self.arm.defaultPosition()
-            sleep(1)
+            sleep(3)
             self.arm.stepper_servo = 50
             self.arm.kit.servo[0].angle = self.arm.stepper_servo                  
-            sleep(1)
-            self.relay.start_vaccum();
+            sleep(3)
+            self.relay.start_vacuum();
             self.arm.ballPosition();
             
         #sweep arm
@@ -49,9 +47,9 @@ class Automation:
             
             print("Auto Launch Position")
             self.arm.defaultPosition()
-            sleep(1)
+            sleep(3)
             self.arm.stepper_servo  = 125
             self.arm.kit.servo[0].angle = self.arm.stepper_servo
-            sleep(1)
+            sleep(3)
             self.arm.launchPosition()
-            self.stop_vaccum();
+            self.stop_vacuum();
