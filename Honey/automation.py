@@ -19,7 +19,7 @@ class Automation:
 
         
         #drive forward for X
-        t_end = time() + 2
+        t_end = time() + 1.2
         while time() < t_end:
             self.drive.move_front(1)
         self.drive.move_stop()      
@@ -32,7 +32,7 @@ class Automation:
         
 
         #drive forward for X
-        t_end = time() + 4
+        t_end = time() + 1.2
         while time() < t_end:
             self.drive.move_front(1)
         self.drive.move_stop()      
