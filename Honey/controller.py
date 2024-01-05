@@ -235,6 +235,7 @@ class HoneyController(Controller):
                 
                 if(self.lastValueArmNegX < -self.armdeadzone):
                     self.arm.x_neg(self.lastValueArmNegX)                
+<<<<<<< HEAD
         #Driving                 
             if(self.dPadU):
                 self.drive.move_front(self.gas)
@@ -244,6 +245,18 @@ class HoneyController(Controller):
                 self.drive.move_left(self.gas)
             if(self.dPadR):
                 self.drive.move_right(self.gas)                 
+=======
+            #Driving                 
+                if(self.dPadU):
+                    self.drive.move_front(self.gas)
+                if(self.dPadD):
+                    self.drive.move_back(self.gas)    
+                if(self.dPadL): 
+                    self.drive.move_left(self.gas)
+                if(self.dPadR):
+                    self.drive.move_right(self.gas) 
+                
+>>>>>>> 307c16adfae297e6c41b1ac793db6d34e6275d5e
             if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
                 self.drive.move_stop()                        
             #Stepper Servo
