@@ -37,7 +37,7 @@ class Automation:
         t_end = time() + 25
         while time() <t_end:
            
-    """
+        """
             #Bring arm down to ball height
             #Swing a bit
             
@@ -46,17 +46,7 @@ class Automation:
             #Turn to rocks
             #drop ball
             
-            """
-            t_end = time() + 1
-            while time() < t_end:
-                drive.move_left()
-            drive.move_stop()
-            
-            t_end = time() + 1
-            while time() < t_end:
-                drive.move_forward()
-            drive.move_stop()
-            """
+
             #drop ball
         print("Automation Ended")
         
