@@ -61,8 +61,8 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     theta1_2 = theta - np.arctan2(l2 * np.sin(theta2_2), l1 + l2 * np.cos(theta2_2))
     
     # Calibration factors
-    calibration_factor_theta1 = np.deg2rad(-20)  # Adjust as needed
-    calibration_factor_theta2 = np.deg2rad(-20)  # Adjust as needed
+    calibration_factor_theta1 = np.deg2rad(-22)  # Adjust as needed
+    calibration_factor_theta2 = np.deg2rad(-14)  # Adjust as needed
 
     # Apply calibration factors
     theta1_1 += calibration_factor_theta1
@@ -73,7 +73,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     # Define joint angle limits
     # Define joint angle limits in radians
     theta1_min, theta1_max = np.deg2rad(2), np.deg2rad(163)
-    theta2_min, theta2_max = np.deg2rad(5), np.deg2rad(156)
+    theta2_min, theta2_max = np.deg2rad(2), np.deg2rad(152)
 
     solutions = ((theta1_1, theta2_1), (theta1_2, theta2_2))
     
@@ -135,15 +135,15 @@ class Arm:
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         print("claw opening - arm")
         self.claw_servo = self.claw_servo + val
-        if (self.claw_servo > 160):
-            self.claw_servo = 160
+        if (self.claw_servo > 122):
+            self.claw_servo = 122
         self.kit.servo[4].angle = self.claw_servo
 
     def close_claw(self, val):
         val = CLAW_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.claw_servo = self.claw_servo - val
-        if (self.claw_servo < 17):
-            self.claw_servo = 17
+        if (self.claw_servo < 1):
+            self.claw_servo = 1
         print("claw closing - arm" + str(self.claw_servo))
         self.kit.servo[4].angle = self.claw_servo
     # ------------------------------ SERVO0 MOVEMENTS
@@ -167,16 +167,16 @@ class Arm:
     def serv1_turn_left(self):
         print("> servo1 rotating left")
         self.elbow_servo = self.elbow_servo - self.moveVal
-        if (self.elbow_servo < 5):
-            self.elbow_servo = 5
+        if (self.elbow_servo < 2):
+            self.elbow_servo = 2
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[1].angle = self.elbow_servo
     def serv1_turn_right(self):
         print("> servo1 rotating right")
         self.elbow_servo = self.elbow_servo + self.moveVal
-        if (self.elbow_servo > 156):
-            self.elbow_servo = 156
+        if (self.elbow_servo > 152):
+            self.elbow_servo = 152
         self.initial_theta2 = self.elbow_servo
         self.px, self.py = forward_kinematics(np.deg2rad(self.initial_theta1), np.deg2rad(self.initial_theta2))
         self.kit.servo[1].angle = self.elbow_servo   
@@ -185,7 +185,7 @@ class Arm:
         print("> wrist rotating left")
         self.wrist_r_servo = self.wrist_r_servo - self.moveVal
         if (self.wrist_r_servo < 2):
-            self.wrist_r_servo = 3
+            self.wrist_r_servo = 2
         self.kit.servo[2].angle = self.wrist_r_servo
 
     def turn_right(self):
@@ -199,15 +199,15 @@ class Arm:
     def go_up(self):
         print("> wrist up")
         self.wrist_ud_servo = self.wrist_ud_servo - self.moveVal
-        if (self.wrist_ud_servo < 6):
-            self.wrist_ud_servo = 6
+        if (self.wrist_ud_servo < 40):
+            self.wrist_ud_servo = 40
         self.kit.servo[3].angle = self.wrist_ud_servo
 
     def go_down(self):
         print("> wrist down")
         self.wrist_ud_servo = self.wrist_ud_servo + self.moveVal
-        if (self.wrist_ud_servo > 155):
-            self.wrist_ud_servo = 155
+        if (self.wrist_ud_servo > 160):
+            self.wrist_ud_servo = 160
         self.kit.servo[3].angle = self.wrist_ud_servo
     # ------------------------------ ROTATIONAL MOVEMENTS SERV05
     def stepper_turn_right(self):
