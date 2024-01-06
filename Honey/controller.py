@@ -52,7 +52,6 @@ class HoneyController(Controller):
         self.dPadR = False
         self.dPadU = False
         self.dPadD = False
-        self.beep = True
         Controller.__init__(self, **kwargs)
         self.state = False #IKFunctions Drive
         #on true: indivual joint control
@@ -60,11 +59,6 @@ class HoneyController(Controller):
     '''
     ------------------------------ START AUTOMATIC CONTROL ------------------------------
     '''
-    def on_options_press(self):
-        if(self.beep):
-            print("start automatic control")
-            self.automation.start()
-            self.beep= not self.beep           
         
 
     '''
@@ -209,52 +203,51 @@ class HoneyController(Controller):
     ------------------------------TICK SYSTEM ------------------------------
     '''   
     def checker(self): 
-        if(not self.beep):     
-            if(self.state):
-                #Servo 0 Turn Left
-                if(self.lastValueArmY> self.manualDeadZone):
-                    self.arm.serv0_turn_left()
-                #Servo 0 Turn Right    
-                if(self.lastValueArmNegY <-self.manualDeadZone):
-                    self.arm.serv0_turn_right()           
-                #Servo 1 Turn Right
-                if(self.lastValueArmX >self.manualDeadZone):
-                    self.arm.serv1_turn_right()   
-                #Servo 1 Turn Left
-                if(self.lastValueArmNegX <-self.manualDeadZone):
-                    self.arm.serv1_turn_left()             
-                
-            else:
-                #Arm
-                if(self.lastValueArmY > self.armdeadzone):
-                    self.arm.y_pos(self.lastValueArmY)  
-                    
-                if(self.lastValueArmNegY < -self.armdeadzone):
-                    self.arm.y_neg(self.lastValueArmNegY)             
-
-                if(self.lastValueArmX >self.armdeadzone): 
-                    self.arm.x_pos(self.lastValueArmX)
-                
-                if(self.lastValueArmNegX < -self.armdeadzone):
-                    self.arm.x_neg(self.lastValueArmNegX)                
-        #Driving                 
-            if(self.dPadU):
-                self.drive.move_front(self.gas)
-            if(self.dPadD):
-                self.drive.move_back(self.gas)    
-            if(self.dPadL):
-                self.drive.move_left(self.gas)
-            if(self.dPadR):
-                self.drive.move_right(self.gas)                 
-            if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
-                self.drive.move_stop()                        
-            #Stepper Servo
-            if(self.lastValueStepperL1):
-                self.arm.stepper_turn_left() 
-                    
-            if(self.lastValueStepperR1):
-                self.arm.stepper_turn_right()  
+        if(self.state):
+            #Servo 0 Turn Left
+            if(self.lastValueArmY> self.manualDeadZone):
+                self.arm.serv0_turn_left()
+            #Servo 0 Turn Right    
+            if(self.lastValueArmNegY <-self.manualDeadZone):
+                self.arm.serv0_turn_right()           
+            #Servo 1 Turn Right
+            if(self.lastValueArmX >self.manualDeadZone):
+                self.arm.serv1_turn_right()   
+            #Servo 1 Turn Left
+            if(self.lastValueArmNegX <-self.manualDeadZone):
+                self.arm.serv1_turn_left()             
             
+        else:
+            #Arm
+            if(self.lastValueArmY > self.armdeadzone):
+                self.arm.y_pos(self.lastValueArmY)  
+                
+            if(self.lastValueArmNegY < -self.armdeadzone):
+                self.arm.y_neg(self.lastValueArmNegY)             
+
+            if(self.lastValueArmX >self.armdeadzone): 
+                self.arm.x_pos(self.lastValueArmX)
+            
+            if(self.lastValueArmNegX < -self.armdeadzone):
+                self.arm.x_neg(self.lastValueArmNegX)                
+    #Driving                 
+        if(self.dPadU):
+            self.drive.move_front(self.gas)
+        if(self.dPadD):
+            self.drive.move_back(self.gas)    
+        if(self.dPadL):
+            self.drive.move_left(self.gas)
+        if(self.dPadR):
+            self.drive.move_right(self.gas)                 
+        if(self.dPadU==False and self.dPadD==False and self.dPadL==False and self.dPadR==False):
+            self.drive.move_stop()                        
+        #Stepper Servo
+        if(self.lastValueStepperL1):
+            self.arm.stepper_turn_left() 
+                
+        if(self.lastValueStepperR1):
+            self.arm.stepper_turn_right()  
+        
 class SetPositionController(Controller):
     
     def __init__(self, arm, **kwargs):
