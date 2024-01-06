@@ -20,10 +20,10 @@ class Automation:
         print("Beginning driving")
 
         #Turn towards center and move forward
-        t_end = time() + 1
-        while time() < t_end:
-            self.drive.move_left(1)
-        self.drive.move_stop()
+#        t_end = time() + 1
+#        while time() < t_end:
+#            self.drive.move_right(1)
+#        self.drive.move_stop()
         
         #drive forward for X
         t_end = time() + 1
