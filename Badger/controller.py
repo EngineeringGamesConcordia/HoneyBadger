@@ -68,16 +68,19 @@ class BadgerController(Controller):
     ------------------------------ STATE CONTROL (CLAW DRIVE GAS JOINTS)------------------------------
     '''
     def on_share_press(self):
-        self.state =not(self.state)        
-        print("start manual control" + str(self.state))
-        self.gas =0
-        self.lastValueCloseClaw = 0
-        self.lastValueOpenClaw = 0
-        self.lastValueArmX = 0
-        self.lastValueArmNegX = 0
-        self.lastValueArmY = 0
-        self.lastValueArmNegY =0
-        # self.drive.start_manual_control()
+        if(self.beep):
+            self.beep = False
+        else:
+            self.state =not(self.state)        
+            print("start manual control" + str(self.state))
+            self.gas =0
+            self.lastValueCloseClaw = 0
+            self.lastValueOpenClaw = 0
+            self.lastValueArmX = 0
+            self.lastValueArmNegX = 0
+            self.lastValueArmY = 0
+            self.lastValueArmNegY =0
+            # self.drive.start_manual_control()
     
       # GAS GAS GAS && CLOSE
     def on_R2_press(self, value):
