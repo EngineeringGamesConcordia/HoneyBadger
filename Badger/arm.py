@@ -62,7 +62,7 @@ def calculate_inverse_kinematic(x_target, y_target, initial_theta1, initial_thet
     
     # Calibration factors
     calibration_factor_theta1 = np.deg2rad(-22)  # Adjust as needed
-    calibration_factor_theta2 = np.deg2rad(-16)  # Adjust as needed
+    calibration_factor_theta2 = np.deg2rad(-15)  # Adjust as needed
 
     # Apply calibration factors
     theta1_1 += calibration_factor_theta1
@@ -244,8 +244,8 @@ class Arm:
         print("> arm22 x_neg")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.px = self.px + val;
-        if (self.px > 3):
-            self.px = 3
+        if (self.px > 1):
+            self.px = 1
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("px = " + str(self.px))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
@@ -260,8 +260,8 @@ class Arm:
         print("> arm22 y_pos")
         val = KINEMATIC_SCALE * ((((val + CONTROLLER_SCALE) / (2 * CONTROLLER_SCALE)) ** 3) + 2**15)
         self.py = self.py - val;
-        if (self.py < -6):
-            self.py = -6
+        if (self.py < -4):
+            self.py = -4
         theta_1, theta_2 = calculate_inverse_kinematic(self.px, self.py, self.initial_theta1, self.initial_theta2)
         print ("py = " + str(self.py))
         print ("theta1 theta2 = " + str(theta_1) + "   " + str(theta_2))
